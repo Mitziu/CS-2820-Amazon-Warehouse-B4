@@ -1,3 +1,4 @@
+package Floor;
 
 public class floor extends Thing {
 	public static int x= 1 ;

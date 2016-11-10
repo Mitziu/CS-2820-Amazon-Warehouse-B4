@@ -1,4 +1,5 @@
-import java.util.List;
+package Floor;
+
 import java.util.ArrayList;
 public class moveThing extends Thing{ //contains robots and shelves
 	public static int w= 1;

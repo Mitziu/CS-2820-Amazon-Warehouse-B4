@@ -1,3 +1,4 @@
+package Floor;
 
 public class Thing {
 	public static int x_loc;

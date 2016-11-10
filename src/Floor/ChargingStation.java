@@ -1,3 +1,4 @@
+package Floor;
 
 public class ChargingStation extends Thing {
 	public static int width= 2;

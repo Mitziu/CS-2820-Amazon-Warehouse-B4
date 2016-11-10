@@ -1,3 +1,5 @@
+package Clock;
+
 import java.util.Observable;
 
 /**

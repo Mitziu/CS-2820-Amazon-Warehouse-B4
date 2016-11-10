@@ -1,3 +1,5 @@
+import Clock.Clock;
+import Master.Master;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +31,7 @@ public class MasterTest {
 
     @Test
     public void loadCorrectValues() {
-        Queue<UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
+        Queue<Master.UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
 
         for (int i = 0; i < expectedTimeToArrive.length; i++) {
             Assert.assertTrue(upcomingOrders.poll().getTimeToOrder() == expectedTimeToArrive[i]);
@@ -47,7 +49,7 @@ public class MasterTest {
     public void orderGoesToProcess() {
         clock.tick();
 
-        Queue<UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
+        Queue<Master.UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
         for (int i = 1; i < expectedTimeToArrive.length; i++) {
             Assert.assertTrue(upcomingOrders.poll().getTimeToOrder() == expectedTimeToArrive[i]);
         }

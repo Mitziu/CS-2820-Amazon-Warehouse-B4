@@ -1,3 +1,4 @@
+package Floor;
 
 public class ShelfArea extends Thing{
 	public String name;

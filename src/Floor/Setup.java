@@ -1,3 +1,5 @@
+package Floor;
+
 import java.util.ArrayList;
 public class Setup {
 	floor f1;

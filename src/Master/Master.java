@@ -1,3 +1,5 @@
+package Master;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class Master implements Observer {
     }
 
     /**
-     * Loads the Simulated OrderingSystemInterface from the upcomingOrders CSV file
+     * Loads the Simulated Ordering.OrderingSystemInterface from the upcomingOrders CSV file
      */
     private void loadOrderQueue() {
 

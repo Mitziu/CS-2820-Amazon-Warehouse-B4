@@ -1,3 +1,5 @@
+package Floor;
+
 public class m_belt extends Thing{
 	public static int x= 1 ;
 	public static int y= 2;

@@ -1,3 +1,5 @@
+package Master;
+
 import java.util.Map;
 
 /**
@@ -10,11 +12,11 @@ public class UpcomingOrder {
 
     public UpcomingOrder(Integer timeToOrder, Map<Integer, Integer> items, String address) {
         if (items.isEmpty()) {
-            throw new IllegalStateException("Order has to include at least 1 item");
+            throw new IllegalStateException("Ordering.Order has to include at least 1 item");
         }
 
         if (timeToOrder < 0) {
-            throw new IllegalStateException("Time to Order has to be greater than or equal to zero");
+            throw new IllegalStateException("Time to Ordering.Order has to be greater than or equal to zero");
         }
 
         if (address == "") {

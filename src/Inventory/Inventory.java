@@ -1,3 +1,5 @@
+package Inventory;
+
 import java.util.*;
 public class Inventory {
 	

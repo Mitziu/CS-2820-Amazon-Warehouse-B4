@@ -1,3 +1,4 @@
+package Floor;
 
 public class Station extends Thing {
 	public static int w = 1;

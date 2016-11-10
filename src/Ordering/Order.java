@@ -1,6 +1,8 @@
+package Ordering;
+
 import java.util.*;
 
-//Max Riley Class Order
+//Max Riley Class Ordering.Order
 
 class Order {
 	
@@ -19,17 +21,17 @@ class Order {
 		this.OrderLocation = "Start";
 	}
 	
-	//Gets order ID from Order
+	//Gets order ID from Ordering.Order
 	public Integer getOrderID(){
 		return this.OrderID;
 	}
 	
-	//Gets Address from Order
+	//Gets Address from Ordering.Order
 	public String getAddress(){
 		return this.Address;
 	}
 	
-	//Gets Locations of Order
+	//Gets Locations of Ordering.Order
 	public String getLocation(){
 		return this.OrderLocation;
 	}
@@ -43,9 +45,9 @@ class Order {
 }
 
 
-//Makes a list of OrderingSystemInterface so we have an overview of all OrderingSystemInterface currently being worked on,
+//Makes a list of Ordering.OrderingSystemInterface so we have an overview of all Ordering.OrderingSystemInterface currently being worked on,
 //And also lets you remove completed orders and add new orders
-class OrderingSystem implements OrderingSystemInterface{
+class OrderingSystem implements OrderingSystemInterface {
 	
 	//Instance variable is a map, the Key being orderIDs
 	public Map<Integer, Order> OngoingOrders;

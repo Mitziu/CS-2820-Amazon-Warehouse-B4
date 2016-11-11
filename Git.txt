@@ -1,0 +1,161 @@
+Git Instruction
+	1) Make your changes
+	2) Before you commit your changes MAKE SURE to pull
+		If it complains about unstaged changes you need to stash your changes temporarily
+		To do this in IntelliJ
+				VCS --> Git --> Stash Changes ... 
+					Write a message
+			After you do this do the pull
+			After the pull do the following
+				VCS --> Git --> Unstash Changes ...
+					Click the one you just stashed and click on Apply Stash
+		To do this through the command line
+			git stash
+			
+			git stash pull --rebase
+
+			git stash pop
+		
+	3) Incase this pull broke something, fix it
+	4) Commit your changes
+	5) Push your changes
+
+
+Git from IntelliJ
+
+PULL:  To do a pull go to VCS --> Git --> Pull...
+	No need to change anything here just click on Pull
+
+Commit: VCS --> Commit Changes...
+	Select the classes you wish to commit
+		Make sure they are only the .java classes or files such as a CSV file. None of the settings that are auto created. (THE SETTINGS TEND TO BE XML FILES)
+	
+	Once you have selected the classes write a message
+	Next hover over "Commit" and click on "Commit and Push..."
+	From here click on Push
+
+KEYNOTE: When IntelliJ asks "Add File to Git" make sure you only click yes for .java and necessary files (CSV files), please don't upload the xml files that are auto generated.		
+
+Git from command
+
+Pull: git pull --rebase
+
+Commit: git commit -m " <MESSAGE GOES IN HERE> "
+
+Push: git push
+
+Status: git status
+	Gives a representation of your changes
+
+Looks something like 
+
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        new file:   src/testingClass.java
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   src/testingClass.java
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .idea/
+        TestingPrivateRepository.iml
+        out/
+	
+
+
+
+Changes to be commit: The changes that will be packed inside the commit
+	To unstage these changes (Move it to the untracked files) do a git reset HEAD <file name>
+
+Changes not staged for commit: These changes won't be packed inside the commit
+	To "stage" them (add to the commit)
+	Write the command
+		git add <file>
+	Incase you want to reset this file to what's on GitHub you can do (discard changes)
+	Write the command
+		git checkout -- <filename>
+
+Untracked files: These files will not be included in the commit
+	To add it to the commit write the command
+		git add <file name>
+		NEVER DO git add -A since this will add EVERYTHING. Including the settings and unnecessary data
+	
+
+USEFUL GIT COMMANDS
+
+
+git log
+	Will show you the log of commits
+
+git diff HEAD
+	Will show you changes from the last commit up until now
+
+git diff HEAD^
+	Will show you changes from the commit before the last one
+		Useful to see what was commited before you push
+
+git commit --ammend
+	Will let you change the commit message (BEFORE YOU PUSH)
+
+
+IF YOU WANT TO MERGE MULTIPLE COMMITS INTO A SINGLE ONE (BEFORE YOU PUSH)
+
+git rebase --interactive HEAD~<# OF COMMITS TO MERGE>
+	This will bring something like that looks like this
+
+	pick 25a30c4 First commit
+	pick b9c5bdf Second commit
+	
+	With a lot of extra instructions in the bottom
+
+	Change to
+	
+	pick 25a30c4 First commit
+	s b9c5bdf Second commit
+
+	Now save it. Another screen will come up, just save it as it is.
+	
+	If you want to rename this merged commit then simply do a git commit --amend
+
+
+
+There are many more very useful Git commands. I found this link which has more than what we need for this project but I think it'll help incase my instructions are bad (Which they probably are....)
+
+
+
+https://services.github.com/kit/downloads/github-git-cheat-sheet.pdf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

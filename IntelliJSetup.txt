@@ -1,0 +1,57 @@
+Download from
+
+https://www.jetbrains.com/idea/
+
+Once you install it to clone the repository click
+
+"Check out from Version Control"
+
+Choose the correct Git repository (Should be called "CS-2820-Amazon-Warehouse-B4" )
+
+
+When it asks you to create an IDEA project click yes
+
+Click next on everything up to "Please select project SDK"
+
+In this if there is nothing click on the + and add Java JDK
+	
+	NOTE: On windows for some odd reason you must click the jdk in Program Files directory (not X86)
+		Make sure you select 1.8
+
+
+Then click next and finish.
+
+---------------------------------------------------------------------------------------
+
+Once the main screen opens up go to File --> Project Structure
+
+From this menu select the Projects tab on the left
+
+Make sure the Project SDK is 1.8 (Should be since we added this already, if not click on new and find the JDK directory in the Program Files directory)
+
+Make sure Project Language Level is set to "SDK Default (8)" or "8 - Lambdas, type annotations, etc.."
+
+
+
+Now select the Modules tab on the left
+
+Go to sources tab (Should be already there)
+	Make sure src is set to Sources and tst is set to Tests (Should be automatically set up)
+	
+
+Now click on the Paths tab (Right next to Sources)
+	Make sure "Exclude output paths" is selected (Should be by default)
+
+
+Apply your changes and click ok.
+
+-------------------------------------------------------------------
+
+To test if it's working click on Build --> Rebuild Project
+
+
+
+
+
+
+

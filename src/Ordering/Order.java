@@ -47,6 +47,9 @@ class Order {
 
 //Makes a list of Ordering.OrderingSystemInterface so we have an overview of all Ordering.OrderingSystemInterface currently being worked on,
 //And also lets you remove completed orders and add new orders
+
+//Need class to be able to pass floor, inventory, belt, and robot objects
+//Use interfaces to be able to test
 class OrderingSystem implements OrderingSystemInterface {
 	
 	//Instance variable is a map, the Key being orderIDs
@@ -59,7 +62,7 @@ class OrderingSystem implements OrderingSystemInterface {
 	@Override
 	//Lets you add order with just Items wanted and address, creates OrderID and makes key with it
 	public Boolean placeOrder(Map<Integer,Integer> newItemList, String newAddress){
-		//Add a thing that checks inventory to see if it can be processed 
+		//Add a thing that checks inventory to see if it can be processed
 		Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
 		Order newOrder = new Order(uniqueID, newItemList, newAddress);
 		this.OngoingOrders.put(uniqueID, newOrder);

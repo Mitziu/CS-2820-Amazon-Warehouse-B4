@@ -21,6 +21,7 @@ public class Inventory {
 		public void Qty_Update(){
 			for (int value : Containers.values()) {
 			    Item_Quantity += value;
+			}
 		}
 	}
 	

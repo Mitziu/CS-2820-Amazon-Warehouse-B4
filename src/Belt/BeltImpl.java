@@ -52,6 +52,10 @@ public class BeltImpl implements Observer, Belt
 	//ships out of warehouse   and store in list of shipped orders
 	private void ship(Bin bin)
 	{
+		shippedItemIDList.addAll(bin.getAllItems());
+	}
+
+	private void packer(Bin bin) {
 		packerQueue.getFirst().addAllItems(bin);
 	}
 	
@@ -70,7 +74,8 @@ public class BeltImpl implements Observer, Belt
 		pickerQueue.addFirst(new Bin());
 		packerQueue.addFirst(new Bin());
 
-		ship(pickerQueue.removeLast());
+		packer(pickerQueue.removeLast());
+		ship(packerQueue.removeLast());
 	}
 
 	/**

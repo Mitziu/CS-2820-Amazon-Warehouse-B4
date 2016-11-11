@@ -7,7 +7,7 @@ public class Setup {
 	Station packager ;
 	ChargingStation charge ;
 	m_belt f_belt ; 
-	ArrayList<ShelfArea> SA ;
+	ArrayList<Shelf> SA ;
 	ArrayList<route> Routes;
 	public Setup(){
 		f1 = new floor();
@@ -25,7 +25,7 @@ public class Setup {
 		index.add(10);
 		for(int i = 0; i< index.size();i++){
 			int y = index.get(i);
-			ShelfArea temp = new ShelfArea(4,y,i);
+			Shelf temp = new Shelf(4,y,i);
 			SA.add(temp);
 		}
 	}

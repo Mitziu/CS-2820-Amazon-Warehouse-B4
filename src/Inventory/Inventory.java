@@ -9,7 +9,7 @@ public class Inventory {
 	//That way Orders, Inventory, and Floor can all just use one item class together
 	//@Max
 	class Item_Details{
-		HashMap <String, Integer> Containers;
+		HashMap <Integer, Integer> Containers;
 		int Item_ID;
 		String Item_Name;
 		int Item_Quantity;
@@ -44,7 +44,7 @@ public class Inventory {
 	}
 	
 	public LinkedList<String> Contained_In(int ID){
-		Set<String> Tempset = Main_Inventory.get(ID).Containers.keySet();
+		Set<Integer> Tempset = Main_Inventory.get(ID).Containers.keySet();
 		LinkedList<String> RetList = new LinkedList<String>(Tempset); 
 		return RetList;
 	}
@@ -54,6 +54,16 @@ public class Inventory {
 		Main_Inventory.put(New_Item.Item_ID, New_Item);
 	}
 	
-	
+	public Put_Container(int Item_ID, int Container_ID, int Qty){
+		if (Main_Inventory.get(Item_ID).Containers.get(Container_ID) != NULL){
+			tempvar = Main_Inventory.get(Item_ID).Containers.get(Container_ID);
+			tempvar +=  Qty;
+			Main_Inventory.get(Item_ID).Containers.put(Container_ID, tempvar);
+		}
+		
+		else {
+			Main_Inventory.get(Item_ID).Containers.put(Container_ID, Qty);
+		}
+	}
 }
 

@@ -4,7 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import Master.UpcomingOrder;
+
 import java.util.Queue;
+
+
 
 /**
  * Created by Mitziu on 11/3/16.
@@ -31,7 +35,7 @@ public class MasterTest {
 
     @Test
     public void loadCorrectValues() {
-        Queue<Master.UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
+        Queue<UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
 
         for (int i = 0; i < expectedTimeToArrive.length; i++) {
             Assert.assertTrue(upcomingOrders.poll().getTimeToOrder() == expectedTimeToArrive[i]);
@@ -49,7 +53,7 @@ public class MasterTest {
     public void orderGoesToProcess() {
         clock.tick();
 
-        Queue<Master.UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
+        Queue<UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
         for (int i = 1; i < expectedTimeToArrive.length; i++) {
             Assert.assertTrue(upcomingOrders.poll().getTimeToOrder() == expectedTimeToArrive[i]);
         }

@@ -54,7 +54,7 @@ class Order {
 
 //Need class to be able to pass floor, inventory, belt, and robot objects
 //Use interfaces to be able to test
-class OrderingSystem implements OrderingSystemInterface {
+class OrderingSystem implements OrderInterface {
 	
 	//Instance variable is a map, the Key being orderIDs
 	public Map<Integer, Order> OngoingOrders;
@@ -65,7 +65,7 @@ class OrderingSystem implements OrderingSystemInterface {
 	public void OrderingSystem(Inventory inventory, BeltImpl belt){
 		this.OngoingOrders = new HashMap<>();
 		this.inventory = inventory;
-		this.belt - belt;
+		this.belt = belt;
 	}
 	
 	//Lets you add order with just Items wanted and address, creates OrderID and makes key with it
@@ -86,6 +86,26 @@ class OrderingSystem implements OrderingSystemInterface {
 			//Can send items and quantities individually or send the entire order
 			//In interface, function getItem
 
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	
+	//Need to work with robot to send it item number or shelf location to have it pick up items
+	public void getItem(int itemid, int shelfLocation){
+		
+	}
+	//Need to work with floor to get location of item
+	public void getItemLocation(int itemid){
+		
+	}
+	
+	//used as a basis to see if item is in stock, may not be needed though..
+	public boolean isItemInStock(Integer itemid){
+		if(this.inventory.Get_Item_Qty(itemid) > 0){
 			return true;
 		}
 		else{

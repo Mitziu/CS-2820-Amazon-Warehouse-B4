@@ -5,6 +5,9 @@ import java.util.*;
 import Inventory.Item_Details;
 public class Inventory {
 	
+	//We should make this a seperate class outside of inventory so we have a baseline Item class
+	//That way Orders, Inventory, and Floor can all just use one item class together
+	//@Max
 	class Item_Details{
 		HashMap <String, Integer> Containers;
 		int Item_ID;

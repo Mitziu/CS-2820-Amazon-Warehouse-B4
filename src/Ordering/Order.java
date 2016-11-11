@@ -14,13 +14,17 @@ class Order {
 	public String OrderLocation;
 	
 	
-	public  Order(Integer OrderID, Map<Integer, Integer> ItemIDList, String Address){
+	public Order(Integer OrderID, Map<Integer, Integer> ItemIDList, String Address){
 		this.OrderID = OrderID;
 		this.ItemIDList = ItemIDList;
 		this.Address = Address;
 		this.OrderLocation = "Start";
 	}
 	
+	
+	public Map<Integer,Integer> getItemIDList(){
+		return this.ItemIDList;
+	}
 	//Gets order ID from Ordering.Order
 	public Integer getOrderID(){
 		return this.OrderID;
@@ -54,24 +58,49 @@ class OrderingSystem implements OrderingSystemInterface {
 	
 	//Instance variable is a map, the Key being orderIDs
 	public Map<Integer, Order> OngoingOrders;
+	public Inventory inventory;
+	public BeltImpl belt;
 	
-	public void OrderingSystem(){
+	
+	public void OrderingSystem(Inventory inventory, BeltImpl belt){
 		this.OngoingOrders = new HashMap<>();
+		this.inventory = inventory;
+		this.belt - belt;
 	}
-
-	@Override
+	
 	//Lets you add order with just Items wanted and address, creates OrderID and makes key with it
+	//Check with inventory class to make sure there is enough item in stock
 	public Boolean placeOrder(Map<Integer,Integer> newItemList, String newAddress){
-		//Add a thing that checks inventory to see if it can be processed
-		Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
-		Order newOrder = new Order(uniqueID, newItemList, newAddress);
-		this.OngoingOrders.put(uniqueID, newOrder);
+		boolean hasenough;
+		for (Integer key : newItemList.keySet()){
+			if(this.inventory.Get_Item_Qty(key) < newItemList.get(key)){
+				hasenough = false;
+			}
+		}
+		if(hasenough){
+			Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
+			Order newOrder = new Order(uniqueID, newItemList, newAddress);
+			this.OngoingOrders.put(uniqueID, newOrder);
+			
+			//need a method to send information to robot and say "hey pick up these things"
+			//Can send items and quantities individually or send the entire order
+			//In interface, function getItem
 
-		return true;
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
+	
+	//Tells belt that order is ready to move on belt
+	public void startBelt(Integer orderID){
+		Belt.pack(orderID);
+		
+	}
+	
 	
 	//removes item by orderID
-	
 	public void finishOrder(Integer OrderID){
 		this.OngoingOrders.remove(OrderID);
 	}

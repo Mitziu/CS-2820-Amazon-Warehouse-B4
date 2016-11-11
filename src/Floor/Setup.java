@@ -1,7 +1,8 @@
 package Floor;
 
 import java.util.ArrayList;
-public class Setup {
+import java.util.HashMap;
+public class Setup implements FloorPositions {
 	floor f1;
 	Station picker ;
 	Station packager ;
@@ -9,13 +10,15 @@ public class Setup {
 	m_belt f_belt ; 
 	ArrayList<Shelf> SA ;
 	ArrayList<route> Routes;
-	public Setup(){
+	public Setup(){	
+	}
+	public void Initialize(){
 		f1 = new floor();
 		picker = new Station(1,10);
 		packager =new Station(1,1);
 		charge = new ChargingStation(2,1);
 		f_belt = new m_belt();
-		SA = new ArrayList<ShelfArea>(); 
+		SA = new ArrayList<Shelf>(); 
 		Routes = new ArrayList<route>();
 		ArrayList<Integer> index = new ArrayList<Integer>();
 		ArrayList<Integer> routesindex = new ArrayList<Integer>();
@@ -24,9 +27,15 @@ public class Setup {
 		index.add(7);
 		index.add(10);
 		for(int i = 0; i< index.size();i++){
-			int y = index.get(i);
-			Shelf temp = new Shelf(4,y,i);
-			SA.add(temp);
+			for(int j = 0; j<7;j++){
+				int y = index.get(i);
+				Shelf temp = new Shelf(4+j,y,i);
+				SA.add(temp);
+			}
 		}
+	}
+	public HashMap<String, ArrayList<Point>> getAllPositions(){
+		HashMap<String, ArrayList<Point>> m_map = new HashMap<String, ArrayList<Point>>();
+		return m_map;
 	}
 }

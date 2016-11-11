@@ -1,6 +1,6 @@
 package Floor;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Matt on 11/10/2016.
@@ -16,6 +16,7 @@ public interface FloorPositions {
      *
      *  Feel free to change the Key/Value to suit your needs
      */
-    Map<Integer, List<Object>> getPositions();
-
+    HashMap<String, ArrayList<Point>> getAllPositions();
+    void Initialize();
+    // 
 }

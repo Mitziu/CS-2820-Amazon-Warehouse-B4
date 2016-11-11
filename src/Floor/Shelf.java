@@ -1,5 +1,4 @@
 package Floor;
-import java.util.Map;
 public class Shelf extends Thing{
 	public String name;
 	//public  HashMap<Integer, String> items;

@@ -1,10 +1,9 @@
 package Floor;
-import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Created by Matt on 11/10/2016.
- * @author Matt
+ * @author Matt, Zuoyuan Zhao
  * Please implement this so that the visualizer can see your stuff.
  */
 public interface FloorPositions {
@@ -16,6 +15,11 @@ public interface FloorPositions {
      *
      *  Feel free to change the Key/Value to suit your needs
      */
-    Map<Integer, List<Object>> getPositions();
-
+    // 1. run Initialize();
+     //2. run getAllPositions, this will return a map that contains all pairs of (name, position). Name is a string and position will be a point.
+    
+    void Initialize();
+    HashMap<String, Point> getAllPositions();
+   
+    // 
 }

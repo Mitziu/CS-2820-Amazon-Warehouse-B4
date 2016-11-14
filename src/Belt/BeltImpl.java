@@ -87,7 +87,7 @@ public class BeltImpl implements Observer, Belt
 	}
 
 	/**
-	 * Private class for belt to contain items
+	 * Private class for belt to contain items inside bin
 	 * Author: Mitziu
 	 */
 	private class Bin {

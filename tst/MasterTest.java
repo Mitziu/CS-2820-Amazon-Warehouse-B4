@@ -28,11 +28,17 @@ public class MasterTest {
         clock.addObserver(master);
     }
 
+    /**
+     * Verifies that Master loads the upcoming orders from the CSV file
+     */
     @Test
     public void masterLoadOrders() {
         Assert.assertTrue(!master.getUpcomingOrders().isEmpty());
     }
 
+    /**
+     * Verifies that the mock orders loaded from the CSV file match was was expected
+     */
     @Test
     public void loadCorrectValues() {
         Queue<UpcomingOrder> upcomingOrders = master.getUpcomingOrders();
@@ -42,6 +48,9 @@ public class MasterTest {
         }
     }
 
+    /**
+     * Verifies that time inside Master is working properly
+     */
     @Test
     public void tickAdvancesTime() {
         clock.tick();
@@ -49,6 +58,9 @@ public class MasterTest {
         Assert.assertTrue(master.getTime() == 0);
     }
 
+    /**
+     * Verifies that the order is sent to order when the time of arrival has come
+     */
     @Test
     public void orderGoesToProcess() {
         clock.tick();

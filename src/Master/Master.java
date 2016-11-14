@@ -24,6 +24,12 @@ public class Master implements Observer {
 
     private OrderingSystemInterface orderSystem;
 
+    /**
+     * Update method from Oberser. update is called everytime the Clock class ticks\
+     * @author Mitziu
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         //Initializes the timer
@@ -53,6 +59,7 @@ public class Master implements Observer {
 
     /**
      * Loads the Simulated Ordering.OrderingSystemInterface from the upcomingOrders CSV file
+     * @author Mitziu
      */
     private void loadOrderQueue() {
 
@@ -75,6 +82,7 @@ public class Master implements Observer {
 
     /**
      * Adds an order to the queue
+     * @author Mitziu
      * @param orderInformation Information per order
      */
     private void loadCurrentOrder(String orderInformation) {

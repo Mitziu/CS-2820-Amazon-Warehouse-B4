@@ -10,18 +10,20 @@ import Floor.*;
  * Note: this will be refactored to work better with observer
  */
 public class VisSubscriber implements Observer {
+    boolean waitForTimer = false;
     private long timeDiff;
     private long time;
-    Visualizer myVis; //possible code smell? (contains visualizer, visualizer contains this)
+    Visualizer visualizer;
 
-    public VisSubscriber (Visualizer v) {
-        myVis = v;
+    public VisSubscriber () {
+        visualizer = new Visualizer();
     }
 
     @Override
     public void update (Observable o, Object arg) {
         if (timeDiff == 0) {
             time = System.currentTimeMillis();
+            //fill in to put timer here--if no new updates come, then will autoupdate after 1.01 seconds
         } else {
             time = System.currentTimeMillis() - time;
             timeDiff += time;
@@ -39,6 +41,6 @@ public class VisSubscriber implements Observer {
         dumVals.put("Bender_Is_The_Greatest_Robot_Ever", new Point(3, 5));
         dumVals.put("A_Shelf", new Point(3, 6));
         dumVals.put("Any_Other_Object_In_Warehouse", new Point(1,1));
-        myVis.updateFloor(dumVals);
+        visualizer.updateFloor(dumVals);
     }
 }

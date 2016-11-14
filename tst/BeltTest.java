@@ -32,7 +32,6 @@ public class BeltTest
             List<Integer> itemsOnBeltList = new ArrayList<>();
             itemsOnBeltList.add(orderId);
 
-
             assertEquals(itemsOnBeltList, itemsOnBelt2List);
         }
 
@@ -40,9 +39,7 @@ public class BeltTest
     public void Beltpackager()//need review by master
     {
         BeltTest test01Belt = new BeltTest();
-
         String result = test01Belt.onSite_Pick(1, 10);
-
         System.out.println("and tested");//onSite_Pick should print  "order at picke station"
 
         assertEquals("order at picker station", result);

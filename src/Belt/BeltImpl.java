@@ -44,7 +44,7 @@ public class BeltImpl implements Observer, Belt
 	}
 	
 	//receives item from Robot, and sends to belt to reach packer
-	public void pack(Integer orderID)  //receive from picker and send to packer
+	public void pack(Integer orderID)
 	{
 		pickerQueue.getFirst().addItem(orderID);
 	}
@@ -59,12 +59,14 @@ public class BeltImpl implements Observer, Belt
 		packerQueue.getFirst().addAllItems(bin);
 	}
 	
-	public void onSite_Pick(int x, int y)
+	public void onSite_Pick(int x, int y)// happens when robot reaches picker station
 	{
 		Integer orderID = 0;
 		if(x_loc_pick ==  x && y_loc_pick ==  y)
 		{
 			pack(orderID);
+            //print msg : "order at picker station"
+            System.out.println("order at picker station");
 		}
 	}
 	
@@ -87,11 +89,11 @@ public class BeltImpl implements Observer, Belt
 		private List<Integer> itemsInside;
 
 		public Bin() {
-			itemsInside = new ArrayList<>();
+			itemsInside = new ArrayList<>();// array that has items identified by order ID
 		}
 
 		public void addItem(Integer orderID) {
-			itemsInside.add(orderID);
+			itemsInside.add(orderID);//include items inside array "itemsInside"
 		}
 
 		public List<Integer> getAllItems() {
@@ -102,5 +104,28 @@ public class BeltImpl implements Observer, Belt
 			itemsInside.addAll(itemsToAdd.getAllItems());
 		}
 	}
+
+    private class Belt2
+    {
+        private List<Integer> itemsOnBeltList;
+        public Belt2()
+        {
+            itemsOnBeltList = new ArrayList<>();// creation of array that has items identified by order ID
+        }
+
+        private void addItemBelt(Integer orderID)
+        {
+            itemsOnBeltList.add(orderID);//include items inside array "itemsOnBeltList"
+        }
+        public List<Integer> getAllItems()
+        {
+            return itemsOnBeltList;//retrieve all items present on Belt
+        }
+        private void removeItemBelt(Integer orderID)
+        {
+            itemsOnBeltList.remove(orderID);
+        }
+
+    }
 
 }

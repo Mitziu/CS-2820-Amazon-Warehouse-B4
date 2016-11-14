@@ -48,6 +48,11 @@ public class BeltImpl implements Observer, Belt
 	{
 		pickerQueue.getFirst().addItem(orderID);
 	}
+
+	public List<Integer> reportContent()
+	{
+		return pickerQueue.getFirst().getAllItems();
+	}
 	
 	//ships out of warehouse   and store in list of shipped orders
 	private void ship(Bin bin)
@@ -59,15 +64,16 @@ public class BeltImpl implements Observer, Belt
 		packerQueue.getFirst().addAllItems(bin);
 	}
 	
-	public void onSite_Pick(int x, int y)// happens when robot reaches picker station
+	public String onSite_Pick(int x, int y)// happens when robot reaches picker station
 	{
 		Integer orderID = 0;
 		if(x_loc_pick ==  x && y_loc_pick ==  y)
 		{
 			pack(orderID);
             //print msg : "order at picker station"
-            System.out.println("order at picker station");
+            return ("order at picker station");
 		}
+		return ("NOT THERE YET");
 	}
 	
 	@Override

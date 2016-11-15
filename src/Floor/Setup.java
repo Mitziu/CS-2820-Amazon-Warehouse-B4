@@ -35,10 +35,6 @@ public class Setup implements FloorPositions {
 				SA.add(temp);
 			}
 		}
-		Shelf temp = new Shelf(2,1,10);
-		SA.add(temp);
-		temp = new Shelf(3,1,20);
-		SA.add(temp);
 		route r_temp = new route(2,1,2,1,1);
 		Routes.add(r_temp);
 		r_temp = new route(2,2,9,1,2);
@@ -68,8 +64,17 @@ public class Setup implements FloorPositions {
 	public ArrayList<route> getRoutes(){
 		return Routes;
 	}
+	public Station getPicker(){
+		return picker;
+	}
+	public Station GetPackager(){
+		return packager;
+	} 
 	public ArrayList<Robots> getRobots(){
 		return RB;
+	}
+	public ChargingStation getChargingStation(){
+		return charge;
 	}
 	public m_belt getBelt(){
 		return f_belt;

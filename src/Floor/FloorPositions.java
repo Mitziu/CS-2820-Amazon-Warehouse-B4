@@ -16,14 +16,18 @@ public interface FloorPositions {
      *
      *  Feel free to change the Key/Value to suit your needs
      */
+	//0. create the object
     // 1. run Initialize();
-     //2. run getAllPositions, this will return a map that contains all pairs of (name, position). Name is a string and position will be a point.
-    
-    void Initialize();
+     //2. run others;
+	void Initialize();
     HashMap<String, Point> getAllPositions();
     ArrayList<Shelf> getShelves();
     ArrayList<route> getRoutes();
     ArrayList<Point> RouteFinding(Point target, Point RobotLoc);
-   
+    ArrayList<Robots> getRobots(); 
+    m_belt getBelt();
+    Station getPicker();
+    Station GetPackager();
+    ChargingStation getChargingStation();
     // 
 }

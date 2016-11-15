@@ -3,6 +3,7 @@ package Ordering;
 
 import Ordering.OrderInterface;
 import Belt.Belt;
+import Inventory.Inventory;
 import Belt.BeltImpl;
 
 //Need import statement for inventory when it is fixed
@@ -77,7 +78,7 @@ class OrderingSystem implements OrderInterface {
 	//Lets you add order with just Items wanted and address, creates OrderID and makes key with it
 	//Check with inventory class to make sure there is enough item in stock
 	public Boolean placeOrder(Map<Integer,Integer> newItemList, String newAddress){
-		boolean hasenough;
+		boolean hasenough = true;
 		for (Integer key : newItemList.keySet()){
 			if(this.inventory.Get_Item_Qty(key) < newItemList.get(key)){
 				hasenough = false;

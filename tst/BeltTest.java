@@ -3,8 +3,9 @@
  */
 import Belt.BeltImpl;
 import org.junit.Assert;
-        import org.junit.Before;
-        import org.junit.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,38 +13,28 @@ import java.util.List;
 
 public class BeltTest
 {
-
     @Test
     public void BeltPick()//insert robot location to verify it is at picker station
     {
         BeltImpl test01Belt = new BeltImpl(10,10);
 
-        String result = test01Belt.onSite_Pick(1, 10);
+        String result = test01Belt.onSite_Pick(0, 0);
 
-        System.out.println("on site and tested");//onSite_Pick should print  "order at picke station"
+        System.out.println("on site and tested");//onSite_Pick should print  "order at picker station"
 
-        Assert.assertEquals("order at picker station", result);
+        Assert.assertTrue(result.equals("order at picker station"));
     }
         @Test
         public void testBelt2() {
             Integer orderId = 1;
             BeltImpl Test02 = new BeltImpl(1,1);
             Test02.pack(orderId);
-            List<Integer> itemsOnBelt2List = Test02.reportContent();
-            List<Integer> itemsOnBeltList = new ArrayList<>();
-            itemsOnBeltList.add(orderId);
+            List<Integer> actualItemsOnBeltList = Test02.reportContent();
+            List<Integer> expectedItemsOnBeltList = new ArrayList<>();
+            expectedItemsOnBeltList.add(orderId);
 
-            Assert.assertEquals(itemsOnBeltList, itemsOnBelt2List);
+            Assert.assertTrue(actualItemsOnBeltList.size()==expectedItemsOnBeltList.size());
+
+            Assert.assertTrue(actualItemsOnBeltList.get(0) == expectedItemsOnBeltList.get(0));
         }
-    /*     //commented out by Matt to make things work. Suggestion: test01Belt should be a BeltImpl, not BeltTest
-    @Test
-    public void Beltpackager()//need review by master
-    {
-        BeltTest test01Belt = new BeltTest();
-        String result = test01Belt.onSite_Pick(1, 10);
-        System.out.println("and tested");//onSite_Pick should print  "order at picke station"
-
-        Assert.assertEquals("order at picker station", result);
-    }
-    */
 }

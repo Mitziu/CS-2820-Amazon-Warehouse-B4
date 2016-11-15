@@ -155,5 +155,49 @@ public class Inventory_Test {
 		
 		assertEquals(0, Inv.Get_Item_Qty(75450));
 	}
+	
+	@Test
+	public void testInitializer() throws ParseException, IOException{
+		Inv.Inventory_Intialize("Inventory_CSV");
+		assertEquals("Cat Food", Inv.Get_Item_Name(7));
+		assertEquals("Poster1", Inv.Get_Item_Name(9));
+		assertEquals(7, Inv.Get_Inventory_ID("Cat Food"));
+		assertEquals(1, Inv.Get_Inventory_ID("Baseball"));
+		Inv.Put_Container(6, 11, 100);
+		Inv.Put_Container(10, 22, 200);
+		assertEquals(100, Inv.Get_Item_Qty(6));
+		assertEquals(200, Inv.Get_Item_Qty(10));
+		assertEquals(11, Inv.Contained_In(6).get(0).intValue());
+		assertEquals(22, Inv.Contained_In(10).get(0).intValue());
+		Inv.Take_Container(6, 11, 50);
+		Inv.Take_Container(10, 22, 100);
+		assertEquals(50, Inv.Get_Item_Qty(6));
+		assertEquals(100, Inv.Get_Item_Qty(10));
+		assertEquals(11, Inv.Contained_In(6).get(0).intValue());
+		assertEquals(22, Inv.Contained_In(10).get(0).intValue());
+		Inv.Take_Container(6, 11, 50);
+		Inv.Take_Container(10, 22, 100);
+		assertEquals(0, Inv.Get_Item_Qty(6));
+		assertEquals(0, Inv.Get_Item_Qty(10));
+		assertEquals(0, Inv.Contained_In(6).get(0).intValue());
+		assertEquals(0, Inv.Contained_In(10).get(0).intValue());
+	}
+	@Test
+	public void testContainer_Count() throws ParseException, IOException{
+		Inv.Inventory_Intialize("Inventory_CSV");
+		Inv.Put_Container(6, 11, 100);
+		Inv.Put_Container(6, 22, 200);
+		assertEquals(100, Inv.Container_Count(6, 11));
+		assertEquals(200, Inv.Container_Count(6, 22));
+		assertEquals(300, Inv.Get_Item_Qty(6));
+		Inv.Take_Container(6, 11, 50);
+		Inv.Take_Container(6, 22, 100);
+		assertEquals(50, Inv.Container_Count(6, 11));
+		assertEquals(100, Inv.Container_Count(6, 22));
+		assertEquals(150, Inv.Get_Item_Qty(6));
+		Inv.Take_Container(6, 22, 100);
+		assertEquals(0, Inv.Container_Count(6, 22));
+	}
+
 }
 

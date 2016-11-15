@@ -1,4 +1,8 @@
 package Inventory;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 /**
@@ -183,5 +187,38 @@ public class Inventory{
 		LinkedList<Integer> RetList = new LinkedList<Integer>();
 		RetList.addAll(Tempset);
 		return RetList;
+	}
+	
+	/**
+	 * Fills the Main_Inventory Hashmap with data from a CSV file
+	 * @param Filename Name of the CSV file to be read
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public void Inventory_Intialize(String Filename) throws ParseException, IOException{
+		 BufferedReader br = new BufferedReader(new FileReader(Filename));
+		    String line =  null;
+
+		    while((line=br.readLine())!=null){
+		            String arr[] = line.split(",");
+		            Add_Inventory(Integer.valueOf(arr[0]), arr[1]);
+		    }
+	}
+	
+	/**
+	 * Returns the Number of Items in a specific Container
+	 * @param Item_ID ID number for the Item
+	 * @param Container_ID	ID number for the Container
+	 * @return Number of Items in that container
+	 */
+	public int Container_Count(int Item_ID, int Container_ID){
+		if (Main_Inventory.get(Item_ID).Containers.get(Container_ID) != null){
+			int count = Main_Inventory.get(Item_ID).Containers.get(Container_ID);
+			return count;
+		}
+		else{
+			int count = 0;
+			return count;
+		}
 	}
 }	

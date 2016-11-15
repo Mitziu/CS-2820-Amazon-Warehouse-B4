@@ -1,5 +1,11 @@
 package Ordering;
 
+
+import Ordering.OrderInterface;
+import Belt.Belt;
+import Belt.BeltImpl;
+
+//Need import statement for inventory when it is fixed
 import java.util.*;
 
 //Max Riley Class Ordering.Order
@@ -115,7 +121,7 @@ class OrderingSystem implements OrderInterface {
 	
 	//Tells belt that order is ready to move on belt
 	public void startBelt(Integer orderID){
-		Belt.pack(orderID);
+		//belt.pack(orderID);
 		
 	}
 	

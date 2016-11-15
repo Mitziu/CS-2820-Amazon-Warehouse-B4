@@ -13,11 +13,13 @@ public class VisSubscriber implements Observer {
     private long timeDiff;
     private long time;
     Visualizer visualizer;
+    FloorPositions floorPositions;
 
     /**
      * @author Matt
      */
-    public VisSubscriber () {
+    public VisSubscriber (FloorPositions floorPositions) {
+        this.floorPositions = floorPositions;
         visualizer = new Visualizer();
     }
 
@@ -27,7 +29,8 @@ public class VisSubscriber implements Observer {
      */
     @Override
     public void update (Observable o, Object arg) {
-        this.givePositions((Map)arg);
+        //TODO: Get latest map from Floor
+        givePositions(floorPositions.getAllPositions());
     }
 
     /**

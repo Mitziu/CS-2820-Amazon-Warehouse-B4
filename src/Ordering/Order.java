@@ -121,7 +121,7 @@ class OrderingSystem implements OrderInterface {
 	
 	//Tells belt that order is ready to move on belt
 	public void startBelt(Integer orderID){
-		//belt.pack(orderID);
+		belt.pack(orderID);
 		
 	}
 	

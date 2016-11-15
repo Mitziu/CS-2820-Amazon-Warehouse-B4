@@ -1,4 +1,5 @@
 package Floor;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -20,6 +21,9 @@ public interface FloorPositions {
     
     void Initialize();
     HashMap<String, Point> getAllPositions();
+    ArrayList<Shelf> getShelves();
+    ArrayList<route> getRoutes();
+    ArrayList<Point> RouteFinding(Point target, Point RobotLoc);
    
     // 
 }

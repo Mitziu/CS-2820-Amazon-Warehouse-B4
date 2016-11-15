@@ -9,6 +9,7 @@ public class Setup implements FloorPositions {
 	ChargingStation charge ;
 	m_belt f_belt ; 
 	ArrayList<Shelf> SA ;
+	ArrayList<Robots> RB ;
 	ArrayList<route> Routes;
 	public Setup(){	
 	}
@@ -18,10 +19,10 @@ public class Setup implements FloorPositions {
 		packager =new Station(1,1);
 		charge = new ChargingStation(2,1);
 		f_belt = new m_belt();
+		RB = new ArrayList<Robots>();
 		SA = new ArrayList<Shelf>(); 
 		Routes = new ArrayList<route>();
 		ArrayList<Integer> index = new ArrayList<Integer>();
-		ArrayList<Integer> routesindex = new ArrayList<Integer>();
 		index.add(1);
 		index.add(4);
 		index.add(7);
@@ -34,6 +35,44 @@ public class Setup implements FloorPositions {
 				SA.add(temp);
 			}
 		}
+		Shelf temp = new Shelf(2,1,10);
+		SA.add(temp);
+		temp = new Shelf(3,1,20);
+		SA.add(temp);
+		route r_temp = new route(2,1,2,1,1);
+		Routes.add(r_temp);
+		r_temp = new route(2,2,9,1,2);
+		Routes.add(r_temp);
+		r_temp = new route(2,3,9,1,3);
+		Routes.add(r_temp);
+		r_temp = new route(2,4,2,1,4);
+		Routes.add(r_temp);
+		r_temp = new route(2,5,9,1,5);
+		Routes.add(r_temp);
+		r_temp = new route(2,6,9,1,6);
+		Routes.add(r_temp);
+		r_temp = new route(2,7,2,1,7);
+		Routes.add(r_temp);
+		r_temp = new route(2,8,9,1,8);
+		Routes.add(r_temp);
+		r_temp = new route(2,9,9,1,9);
+		Routes.add(r_temp);
+		Robots r1 = new Robots(2,10,1);
+		Robots r2 = new Robots(3,10,1);
+		RB.add(r1);
+		RB.add(r2);
+	}
+	public ArrayList<Shelf> getShelves(){
+		return SA;
+	}
+	public ArrayList<route> getRoutes(){
+		return Routes;
+	}
+	public ArrayList<Robots> getRobots(){
+		return RB;
+	}
+	public m_belt getBelt(){
+		return f_belt;
 	}
 	public HashMap<String, Point> getAllPositions(){
 		HashMap<String, Point> m_map = new HashMap<String, Point>();
@@ -52,5 +91,71 @@ public class Setup implements FloorPositions {
                                                   m_map.put(SA.get(i).name, f) ;
                                          }
 		return m_map;
+	}
+	public ArrayList<Point> RouteFinding(Point target, Point RobotLoc){
+		ArrayList<route> r = Routes;
+		ArrayList<Point> allpoint = new ArrayList<Point>();
+		ArrayList<Point> temp = new ArrayList<Point>();
+		ArrayList<Point> finalPoints= new ArrayList<Point>();
+		HashMap<Point, Integer> m_map = new HashMap<Point, Integer>();
+		for(int i = 0; i< r.size();i++){
+			temp = r.get(i).range();
+			for(int j = 0; j< temp.size();j++){
+				allpoint.add(temp.get(i));
+			}
+		}
+		for(int i = 0; i< allpoint.size();i++){
+			m_map.put(allpoint.get(i),1);
+		}
+		finalPoints = pathTraveling(RobotLoc,target,m_map);
+		return finalPoints;
+	}
+	public ArrayList<Point> pathTraveling(Point s, Point e,HashMap<Point, Integer> m_map){
+		ArrayList<Point> result = new ArrayList<Point>();
+		if(s.GetX() == e.GetX()&&s.GetY() == e.GetY()){
+			return result;
+		}else{
+			Point temp = new Point(s.GetX()+1,s.GetY());
+			if(m_map.containsKey(temp)){
+				result.add(temp);
+				ArrayList<Point> tempAL = new ArrayList<Point>();
+				tempAL  = pathTraveling(temp,e,m_map);
+				for(int i = 0;i<tempAL.size();i++){
+					result.add(tempAL.get(i));
+				}
+				return result;
+			}
+			temp = new Point(s.GetX()-1,s.GetY());
+			if(m_map.containsKey(temp)){
+				result.add(temp);
+				ArrayList<Point> tempAL = new ArrayList<Point>();
+				tempAL  = pathTraveling(temp,e,m_map);
+				for(int i = 0;i<tempAL.size();i++){
+					result.add(tempAL.get(i));
+				}
+				return result;
+			}
+			temp = new Point(s.GetX(),s.GetY()-1);
+			if(m_map.containsKey(temp)){
+				result.add(temp);
+				ArrayList<Point> tempAL = new ArrayList<Point>();
+				tempAL  = pathTraveling(temp,e,m_map);
+				for(int i = 0;i<tempAL.size();i++){
+					result.add(tempAL.get(i));
+				}
+				return result;
+			}
+			temp = new Point(s.GetX(),s.GetY()+1);
+			if(m_map.containsKey(temp)){
+				result.add(temp);
+				ArrayList<Point> tempAL = new ArrayList<Point>();
+				tempAL  = pathTraveling(temp,e,m_map);
+				for(int i = 0;i<tempAL.size();i++){
+					result.add(tempAL.get(i));
+				}
+				return result;
+			}
+		}
+		return null;
 	}
 }

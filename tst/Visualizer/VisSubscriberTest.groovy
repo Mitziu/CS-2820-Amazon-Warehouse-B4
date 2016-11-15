@@ -34,7 +34,7 @@ class VisSubscriberTest extends GroovyTestCase {
      * Ensure that visualizer gets the new map of floor
      */
     void testUpdate() {
-        clk.notifyObservers(dumVals);
+        clk.tick(dumVals);
         Assert.assertEquals(dumVals, Visualizer.floorMap);
     }
 

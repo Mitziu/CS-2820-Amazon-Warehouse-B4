@@ -1,3 +1,5 @@
+import Inventory.Inventory_Interface;
+import Inventory.Inventory;
 import org.junit.Test;
 import org.junit.Ignore;
 

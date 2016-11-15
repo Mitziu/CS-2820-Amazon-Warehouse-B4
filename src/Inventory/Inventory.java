@@ -59,7 +59,7 @@ public class Inventory{
 	
 	/**
 	 * Returns how many of a particular item are stocked in the warehouse
-	 * @param int Item ID number
+	 * @param ID Item ID number
 	 * @return int Amount of Item currently in stock
 	 */
 	public int Get_Item_Qty(int ID){
@@ -68,7 +68,7 @@ public class Inventory{
 
 	/**
 	 * Returns the name of the item when given the item ID number
-	 * @param int Item ID number
+	 * @param ID Item ID number
 	 * @return String Item's name
 	 * @author William Anderson
 	 */
@@ -78,7 +78,7 @@ public class Inventory{
 
 	/**
 	 * Returns the Item's ID number given the Item name
-	 * @param String Name of Item
+	 * @param name Name of Item
 	 * @return int Item ID number
 	 * @author William Anderson
 	 */
@@ -90,7 +90,7 @@ public class Inventory{
 	 * Returns a LinkedList containg all of the ID numbers of the containers that are currently
 	 * holding this Item.  If no containers currently hold this item then it returns a single 
 	 * element list with the value 0 in it.
-	 * @param int Item ID number
+	 * @param ID Item ID number
  	 * @return LinkedList of Container ID numbers
  	 * @author William Anderson
 	 */
@@ -111,8 +111,8 @@ public class Inventory{
 
 	/**
 	 * Adds an Item to the Main_Inventory HashMap.
-	 * @param int Item ID number
-	 * @param Item Name
+	 * @param ID Item ID number
+	 * @param Name Name
 	 * @author William Anderson
 	 */
 	//Currently this assumes that no one will try to add the same Item or Item ID number twice.
@@ -125,9 +125,9 @@ public class Inventory{
 	/**
 	 * Adds an Item to the container by either adding that container and the amount contained to the 
 	 * item's HashMap of containers or updates the value for that container in the HashMap
-	 * @param int Item ID number
-	 * @param int Container ID number
-	 * @param int Quantity to be added
+	 * @param Item_ID Item ID number
+	 * @param Container_ID Container ID number
+	 * @param Qty Quantity to be added
 	 * @author William Anderson
 	 */
 	public void Put_Container(int Item_ID, int Container_ID, int Qty){
@@ -150,9 +150,9 @@ public class Inventory{
 	/**
 	 * Takes an item out of a container by editing the quantity for that container in the Item's HashMap
 	 * Also it will remove the container from the item's HashMap if the amount in the container drops to 0
-	 * @param int Item ID number
-	 * @param int Container ID number
-	 * @param int Quantity to be taken
+	 * @param Item_ID Item ID number
+	 * @param Container_ID Container ID number
+	 * @param Qty Quantity to be taken
 	 * @author William Anderson
 	 */
 	public void Take_Container(int Item_ID, int Container_ID, int Qty){

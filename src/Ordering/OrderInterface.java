@@ -25,7 +25,7 @@ public interface OrderInterface{
     
     //Check to see if item is in stock
     public boolean isItemInStock(Integer itemid);
-    
-    
+
+    public Boolean placeOrder(Map<Integer, Integer> items, String address);
 }
 

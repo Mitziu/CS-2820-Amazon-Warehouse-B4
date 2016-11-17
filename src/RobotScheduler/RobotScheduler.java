@@ -1,3 +1,5 @@
+package RobotScheduler;
+
 import java.util.*;
 
 class Location{

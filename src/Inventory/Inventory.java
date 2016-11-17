@@ -1,5 +1,6 @@
 package Inventory;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
@@ -192,17 +193,16 @@ public class Inventory{
 	/**
 	 * Fills the Main_Inventory Hashmap with data from a CSV file
 	 * @param Filename Name of the CSV file to be read
-	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public void Inventory_Intialize(String Filename) throws ParseException, IOException{
-		 BufferedReader br = new BufferedReader(new FileReader(Filename));
-		    String line =  null;
+	public void Inventory_Intialize(String Filename) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(Filename));
+		String line =  null;
 
-		    while((line=br.readLine())!=null){
-		            String arr[] = line.split(",");
-		            Add_Inventory(Integer.valueOf(arr[0]), arr[1]);
-		    }
+		while((line=br.readLine())!=null){
+				String arr[] = line.split(",");
+				Add_Inventory(Integer.valueOf(arr[0]), arr[1]);
+		}
 	}
 	
 	/**

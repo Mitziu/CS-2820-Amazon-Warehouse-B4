@@ -1,5 +1,6 @@
 package Floor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,8 +25,49 @@ public class MockFloor implements FloorPositions{
         floorMap.put("Any_Other_Object_In_Warehouse", new Point(1,1));
     }
 
+
     @Override
     public HashMap<String, Point> getAllPositions() {
         return floorMap;
+    }
+
+    @Override
+    public ArrayList<Shelf> getShelves() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<route> getRoutes() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Point> RouteFinding(Point target, Point RobotLoc) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Robots> getRobots() {
+        return null;
+    }
+
+    @Override
+    public m_belt getBelt() {
+        return null;
+    }
+
+    @Override
+    public Station getPicker() {
+        return null;
+    }
+
+    @Override
+    public Station GetPackager() {
+        return null;
+    }
+
+    @Override
+    public ChargingStation getChargingStation() {
+        return null;
     }
 }

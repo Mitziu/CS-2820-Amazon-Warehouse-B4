@@ -1,11 +1,10 @@
-import Inventory.Inventory_Interface;
 import Inventory.Inventory;
 import org.junit.Test;
-import org.junit.Ignore;
 
 import static org.junit.Assert.*;
 
-import java.util.*;
+import java.io.IOException;
+import java.text.ParseException;
 
 public class Inventory_Test {
 	
@@ -157,7 +156,7 @@ public class Inventory_Test {
 	}
 	
 	@Test
-	public void testInitializer() throws ParseException, IOException{
+	public void testInitializer() throws ParseException, IOException {
 		Inv.Inventory_Intialize("Inventory_CSV");
 		assertEquals("Cat Food", Inv.Get_Item_Name(7));
 		assertEquals("Poster1", Inv.Get_Item_Name(9));

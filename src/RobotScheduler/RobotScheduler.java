@@ -71,7 +71,7 @@ class Robot {
 	public void setCharged() {charged = false;}
 }
 
-class RobotScheduler {
+public class RobotScheduler {
 	String name;
 	ArrayList<Location> locationList = new ArrayList<Location>();
 	

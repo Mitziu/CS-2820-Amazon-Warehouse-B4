@@ -5,6 +5,7 @@ import Ordering.OrderInterface;
 import Belt.Belt;
 import Inventory.Inventory;
 import Belt.BeltImpl;
+import RobotScheduler.RobotScheduler;
 
 //Need import statement for inventory when it is fixed
 import java.util.*;
@@ -67,12 +68,14 @@ class OrderingSystem implements OrderInterface {
 	public Map<Integer, Order> OngoingOrders;
 	public Inventory inventory;
 	public BeltImpl belt;
+	public RobotScheduler robot;
 	
 	
-	public void OrderingSystem(Inventory inventory, BeltImpl belt){
+	public void OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot){
 		this.OngoingOrders = new HashMap<>();
 		this.inventory = inventory;
 		this.belt = belt;
+		this.robot = robot;
 	}
 	
 	//Lets you add order with just Items wanted and address, creates OrderID and makes key with it
@@ -102,7 +105,7 @@ class OrderingSystem implements OrderInterface {
 	
 	
 	//Need to work with robot to send it item number or shelf location to have it pick up items
-	public void getItem(int itemid, int shelfLocation){
+	public void getItem(Order order){
 		
 	}
 	//Need to work with floor to get location of item

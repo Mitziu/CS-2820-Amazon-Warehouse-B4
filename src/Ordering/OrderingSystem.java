@@ -5,10 +5,12 @@ package Ordering;
 import Belt.BeltImpl;
 import Inventory.Inventory;
 import RobotScheduler.RobotScheduler;
+import Belt.Picker;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.*;
 
 //Need class to be able to pass floor, inventory, belt, and robot objects
 //Use interfaces to be able to test
@@ -19,13 +21,17 @@ public class OrderingSystem implements OrderInterface {
     public Inventory inventory;
     public BeltImpl belt;
     public RobotScheduler robot;
+	public Picker picker;
+	public ArrayList<Order> orderHistory;
 
 
-    public void OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot){
+    public void OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;
         this.robot = robot;
+		this.picker = picker;
+		this.orderHistory = new ArrayList<>();
     }
 
     //Lets you add order with just Items wanted and address, creates OrderID and makes key with it
@@ -41,6 +47,10 @@ public class OrderingSystem implements OrderInterface {
             Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
             Order newOrder = new Order(uniqueID, newItemList, newAddress);
             this.OngoingOrders.put(uniqueID, newOrder);
+			//Sends order to Picker
+			picker.newOrder(newOrder);
+			//Sends order to Robot
+			getItem(newOrder);
 
             //need a method to send information to robot and say "hey pick up these things"
             //Can send items and quantities individually or send the entire order
@@ -77,15 +87,33 @@ public class OrderingSystem implements OrderInterface {
 
     //Tells belt that order is ready to move on belt
     //(11/17) should I send an integer of orderID, or just an order?
-    public void startBelt(Integer orderID){
+	//(11/17) commented out because picker will now tell belt to start, not orders
+    /*public void startBelt(Integer orderID){
         belt.pack(orderID);
 
-    }
+    }*/
 
 
     //removes item by orderID
     public void finishOrder(Integer OrderID){
+		Order holderOrder = this.OngoingOrders.get(OrderID);
         this.OngoingOrders.remove(OrderID);
+		addToHistory(holderOrder);
     }
+	
+	public void addToHistory(Order order){
+		if( this.orderHistory.size() < 30 ){
+			this.orderHistory.add(order);
+		}
+		else{
+			this.orderHistory.remove(0);
+			this.orderHistory.add(order);
+		}
+	}
+	
+	public ArrayList<Order> getHistory(){
+		return this.orderHistory;
+		
+	}
 
 }

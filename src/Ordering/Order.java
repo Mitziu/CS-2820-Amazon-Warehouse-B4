@@ -108,7 +108,9 @@ class OrderingSystem implements OrderInterface {
 	public void getItem(Order order){
 		
 	}
+	
 	//Need to work with floor to get location of item
+	//(11/17) do I need to even do this anymore?
 	public void getItemLocation(int itemid){
 		
 	}
@@ -124,6 +126,7 @@ class OrderingSystem implements OrderInterface {
 	}
 	
 	//Tells belt that order is ready to move on belt
+	//(11/17) should I send an integer of orderID, or just an order?
 	public void startBelt(Integer orderID){
 		belt.pack(orderID);
 		

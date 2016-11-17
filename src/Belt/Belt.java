@@ -1,5 +1,7 @@
 package Belt;
 
+import java.util.List;
+
 /**
  * Created by Eduardo on 11/10/2016.
  */
@@ -10,5 +12,7 @@ public interface Belt {
      * @param orderID : id of the order or identifier
      */
     public void pack (Integer orderID );
+
+    public List<Integer> getShippedItems();
 
 }

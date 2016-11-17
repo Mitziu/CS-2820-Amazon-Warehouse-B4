@@ -87,6 +87,29 @@ public class BeltImpl implements Observer, Belt
 	}
 
 	/**
+	 * Gets list of shipped orders
+	 * @author Mitziu
+	 * @author Eduardo
+	 * @author Max
+	 * @return
+	 */
+	public List<Integer> getShippedItems() {
+		List<Integer> listToReturn = (List<Integer>) shippedItemIDList.clone();
+		resetShippedList();
+		return listToReturn;
+	}
+
+	/**
+	 * Clears List of shipped Orders
+	 * @author Mitziu
+	 * @author Eduardo
+	 * @author Max
+	 */
+	private void resetShippedList() {
+		shippedItemIDList.clear();
+	}
+
+	/**
 	 * Private class for belt to contain items inside bin
 	 * Author: Mitziu
 	 */

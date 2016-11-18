@@ -11,6 +11,7 @@ public class Setup implements FloorPositions {
 	ArrayList<Shelf> SA ;
 	ArrayList<Robots> RB ;
 	ArrayList<route> Routes;
+                     ArrayList<Point> TotalPath = new ArrayList<Point>();
 	public Setup(){	
 	}
         @Override
@@ -122,70 +123,79 @@ public class Setup implements FloorPositions {
                                                                 String m_str = allpoint.get(i).GetX()+","+allpoint.get(i).GetY();
 			m_map.put(m_str,1);
 		}
-		finalPoints = pathTraveling(RobotLoc,target,m_map);
-		return finalPoints;
+		pathTraveling(RobotLoc,target,m_map);
+		return TotalPath;
 	}
-	public ArrayList<Point> pathTraveling(Point s, Point e,HashMap<String, Integer>  m_map){
-		ArrayList<Point> result = new ArrayList<Point>();
+	public void pathTraveling(Point s, Point e,HashMap<String, Integer>  m_map){
+		
 		if(s.GetX() == e.GetX()-1&&s.GetY() == e.GetY()){
-			return result;
+			return ;
 		}else if(s.GetX() == e.GetX()+1&&s.GetY() == e.GetY()) {
-			return result;
+			return ;
 		} else if(s.GetX() == e.GetX()&&s.GetY() == e.GetY()-1) {
-			return result;
+			return ;
 		}else if(s.GetX() == e.GetX()&&s.GetY() == e.GetY()+1) {
-			return result;
+			return ;
 		}
                 
                                           else{
 			Point tempP = new Point(s.GetX()+1,s.GetY());
                                                                 String str = s.GetX()+1+","+s.GetY();
 			if(m_map.containsKey(str)){
-				result.add(tempP);
-				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(tempP,e,m_map);
-				for(int i = 0;i<tempAL.size();i++){
-					result.add(tempAL.get(i));
-				}
-				return result;
+				TotalPath.add(tempP);
+				//RouteFinding(e,tempP);
+				
 			}
 			Point tempP2 = new Point(s.GetX()-1,s.GetY());
                                                                 str = s.GetX()-1+","+s.GetY();
 			if(m_map.containsKey(str)){
-				result.add(tempP2);
-				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(tempP2,e,m_map);
-				for(int i = 0;i<tempAL.size();i++){
-					result.add(tempAL.get(i));
-				}
-				return result;
+				TotalPath.add(tempP2);
+				//RouteFinding(e,tempP2);
 			}
 			Point tempP3 = new Point(s.GetX(),s.GetY()-1);
                                                                 str = s.GetX()+","+(s.GetY()-1);
 			if(m_map.containsKey(str)){
-				result.add(tempP3);
-				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(tempP3,e,m_map);
-				for(int i = 0;i<tempAL.size();i++){
-					result.add(tempAL.get(i));
-				}
-				return result;
+				TotalPath.add(tempP3);
+				//RouteFinding(e,tempP3);
+				
+				
 			}
                                                                 str = s.GetX()+","+(s.GetY()+1);
 			Point tempP4 = new Point(s.GetX(),s.GetY()+1);
 			if(m_map.containsKey(str)){
-				result.add(tempP4);
-				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(tempP4,e,m_map);
-				for(int i = 0;i<tempAL.size();i++){
-					result.add(tempAL.get(i));
-				}
-				return result;
+				TotalPath.add(tempP4);
+				//RouteFinding(e,tempP4);
+				
+				
 			}
+                        if(e.GetY()==10){ GoVertically(new Point(TotalPath.get(TotalPath.size()-1).GetX(),e.GetY()-1),TotalPath.get(TotalPath.size()-1));}else{
+                                                    GoVertically(new Point(TotalPath.get(TotalPath.size()-1).GetX(),e.GetY()+1),TotalPath.get(TotalPath.size()-1));
+                        }
+                                                    GoHorizontally(TotalPath.get(TotalPath.size()-1),e);
 		}
-		return result;
+		return ;
            }
-                     public static void main(String [ ] args)
+        public void GoVertically(Point e,Point s){
+                        if(s.GetY()!=e.GetY()){
+                            int diff = e.GetY()-s.GetY();
+                            int sign;
+                            if (diff>0){sign  =1;}else{sign = -1;}
+                            Point newP = new Point(s.GetX(),s.GetY()+sign);
+                            TotalPath.add(newP);
+                            GoVertically(e,newP);
+                        }
+           }
+           public void GoHorizontally(Point s,Point e){
+                        if(s.GetX()!=e.GetX()){
+                            int diff = e.GetX()-s.GetX();
+                            int sign;
+                            if (diff>0){sign  =1;}else{sign = -1;}
+                            Point newP = new Point(s.GetX()+sign,s.GetY());
+                            TotalPath.add(newP);
+                            GoHorizontally(newP,e);
+                        }
+           }
+                 /*    public static void main(String [ ] args)
                      {
                                 Setup s = new Setup();
                                 s.Initialize();
@@ -196,5 +206,5 @@ public class Setup implements FloorPositions {
                                 for(int i =0 ;i<path.size();i++){
                                            System.out.println(path.get(i).GetX()+","+path.get(i).GetY());
                                 }
-                     }
+                     }*/
 }

@@ -13,6 +13,7 @@ public class Setup implements FloorPositions {
 	ArrayList<route> Routes;
 	public Setup(){	
 	}
+        @Override
 	public void Initialize(){
 		f1 = new floor();
 		picker = new Station(1,10);
@@ -58,29 +59,37 @@ public class Setup implements FloorPositions {
 		RB.add(r1);
 		RB.add(r2);
 	}
+        @Override
 	public ArrayList<Shelf> getShelves(){
 		return SA;
 	}
+        @Override
 	public ArrayList<route> getRoutes(){
 		return Routes;
 	}
+        @Override
 	public Station getPicker(){
 		return picker;
 	}
+        @Override
 	public Station GetPackager(){
 		return packager;
 	} 
+        @Override
 	public ArrayList<Robots> getRobots(){
 		return RB;
 	}
+        @Override
 	public ChargingStation getChargingStation(){
 		return charge;
 	}
+        @Override
 	public m_belt getBelt(){
 		return f_belt;
 	}
+        @Override
 	public HashMap<String, Point> getAllPositions(){
-		HashMap<String, Point> m_map = new HashMap<String, Point>();
+                                        HashMap<String, Point> m_map = new HashMap<String, Point>();
                                         Point f = new Point(f1.getx(),f1.gety());
                                         m_map.put("floor", f);
                                         f = new Point(picker.getx(),picker.gety());
@@ -102,65 +111,90 @@ public class Setup implements FloorPositions {
 		ArrayList<Point> allpoint = new ArrayList<Point>();
 		ArrayList<Point> temp = new ArrayList<Point>();
 		ArrayList<Point> finalPoints= new ArrayList<Point>();
-		HashMap<Point, Integer> m_map = new HashMap<Point, Integer>();
+		HashMap<String, Integer> m_map = new HashMap<String, Integer>();
 		for(int i = 0; i< r.size();i++){
 			temp = r.get(i).range();
 			for(int j = 0; j< temp.size();j++){
-				allpoint.add(temp.get(i));
+				allpoint.add(temp.get(j));
 			}
 		}
 		for(int i = 0; i< allpoint.size();i++){
-			m_map.put(allpoint.get(i),1);
+                                                                String m_str = allpoint.get(i).GetX()+","+allpoint.get(i).GetY();
+			m_map.put(m_str,1);
 		}
 		finalPoints = pathTraveling(RobotLoc,target,m_map);
 		return finalPoints;
 	}
-	public ArrayList<Point> pathTraveling(Point s, Point e,HashMap<Point, Integer> m_map){
+	public ArrayList<Point> pathTraveling(Point s, Point e,HashMap<String, Integer>  m_map){
 		ArrayList<Point> result = new ArrayList<Point>();
-		if(s.GetX() == e.GetX()&&s.GetY() == e.GetY()){
+		if(s.GetX() == e.GetX()-1&&s.GetY() == e.GetY()){
 			return result;
-		}else{
-			Point temp = new Point(s.GetX()+1,s.GetY());
-			if(m_map.containsKey(temp)){
-				result.add(temp);
+		}else if(s.GetX() == e.GetX()+1&&s.GetY() == e.GetY()) {
+			return result;
+		} else if(s.GetX() == e.GetX()&&s.GetY() == e.GetY()-1) {
+			return result;
+		}else if(s.GetX() == e.GetX()&&s.GetY() == e.GetY()+1) {
+			return result;
+		}
+                
+                                          else{
+			Point tempP = new Point(s.GetX()+1,s.GetY());
+                                                                String str = s.GetX()+1+","+s.GetY();
+			if(m_map.containsKey(str)){
+				result.add(tempP);
 				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(temp,e,m_map);
+				tempAL  = pathTraveling(tempP,e,m_map);
 				for(int i = 0;i<tempAL.size();i++){
 					result.add(tempAL.get(i));
 				}
 				return result;
 			}
-			temp = new Point(s.GetX()-1,s.GetY());
-			if(m_map.containsKey(temp)){
-				result.add(temp);
+			Point tempP2 = new Point(s.GetX()-1,s.GetY());
+                                                                str = s.GetX()-1+","+s.GetY();
+			if(m_map.containsKey(str)){
+				result.add(tempP2);
 				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(temp,e,m_map);
+				tempAL  = pathTraveling(tempP2,e,m_map);
 				for(int i = 0;i<tempAL.size();i++){
 					result.add(tempAL.get(i));
 				}
 				return result;
 			}
-			temp = new Point(s.GetX(),s.GetY()-1);
-			if(m_map.containsKey(temp)){
-				result.add(temp);
+			Point tempP3 = new Point(s.GetX(),s.GetY()-1);
+                                                                str = s.GetX()+","+(s.GetY()-1);
+			if(m_map.containsKey(str)){
+				result.add(tempP3);
 				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(temp,e,m_map);
+				tempAL  = pathTraveling(tempP3,e,m_map);
 				for(int i = 0;i<tempAL.size();i++){
 					result.add(tempAL.get(i));
 				}
 				return result;
 			}
-			temp = new Point(s.GetX(),s.GetY()+1);
-			if(m_map.containsKey(temp)){
-				result.add(temp);
+                                                                str = s.GetX()+","+(s.GetY()+1);
+			Point tempP4 = new Point(s.GetX(),s.GetY()+1);
+			if(m_map.containsKey(str)){
+				result.add(tempP4);
 				ArrayList<Point> tempAL = new ArrayList<Point>();
-				tempAL  = pathTraveling(temp,e,m_map);
+				tempAL  = pathTraveling(tempP4,e,m_map);
 				for(int i = 0;i<tempAL.size();i++){
 					result.add(tempAL.get(i));
 				}
 				return result;
 			}
 		}
-		return null;
-	}
+		return result;
+           }
+                     public static void main(String [ ] args)
+                     {
+                                Setup s = new Setup();
+                                s.Initialize();
+                                Point rob_loc = s.getRobots().get(0).getLoc();
+                                Point target = s.getShelves().get(0).getLoc();
+                                ArrayList<Point> path = new ArrayList<Point>();
+                                path = s.RouteFinding(target,rob_loc);
+                                for(int i =0 ;i<path.size();i++){
+                                           System.out.println(path.get(i).GetX()+","+path.get(i).GetY());
+                                }
+                     }
 }

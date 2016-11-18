@@ -1,6 +1,5 @@
 package Belt;
 
-import Floor.Shelf;
 import Ordering.Order;
 
 /**
@@ -24,7 +23,7 @@ public interface Picker {
      * @author Mitziu
      * @author Max
      * @author Eduardo
-     * @param shelf Shelf has arrived
+     * @param shelf Belt.Shelf has arrived
      */
     public void shelfArrived (Shelf shelf);
     //TODO: Need to create a single shelf class

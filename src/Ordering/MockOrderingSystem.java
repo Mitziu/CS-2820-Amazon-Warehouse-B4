@@ -13,10 +13,6 @@ public class MockOrderingSystem implements OrderInterface {
     }
 
     @Override
-    public void startBelt(Integer orderID) {
-    }
-
-    @Override
     public void getItemLocation(int itemid) {
     }
 

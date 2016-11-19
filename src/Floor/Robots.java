@@ -5,7 +5,8 @@ public class Robots implements Thing{ //contains robots and shelves
 	public  int w= 1;
 	public  int h=1;
 	public  int id;
-	public  ArrayList<String> items;
+	public  Shelf m_shelf;
+                     public boolean Carried= false;
                      public  int x_loc;
 	public  int y_loc;
 	public  int width;
@@ -52,4 +53,11 @@ public class Robots implements Thing{ //contains robots and shelves
                     public Point getLoc(){
 		return new Point(x_loc,y_loc);
 	}
+                    public boolean HasShelf(){
+                                return this.Carried;
+                    }
+                    public void CarryUp(Shelf input){
+                                this.Carried = true;
+                                m_shelf = input;
+                    }
 }

@@ -105,8 +105,17 @@ public class Setup implements FloorPositions {
                                                   f = new Point(SA.get(i).getx(),SA.get(i).gety());
                                                   m_map.put(SA.get(i).name, f) ;
                                          }
+                                         for(int i = 0;i<RB.size();i++){
+                                                  f = new Point(RB.get(i).getx(),RB.get(i).gety());
+                                                  m_map.put("robot"+RB.get(i).id, f) ;
+                                         }
+                                         for(int i = 0;i<Routes.size();i++){
+                                                  f = new Point(Routes.get(i).getx(),Routes.get(i).gety());
+                                                  m_map.put(Routes.get(i).name, f) ;
+                                         }
 		return m_map;
 	}
+        @Override
 	public ArrayList<Point> RouteFinding(Point target, Point RobotLoc){
 		ArrayList<route> r = Routes;
 		ArrayList<Point> allpoint = new ArrayList<Point>();
@@ -197,6 +206,10 @@ public class Setup implements FloorPositions {
                             TotalPath.add(newP);
                             GoHorizontally(newP,e);
                         }
+           }
+        @Override
+           public void clearPath(){
+                             TotalPath = new ArrayList<Point>();
            }
                  /*public static void main(String [ ] args)
                      {

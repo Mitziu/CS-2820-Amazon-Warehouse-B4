@@ -168,6 +168,9 @@ public class Setup implements FloorPositions {
 				
 				
 			}
+                        if(TotalPath.get(TotalPath.size()-1).GetX()==2||TotalPath.get(TotalPath.size()-1).GetX()==3){}else{
+                                                    GoHorizontally(TotalPath.get(TotalPath.size()-1),new Point(2,TotalPath.get(TotalPath.size()-1).GetY()));
+                        }
                         if(e.GetY()==10){ GoVertically(new Point(TotalPath.get(TotalPath.size()-1).GetX(),e.GetY()-1),TotalPath.get(TotalPath.size()-1));}else{
                                                     GoVertically(new Point(TotalPath.get(TotalPath.size()-1).GetX(),e.GetY()+1),TotalPath.get(TotalPath.size()-1));
                         }
@@ -195,7 +198,7 @@ public class Setup implements FloorPositions {
                             GoHorizontally(newP,e);
                         }
            }
-                 /*    public static void main(String [ ] args)
+                 /*public static void main(String [ ] args)
                      {
                                 Setup s = new Setup();
                                 s.Initialize();

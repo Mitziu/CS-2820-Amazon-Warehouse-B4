@@ -70,4 +70,8 @@ public class MockFloor implements FloorPositions{
     public ChargingStation getChargingStation() {
         return null;
     }
+
+    @Override
+    public void clearPath() {
+    }
 }

@@ -1,7 +1,7 @@
 package Master;
 
 import Ordering.MockOrderingSystem;
-import Ordering.OrderingSystemInterface;
+import Ordering.OrderInterface;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -22,7 +22,7 @@ public class Master implements Observer {
     private Queue<UpcomingOrder> upcomingOrders;
     private Integer time;
 
-    private OrderingSystemInterface orderSystem;
+    private OrderInterface orderSystem;
 
     /**
      * Update method from Oberser. update is called everytime the Clock class ticks\
@@ -58,7 +58,7 @@ public class Master implements Observer {
     }
 
     /**
-     * Loads the Simulated Ordering.OrderingSystemInterface from the upcomingOrders CSV file
+     * Loads the Simulated Ordering.OrderingInterface from the upcomingOrders CSV file
      * @author Mitziu
      */
     private void loadOrderQueue() {

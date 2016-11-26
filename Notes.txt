@@ -1,0 +1,31 @@
+Orders (RobotScheduler, Picker, Inventory, Belt)
+
+Belt (Bins)
+	• List of shipped items
+		○ getList
+			§ Returns list
+		○ Private clearList inside getList
+			§ Resets
+	• Orders
+		○ Every tick
+			getList
+				Finalize order
+
+RobotScheduler (Inventory)
+	• Robot gets Order
+
+Inventory ()
+	• orderFullfillVerification
+	• ModifyInventory
+		○ When under a threshold add large amount of items
+
+Visualizer ( Floor )
+
+Picker (Belt)
+	• newOrder ( OrderID )
+	• shelfArrive ( shelf )
+
+Inventory
+	• Needs to know which shelves contain what
+
+Floor ( EVERYTHING TO MAP)

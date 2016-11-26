@@ -10,7 +10,7 @@ import java.util.*;
  * NOTE: A visualizer using Swing is in progress. The difference between  this
  * and that one is that it will not use text outputs, but will redraw when updateFloor is called.
  */
-public class Visualizer {
+public class Visualizer{
     Map<String, Point> floorMap;
 
     public Visualizer () {
@@ -25,4 +25,5 @@ public class Visualizer {
     private void textOutput() {
         floorMap.forEach((k,v) -> System.out.println("Name: "+k+" Position:"+v));
     }
+
 }

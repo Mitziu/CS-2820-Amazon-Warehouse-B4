@@ -23,7 +23,7 @@ public class Visualizer{
     }
 
     private void textOutput() {
-        floorMap.forEach((k,v) -> System.out.println("Name: "+k+" Position:"+v));
+        floorMap.forEach((k,v) -> System.out.println("Name: "+k+" Position: "+v.GetX() + ", " + v.GetY()));
     }
 
 }

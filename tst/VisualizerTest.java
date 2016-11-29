@@ -22,8 +22,6 @@ public class VisualizerTest {
     VisRunner vs;
     Clock clk;
 
-    Clock clock;
-
     Map<String, Point> dumVals;
     FloorPositions floorPositions;
 

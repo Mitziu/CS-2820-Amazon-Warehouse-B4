@@ -25,7 +25,7 @@ public class OrderingSystem implements OrderInterface {
 	public ArrayList<Order> orderHistory;
 
 
-    public void OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
+    public OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;
@@ -98,7 +98,7 @@ public class OrderingSystem implements OrderInterface {
     public void finishOrder(Integer OrderID){
 		Order holderOrder = this.OngoingOrders.get(OrderID);
         this.OngoingOrders.remove(OrderID);
-		addToHistory(holderOrder);
+		this.addToHistory(holderOrder);
     }
 	
 	public void addToHistory(Order order){

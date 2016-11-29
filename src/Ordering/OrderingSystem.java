@@ -2,6 +2,12 @@ package Ordering;
 //Makes a list of Ordering.OrderingInterface so we have an overview of all Ordering.OrderingInterface currently being worked on,
 //And also lets you remove completed orders and add new orders
 
+/*
+ *
+ * @author Max Riley
+ *
+ */
+
 import Belt.BeltImpl;
 import Inventory.Inventory;
 import RobotScheduler.RobotScheduler;

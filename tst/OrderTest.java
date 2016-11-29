@@ -16,16 +16,28 @@ import Inventory.Inventory;
 import RobotScheduler.RobotScheduler;
 import Belt.PickerImpl;
 
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.*;
+
 public class OrderTest {
 
-    Inventory testInvent = new Inventory();
-    RobotScheduler testRobot = new RobotScheduler("TestRobot");
-    BeltImpl testBelt = new BeltImpl(10,10);
-    PickerImpl testPicker = new PickerImpl(testBelt);
+    /*public Inventory testInvent = new Inventory();
+    public RobotScheduler testRobot = new RobotScheduler("TestRobot");
+    public BeltImpl testBelt = new BeltImpl(10,10);
+    public PickerImpl testPicker = new PickerImpl(testBelt);
 
-    @Test
-    public void CreateOrder(){
-        OrderingSystem testOrderSystem = new OrderingSystem(testInvent, testBelt, testRobot, testPicker);
+    public OrderingSystem testOrderSystem = new OrderingSystem(testInvent, testBelt, testRobot, testPicker);
+
+    public String HolderAddress = "123 Main Street";
+
+    public Map<Integer,Integer> testItemList = new HashMap<>();
+
+    */
+
+
 
         //Need PlaceOrder test
         //Need isIteminStock test
@@ -33,8 +45,42 @@ public class OrderTest {
         //Need addToHistory test
         //Need getHistory test
 
+    public static void main(String[] args){
+        Inventory testInvent = new Inventory();
+        RobotScheduler testRobot = new RobotScheduler("TestRobot");
+        BeltImpl testBelt = new BeltImpl(10,10);
+        PickerImpl testPicker = new PickerImpl(testBelt);
+
+        OrderingSystem testOrderSystem = new OrderingSystem(testInvent, testBelt, testRobot, testPicker);
+
+        String HolderAddress = "123 Main Street";
+
+        Map<Integer,Integer> testItemList = new HashMap<>();
+
+        //PlaceOrder test
+        for(int x = 0; x < 10; x++) {
+            Boolean tester = testOrderSystem.placeOrder(testItemList, HolderAddress);
+
+            System.out.println(tester);
+        }
+
+        //Get current Orders
+        System.out.println(testOrderSystem.getCurrentOrders());
+
+        //Finish Order test
+        testOrderSystem.finishOrder(100000);
+        testOrderSystem.finishOrder(100003);
+        testOrderSystem.finishOrder(100005);
+        testOrderSystem.finishOrder(100007);
+
+        System.out.println(testOrderSystem.getHistory());
+
 
 
     }
+
+
+
+
 
 }

@@ -29,6 +29,7 @@ public class OrderingSystem implements OrderInterface {
     public RobotScheduler robot;
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
+    public Integer OrderID;
 
 
     public OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
@@ -38,6 +39,7 @@ public class OrderingSystem implements OrderInterface {
         this.robot = robot;
 		this.picker = picker;
 		this.orderHistory = new ArrayList<>();
+        this.OrderID = 100000;
     }
 
     //Lets you add order with just Items wanted and address, creates OrderID and makes key with it
@@ -50,9 +52,11 @@ public class OrderingSystem implements OrderInterface {
             }
         }
         if(hasenough){
-            Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
-            Order newOrder = new Order(uniqueID, newItemList, newAddress);
-            this.OngoingOrders.put(uniqueID, newOrder);
+            //Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
+            Order newOrder = new Order(this.OrderID, newItemList, newAddress);
+            this.OngoingOrders.put(this.OrderID, newOrder);
+
+            this.OrderID++;
 			//Sends order to Picker
 			picker.newOrder(newOrder);
 			//Sends order to Robot
@@ -79,6 +83,10 @@ public class OrderingSystem implements OrderInterface {
     //(11/17) do I need to even do this anymore?
     public void getItemLocation(int itemid){
 
+    }
+
+    public Map<Integer, Order> getCurrentOrders(){
+        return this.OngoingOrders;
     }
 
     //used as a basis to see if item is in stock, may not be needed though..

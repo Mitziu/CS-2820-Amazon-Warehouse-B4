@@ -74,4 +74,9 @@ public class MockFloor implements FloorPositions{
     @Override
     public void clearPath() {
     }
+
+    @Override
+    public ArrayList<Point> getAllPoints() {
+        return null;
+    }
 }

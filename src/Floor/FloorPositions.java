@@ -30,6 +30,7 @@ public interface FloorPositions {
     Station GetPackager(); // for belt
     ChargingStation getChargingStation(); // for robot
     void clearPath();// for robot to re-run the routefinding method
+    ArrayList<Point> getAllPoints();
     
 
 /* User Manual:

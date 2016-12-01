@@ -21,7 +21,8 @@ public class Robots implements Thing{ //contains robots and shelves
         public ArrayList<Point> commands;
         public Point OrginOfShelf;
         public Setup m_setup;
-	public Robots(int x, int y, int s,Setup input){
+	
+	public Robots(int x, int y, int s, Setup input){
 		x_loc= x; 
 		y_loc= y ;
 		width= w;

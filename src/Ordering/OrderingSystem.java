@@ -2,6 +2,12 @@ package Ordering;
 //Makes a list of Ordering.OrderingInterface so we have an overview of all Ordering.OrderingInterface currently being worked on,
 //And also lets you remove completed orders and add new orders
 
+/*
+ *
+ * @author Max Riley
+ *
+ */
+
 import Belt.BeltImpl;
 import Inventory.Inventory;
 import RobotScheduler.RobotScheduler;
@@ -23,15 +29,17 @@ public class OrderingSystem implements OrderInterface {
     public RobotScheduler robot;
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
+    public Integer OrderID;
 
 
-    public void OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
+    public OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;
         this.robot = robot;
 		this.picker = picker;
 		this.orderHistory = new ArrayList<>();
+        this.OrderID = 100000;
     }
 
     //Lets you add order with just Items wanted and address, creates OrderID and makes key with it
@@ -44,9 +52,11 @@ public class OrderingSystem implements OrderInterface {
             }
         }
         if(hasenough){
-            Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
-            Order newOrder = new Order(uniqueID, newItemList, newAddress);
-            this.OngoingOrders.put(uniqueID, newOrder);
+            //Integer uniqueID = Integer.valueOf(UUID.randomUUID().toString());
+            Order newOrder = new Order(this.OrderID, newItemList, newAddress);
+            this.OngoingOrders.put(this.OrderID, newOrder);
+
+            this.OrderID++;
 			//Sends order to Picker
 			picker.newOrder(newOrder);
 			//Sends order to Robot
@@ -75,6 +85,10 @@ public class OrderingSystem implements OrderInterface {
 
     }
 
+    public Map<Integer, Order> getCurrentOrders(){
+        return this.OngoingOrders;
+    }
+
     //used as a basis to see if item is in stock, may not be needed though..
     public boolean isItemInStock(Integer itemid){
         if(this.inventory.Get_Item_Qty(itemid) > 0){
@@ -98,7 +112,7 @@ public class OrderingSystem implements OrderInterface {
     public void finishOrder(Integer OrderID){
 		Order holderOrder = this.OngoingOrders.get(OrderID);
         this.OngoingOrders.remove(OrderID);
-		addToHistory(holderOrder);
+		this.addToHistory(holderOrder);
     }
 	
 	public void addToHistory(Order order){

@@ -1,20 +1,18 @@
-/**
- * Created by Mitziu on 11/17/16.
- *
- * @author Ted Herman
- * @author Mitziu
- */
+package Floor;
 public class Point {
-    int x;
-    int y;
-
-    Point(int x, int y) {
-        this.x = x; this.y = y;
-    }
-    /**
-     * Display Point as a string
-     */
-    public String toString() {
+	public int x;
+	public int y;
+	public Point(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	public int GetX(){
+		return x;
+	}
+	public int GetY(){
+		return y;
+        }
+        public String toString() {
         String result = "Point x=" + x + " y=" + y;
         return result;
     }
@@ -55,10 +53,5 @@ public class Point {
         if (newy < 0) return null;
         return new Point(x,newy);
     }
-    /**
-     * @return true if two points are the same place
-     */
-    boolean equals(Point other) {
-        return (other.x==x && other.y==y);
-    }
+	
 }

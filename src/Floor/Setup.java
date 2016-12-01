@@ -12,6 +12,7 @@ public class Setup implements FloorPositions {
 	ArrayList<Robots> RB ;
 	ArrayList<route> Routes;
                      ArrayList<Point> TotalPath = new ArrayList<Point>();
+                     ArrayList<Point> allpoint;
 	public Setup(){	
 	}
         @Override
@@ -55,8 +56,8 @@ public class Setup implements FloorPositions {
 		Routes.add(r_temp);
 		r_temp = new route(2,9,9,1,9);
 		Routes.add(r_temp);
-		Robots r1 = new Robots(2,10,1);
-		Robots r2 = new Robots(3,10,1);
+		Robots r1 = new Robots(2,10,1,this);
+		Robots r2 = new Robots(3,10,1,this);
 		RB.add(r1);
 		RB.add(r2);
 	}
@@ -117,8 +118,9 @@ public class Setup implements FloorPositions {
 	}
         @Override
 	public ArrayList<Point> RouteFinding(Point target, Point RobotLoc){
+                                           clearPath();
 		ArrayList<route> r = Routes;
-		ArrayList<Point> allpoint = new ArrayList<Point>();
+		allpoint = new ArrayList<Point>();
 		ArrayList<Point> temp = new ArrayList<Point>();
 		ArrayList<Point> finalPoints= new ArrayList<Point>();
 		HashMap<String, Integer> m_map = new HashMap<String, Integer>();
@@ -135,6 +137,10 @@ public class Setup implements FloorPositions {
 		pathTraveling(RobotLoc,target,m_map);
 		return TotalPath;
 	}
+        @Override
+                     public ArrayList<Point> getAllPoints(){
+                                           return allpoint;
+                     } 
 	public void pathTraveling(Point s, Point e,HashMap<String, Integer>  m_map){
 		
 		if(s.GetX() == e.GetX()-1&&s.GetY() == e.GetY()){

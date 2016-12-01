@@ -14,7 +14,7 @@ public class Inventory_Test {
 	
 	@Test
 	public void testconstructor(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		assertEquals(75450, Inv.Get_Inventory_ID("Baseball"));
 		assertEquals("Baseball", Inv.Get_Item_Name(75450));
 		assertEquals(0, Inv.Get_Item_Qty(75450));
@@ -25,7 +25,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In1(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		int testvar = SM.Contained_In(75450).get(0);
 		assertEquals(0, testvar);
 	}
@@ -35,7 +35,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In2(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
 		assertEquals(11, SM.Contained_In(75450).get(0).intValue());
 		assertEquals(13, Inv.Get_Item_Qty(75450));
@@ -45,10 +45,10 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In3(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
-		Inv.Add_Inventory(75451, "Softball", 0);
-		Inv.Add_Inventory(75452, "Ballcap", 0);
+		Inv.Add_Inventory(75451, "Softball");
+		Inv.Add_Inventory(75452, "Ballcap");
 		SM.Put_Container(75451, 12, 27);
 		SM.Put_Container(75452, 13, 38);
 		
@@ -66,7 +66,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_in4(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
 		
 		SM.Put_Container(75450, 12, 17);
@@ -84,7 +84,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container1(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
 		SM.Take_Container(75450, 11, 7);
 		assertEquals(6, Inv.Get_Item_Qty(75450));
@@ -95,10 +95,10 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container2(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
-		Inv.Add_Inventory(75451, "Softball", 0);
-		Inv.Add_Inventory(75452, "Ballcap", 0);
+		Inv.Add_Inventory(75451, "Softball");
+		Inv.Add_Inventory(75452, "Ballcap");
 		SM.Put_Container(75451, 12, 27);
 		SM.Put_Container(75452, 13, 38);
 		SM.Take_Container(75450, 11, 7);
@@ -118,7 +118,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container3(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
 		SM.Put_Container(75450, 12, 17);
 		SM.Take_Container(75450, 12, 15);
@@ -137,7 +137,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testEmpty_Container(){
-		Inv.Add_Inventory(75450, "Baseball", 0);
+		Inv.Add_Inventory(75450, "Baseball");
 		SM.Put_Container(75450, 11, 13);
 		SM.Put_Container(75450, 12, 17);
 		
@@ -157,52 +157,52 @@ public class Inventory_Test {
 	}
 	
 	@Test
-	public void testInitializer() throws IOException {
-		Inv.Inventory_Intialize("CSVFiles/Inventory_CSV");
+	public void testInitializer() throws ParseException, IOException{
+		Inv.Inventory_Intialize("Inventory_CSV");
 		assertEquals("Cat Food", Inv.Get_Item_Name(7));
 		assertEquals("Poster1", Inv.Get_Item_Name(9));
 		assertEquals(7, Inv.Get_Inventory_ID("Cat Food"));
 		assertEquals(1, Inv.Get_Inventory_ID("Baseball"));
-		Inv.Put_Container(6, 11, 100);
-		Inv.Put_Container(10, 22, 200);
+		SM.Put_Container(6, 11, 100);
+		SM.Put_Container(10, 22, 200);
 		assertEquals(100, Inv.Get_Item_Qty(6));
 		assertEquals(200, Inv.Get_Item_Qty(10));
-		assertEquals(11, Inv.Contained_In(6).get(0).intValue());
-		assertEquals(22, Inv.Contained_In(10).get(0).intValue());
-		Inv.Take_Container(6, 11, 50);
-		Inv.Take_Container(10, 22, 100);
+		assertEquals(11, SM.Contained_In(6).get(0).intValue());
+		assertEquals(22, SM.Contained_In(10).get(0).intValue());
+		SM.Take_Container(6, 11, 50);
+		SM.Take_Container(10, 22, 100);
 		assertEquals(50, Inv.Get_Item_Qty(6));
 		assertEquals(100, Inv.Get_Item_Qty(10));
-		assertEquals(11, Inv.Contained_In(6).get(0).intValue());
-		assertEquals(22, Inv.Contained_In(10).get(0).intValue());
-		Inv.Take_Container(6, 11, 50);
-		Inv.Take_Container(10, 22, 100);
+		assertEquals(11, SM.Contained_In(6).get(0).intValue());
+		assertEquals(22, SM.Contained_In(10).get(0).intValue());
+		SM.Take_Container(6, 11, 50);
+		SM.Take_Container(10, 22, 100);
 		assertEquals(0, Inv.Get_Item_Qty(6));
 		assertEquals(0, Inv.Get_Item_Qty(10));
-		assertEquals(0, Inv.Contained_In(6).get(0).intValue());
-		assertEquals(0, Inv.Contained_In(10).get(0).intValue());
+		assertEquals(0, SM.Contained_In(6).get(0).intValue());
+		assertEquals(0, SM.Contained_In(10).get(0).intValue());
 	}
 	@Test
-	public void testContainer_Count() throws IOException{
-		Inv.Inventory_Intialize("CSVFiles/Inventory_CSV");
-		Inv.Put_Container(6, 11, 100);
-		Inv.Put_Container(6, 22, 200);
-		assertEquals(100, Inv.Container_Count(6, 11));
-		assertEquals(200, Inv.Container_Count(6, 22));
+	public void testContainer_Count() throws ParseException, IOException{
+		Inv.Inventory_Intialize("Inventory_CSV");
+		SM.Put_Container(6, 11, 100);
+		SM.Put_Container(6, 22, 200);
+		assertEquals(100, SM.Container_Count(6, 11));
+		assertEquals(200, SM.Container_Count(6, 22));
 		assertEquals(300, Inv.Get_Item_Qty(6));
-		Inv.Take_Container(6, 11, 50);
-		Inv.Take_Container(6, 22, 100);
-		assertEquals(50, Inv.Container_Count(6, 11));
-		assertEquals(100, Inv.Container_Count(6, 22));
+		SM.Take_Container(6, 11, 50);
+		SM.Take_Container(6, 22, 100);
+		assertEquals(50, SM.Container_Count(6, 11));
+		assertEquals(100, SM.Container_Count(6, 22));
 		assertEquals(150, Inv.Get_Item_Qty(6));
-		Inv.Take_Container(6, 22, 100);
-		assertEquals(0, Inv.Container_Count(6, 22));
+		SM.Take_Container(6, 22, 100);
+		assertEquals(0, SM.Container_Count(6, 22));
 	}
-
+	
 	@Test (expected = IOException.class)
 	public void initializerExceptionThrown() throws IOException{
 		Inv.Inventory_Intialize("Fake_CSV");
 	}
-
+	
 }
 

@@ -21,6 +21,8 @@ public class BeltImpl implements Observer, Belt
 	private Deque<Bin> packerQueue;
 	private Integer sizeOfPickerBelt;
 	private Integer sizeOfPackerBelt;
+	private Belt2 beltUnit;
+
 
 	public BeltImpl (Integer sizeOfPickerBelt , Integer sizeOfPackerBelt)
 	{
@@ -28,6 +30,8 @@ public class BeltImpl implements Observer, Belt
 		this.sizeOfPickerBelt = sizeOfPickerBelt;
 		pickerQueue = new LinkedList<>();//use methods to fill this list
 		packerQueue = new LinkedList<>();//use methods to fill this list
+		beltUnit = new Belt2();
+
 
 		fillQueues();
 	}
@@ -43,10 +47,11 @@ public class BeltImpl implements Observer, Belt
 		}
 	}
 	
-	//receives item from Robot, and sends to belt to reach packer
-	public void pack(Integer orderID)
+	//Picker receives item from Robot, and sends to belt to reach packer
+	public void pick(Integer orderID)
 	{
 		pickerQueue.getFirst().addItem(orderID);
+		beltUnit.addItemBelt(orderID);//add order ID to beltUnit for report purposes
 	}
 
 	public List<Integer> reportContent()
@@ -60,8 +65,14 @@ public class BeltImpl implements Observer, Belt
 		shippedItemIDList.addAll(bin.getAllItems());
 	}
 
+	//method that finish process, Item gets packed and out of Belt, also takes order ID out from public list beltUnit
 	private void packer(Bin bin) {
 		packerQueue.getFirst().addAllItems(bin);
+		for (Integer OrderID : bin.getAllItems())
+		{
+			beltUnit.removeItemBelt(OrderID);
+		}
+
 	}
 	
 	public String onSite_Pick(int x, int y)// happens when robot reaches picker station
@@ -69,7 +80,7 @@ public class BeltImpl implements Observer, Belt
 		Integer orderID = 0;
 		if(x_loc_pick ==  x && y_loc_pick ==  y)
 		{
-			pack(orderID);
+			pick(orderID);
             //print msg : "order at picker station"
             return ("order at picker station");
 		}
@@ -117,22 +128,22 @@ public class BeltImpl implements Observer, Belt
 
 		private List<Integer> itemsInside;
 
-		public Bin() {
-			itemsInside = new ArrayList<>();// array that has items identified by order ID
-		}
-
-		public void addItem(Integer orderID) {
-			itemsInside.add(orderID);//include items inside array "itemsInside"
-		}
-
-		public List<Integer> getAllItems() {
-			return itemsInside;
-		}
-
-		public void addAllItems(Bin itemsToAdd) {
-			itemsInside.addAll(itemsToAdd.getAllItems());
-		}
+	public Bin() {
+		itemsInside = new ArrayList<>();// array that has items identified by order ID
 	}
+
+	public void addItem(Integer orderID) {
+		itemsInside.add(orderID);//include items inside array "itemsInside"
+	}
+
+	public List<Integer> getAllItems() {
+		return itemsInside;
+	}
+
+	public void addAllItems(Bin itemsToAdd) {
+		itemsInside.addAll(itemsToAdd.getAllItems());
+	}
+}
 
     private class Belt2
     {
@@ -142,7 +153,7 @@ public class BeltImpl implements Observer, Belt
             itemsOnBeltList = new ArrayList<>();// creation of array that has items identified by order ID
         }
 
-        private void addItemBelt(Integer orderID)
+        public void addItemBelt(Integer orderID)
         {
             itemsOnBeltList.add(orderID);//include items inside array "itemsOnBeltList"
         }
@@ -150,11 +161,11 @@ public class BeltImpl implements Observer, Belt
         {
             return itemsOnBeltList;//retrieve all items present on Belt
         }
-        private void removeItemBelt(Integer orderID)
+		public void removeItemBelt(Integer orderID)
         {
             itemsOnBeltList.remove(orderID);
         }
-
     }
+// create new class that extends private belt2
 
 }

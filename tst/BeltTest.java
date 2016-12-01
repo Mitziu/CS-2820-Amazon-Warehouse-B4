@@ -28,7 +28,7 @@ public class BeltTest
         public void testBelt2() {
             Integer orderId = 1;
             BeltImpl Test02 = new BeltImpl(1,1);
-            Test02.pack(orderId);
+            Test02.pick(orderId);
             List<Integer> actualItemsOnBeltList = Test02.reportContent();
             List<Integer> expectedItemsOnBeltList = new ArrayList<>();
             expectedItemsOnBeltList.add(orderId);

@@ -127,8 +127,8 @@ public class Inventory{
 	/**
 	 * Removes the specified quantity of the item from the Main Inventory therefore reserving some items
 	 * for that order.  It does not, however, update the quantity of that item anywhere in the shelves.
-	 * @param Item_ID
-	 * @param Qty
+	 * @param Item_ID ID number of the item to be reserved
+	 * @param Qty Quantity of the item to be reserved
 	 */
 	public void Order_Claim(int Item_ID, int Qty){
 		//Assuming there will be no orders for items not in inventory

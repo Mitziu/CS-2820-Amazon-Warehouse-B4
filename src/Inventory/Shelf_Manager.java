@@ -80,7 +80,7 @@ public class Shelf_Manager implements S_Manager{
 		}
 
 		else {
-			Shelf_Use.Items.put(Shelf_ID, Qty);
+			Shelf_Use.Items.put(Item_ID, Qty);
 		}
 		
 	}

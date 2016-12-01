@@ -1,16 +1,16 @@
 package Floor;
 
 public class ChargingStation implements Thing {
-	public  int width= 2;
-	public  int length=1;
-                     public  int x_loc;
-	public  int y_loc;
-	public  boolean moveable; //some of them may be able to move, others do not
-                     public Point getLoc(){
+	public int width= 2;
+	public int length=1;
+        public int x_loc;
+	public int y_loc;
+	public boolean moveable; //some of them may be able to move, others do not
+        public Point getLoc(){
 		return new Point(x_loc,y_loc);
 	}
         @Override
-                      public int getx(){ //x coordinate
+        public int getx(){ //x coordinate
 		return x_loc;
 	}
         @Override
@@ -34,12 +34,11 @@ public class ChargingStation implements Thing {
 		if(moveable){
 			x_loc = x;
 			y_loc = y;
-		}
-		
+		}		
 	}
 	public ChargingStation(int x, int y){
-                                           x_loc= x; 
-		y_loc= y ;
+		x_loc= x; 
+		y_loc= y;
 		moveable = false;
 	}
 	public boolean IsCharging(int x,  int y){

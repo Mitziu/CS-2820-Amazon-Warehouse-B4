@@ -1,11 +1,9 @@
 package Inventory;
+import java.util.*;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.*;
-
 /**
  * @author William Anderson
  * @author Matt McCan
@@ -17,10 +15,6 @@ import java.util.*;
  *
  */
 public class Inventory{
-	
-	//We should make this a seperate class outside of inventory so we have a baseline Item class
-	//That way Orders, Inventory, and Floor can all just use one item class together
-	//@Max
 
 	/**
 	 * Nested class to hold the details of items.  Will be stored in the HashMap Main_Inventory.
@@ -46,11 +40,8 @@ public class Inventory{
 		 * Updates the quantity of an item by adding up all of the quantities stored in the shelves
 		 * @author William Anderson
 		 */
-		public void Qty_Update(){
-			Item_Quantity = 0;
-			for (int value : Containers.values()) {
-				Item_Quantity += value;
-			}
+		public void Qty_Update(int New_Qty){
+			this.Item_Quantity = New_Qty;
 		}
 	}
 	
@@ -64,7 +55,7 @@ public class Inventory{
 	
 	/**
 	 * Returns how many of a particular item are stocked in the warehouse
-	 * @param ID Item ID number
+	 * @param int Item ID number
 	 * @return int Amount of Item currently in stock
 	 */
 	public int Get_Item_Qty(int ID){
@@ -73,7 +64,7 @@ public class Inventory{
 
 	/**
 	 * Returns the name of the item when given the item ID number
-	 * @param ID Item ID number
+	 * @param int Item ID number
 	 * @return String Item's name
 	 * @author William Anderson
 	 */
@@ -83,41 +74,18 @@ public class Inventory{
 
 	/**
 	 * Returns the Item's ID number given the Item name
-	 * @param name Name of Item
+	 * @param String Name of Item
 	 * @return int Item ID number
 	 * @author William Anderson
 	 */
 	public int Get_Inventory_ID(String name){
 		return Converter.get(name);
 	}
-	
-	/** 
-	 * Returns a LinkedList containg all of the ID numbers of the containers that are currently
-	 * holding this Item.  If no containers currently hold this item then it returns a single 
-	 * element list with the value 0 in it.
-	 * @param ID Item ID number
- 	 * @return LinkedList of Container ID numbers
- 	 * @author William Anderson
-	 */
-	public LinkedList<Integer> Contained_In(int ID){
-		LinkedList<Integer> RetList = new LinkedList<Integer>();
-		boolean empty_check = Main_Inventory.get(ID).Containers.isEmpty();
-		if (empty_check == true){
-			RetList.add(0);
-		}
-		
-		else{
-		Set<Integer> Tempset = Main_Inventory.get(ID).Containers.keySet();
-		RetList.addAll(Tempset);
-		}
-		
-		return RetList;
-	}
 
 	/**
 	 * Adds an Item to the Main_Inventory HashMap.
-	 * @param ID Item ID number
-	 * @param Name Name
+	 * @param int Item ID number
+	 * @param Item Name
 	 * @author William Anderson
 	 */
 	//Currently this assumes that no one will try to add the same Item or Item ID number twice.
@@ -127,57 +95,6 @@ public class Inventory{
 		Converter.put(New_Item.Item_Name, New_Item.Item_ID);
 	}
 
-	/**
-	 * Adds an Item to the container by either adding that container and the amount contained to the 
-	 * item's HashMap of containers or updates the value for that container in the HashMap
-	 * @param Item_ID Item ID number
-	 * @param Container_ID Container ID number
-	 * @param Qty Quantity to be added
-	 * @author William Anderson
-	 */
-	public void Put_Container(int Item_ID, int Container_ID, int Qty){
-		Item_Details Item_Use = Main_Inventory.get(Item_ID);
-		
-		if (Item_Use.Containers.get(Container_ID) != null){
-			int tempvar = Item_Use.Containers.get(Container_ID);
-			tempvar +=  Qty;
-			Item_Use.Containers.put(Container_ID, tempvar);
-			Item_Use.Qty_Update();
-		}
-
-		else {
-			Item_Use.Containers.put(Container_ID, Qty);
-			Item_Use.Qty_Update();
-		}
-		
-	}
-	
-	/**
-	 * Takes an item out of a container by editing the quantity for that container in the Item's HashMap
-	 * Also it will remove the container from the item's HashMap if the amount in the container drops to 0
-	 * @param Item_ID Item ID number
-	 * @param Container_ID Container ID number
-	 * @param Qty Quantity to be taken
-	 * @author William Anderson
-	 */
-	public void Take_Container(int Item_ID, int Container_ID, int Qty){
-		//Making an assumption that a robot will never attempt to take an item from a shelf
-		//not holding that item
-		Item_Details Item_Use = Main_Inventory.get(Item_ID);
-		int tempvar = Item_Use.Containers.get(Container_ID);
-		tempvar -= Qty;
-		
-		if (tempvar == 0){
-			Item_Use.Containers.remove(Container_ID);
-			Item_Use.Qty_Update();
-		}
-		
-		else{	
-		Item_Use.Containers.put(Container_ID, tempvar);
-		Item_Use.Qty_Update();
-		}	
-	}
-	
 	/**
 	 * Returns a LinkedList of every Item ID number currently in the inventory
 	 * @return LinkedList of every Item ID number currently in the inventory
@@ -193,32 +110,29 @@ public class Inventory{
 	/**
 	 * Fills the Main_Inventory Hashmap with data from a CSV file
 	 * @param Filename Name of the CSV file to be read
+	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public void Inventory_Intialize(String Filename) throws IOException{
-		BufferedReader br = new BufferedReader(new FileReader(Filename));
-		String line =  null;
+	public void Inventory_Intialize(String Filename) throws ParseException, IOException{
+		 BufferedReader br = new BufferedReader(new FileReader(Filename));
+		    String line =  null;
 
-		while((line=br.readLine())!=null){
-				String arr[] = line.split(",");
-				Add_Inventory(Integer.valueOf(arr[0]), arr[1]);
-		}
+		    while((line=br.readLine())!=null){
+		            String arr[] = line.split(",");
+		            Add_Inventory(Integer.valueOf(arr[0]), arr[1]);
+		    }
 	}
 	
 	/**
-	 * Returns the Number of Items in a specific Container
-	 * @param Item_ID ID number for the Item
-	 * @param Container_ID	ID number for the Container
-	 * @return Number of Items in that container
+	 * Removes the specified quantity of the item from the Main Inventory therefore reserving some items
+	 * for that order.  It does not, however, update the quantity of that item anywhere in the shelves.
+	 * @param Item_ID
+	 * @param Qty
 	 */
-	public int Container_Count(int Item_ID, int Container_ID){
-		if (Main_Inventory.get(Item_ID).Containers.get(Container_ID) != null){
-			int count = Main_Inventory.get(Item_ID).Containers.get(Container_ID);
-			return count;
-		}
-		else{
-			int count = 0;
-			return count;
-		}
+	public void Order_Claim(int Item_ID, int Qty){
+		//Assuming there will be no orders for items not in inventory
+		Item_Details Item_Use = Main_Inventory.get(Item_ID);
+		int tempvar = Item_Use.Item_Quantity;
+		tempvar -= Qty;
 	}
 }	

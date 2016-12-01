@@ -19,7 +19,7 @@ public class Shelf_Manager implements S_Manager{
 	/**
 	 * Nested Class to store details of individual shelves.  Namely, a HashMap of items contained
 	 * within the shelf and their quantities.
-	 * @author Willis
+	 * @author William Anderson
 	 *
 	 */
 	class Shelf_Details{

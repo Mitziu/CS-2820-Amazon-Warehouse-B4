@@ -1,3 +1,4 @@
+package Inventory;
 import java.util.*;
 /**
  * 
@@ -18,5 +19,6 @@ public interface S_Manager {
 	//Takes specified amount away from that shelf
 	public void Take_Container(int Item_ID, int Shelf_ID, int Qty);
 	
-	
+	//Returns a List of every shelf that contains that item
+	public LinkedList<Integer> Contained_In(int Item_ID);
 }

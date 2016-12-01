@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
  */
 public class PickerImpl implements Picker, Observer {
 
+    //TODO: Pass Shelf Manager and deduct items from it
+
     private List<OrderToFulfill> ongoingOrders;
     private Belt myBelt;
 
@@ -49,6 +51,7 @@ public class PickerImpl implements Picker, Observer {
      * @param shelf Belt.Shelf has arrived
      */
     @Override
+    //TODO: Should be shelf ID
     public void shelfArrived(Shelf shelf) {
         shelf.itemsOnShelf().stream()
                 .forEach(itemID -> pickItemsFromShelf(itemID));

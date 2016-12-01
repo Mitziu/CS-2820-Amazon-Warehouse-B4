@@ -1,3 +1,6 @@
+import Inventory.Inventory;
+import Inventory.Shelf_Manager;
+
 import org.junit.Test;
 import org.junit.Ignore;
 

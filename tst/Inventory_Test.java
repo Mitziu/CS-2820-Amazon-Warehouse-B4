@@ -1,10 +1,12 @@
 import Inventory.Inventory;
+import Inventory.Shelf_Manager;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class Inventory_Test {
 	
@@ -157,7 +159,7 @@ public class Inventory_Test {
 	}
 	
 	@Test
-	public void testInitializer() throws ParseException, IOException{
+	public void testInitializer() throws IOException, ParseException {
 		Inv.Inventory_Intialize("Inventory_CSV");
 		assertEquals("Cat Food", Inv.Get_Item_Name(7));
 		assertEquals("Poster1", Inv.Get_Item_Name(9));
@@ -183,7 +185,7 @@ public class Inventory_Test {
 		assertEquals(0, SM.Contained_In(10).get(0).intValue());
 	}
 	@Test
-	public void testContainer_Count() throws IOException{
+	public void testContainer_Count() throws IOException, ParseException{
 		Inv.Inventory_Intialize("CSVFiles/Inventory_CSV");
 		SM.Put_Container(6, 11, 100);
 		SM.Put_Container(6, 22, 200);
@@ -200,7 +202,7 @@ public class Inventory_Test {
 	}
 	
 	@Test (expected = IOException.class)
-	public void initializerExceptionThrown() throws IOException{
+	public void initializerExceptionThrown() throws IOException, ParseException{
 		Inv.Inventory_Intialize("Fake_CSV");
 	}
 	

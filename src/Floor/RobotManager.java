@@ -5,6 +5,9 @@
  */
 package Floor;
 
+import Inventory.Inventory_Interface;
+import Ordering.Order;
+
 /**
  *
  * @author zuoyuan
@@ -14,5 +17,5 @@ public interface RobotManager {
      
     //WARNING: INITIALIZE FloorPositions FIRST!!!!!!!!!!!!!!
     /*DOCUMENTAION: OrderIsComing is the "MAIN" function for RobotManager, no other functions are needed*/
-    public void OrderIsComing(Order order,Inventory_Interface input , FloorPositions src);
+    public void OrderIsComing(Order order, Inventory_Interface input , FloorPositions src);
 }

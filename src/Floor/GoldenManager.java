@@ -5,6 +5,9 @@
  */
 package Floor;
 
+import Inventory.Inventory_Interface;
+import Ordering.Order;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;

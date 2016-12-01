@@ -5,7 +5,7 @@
  */
 package Floor;
 
-import Inventory.Inventory_Interface;
+import Inventory.S_Manager;
 import Ordering.Order;
 
 /**
@@ -14,8 +14,18 @@ import Ordering.Order;
  */
 //For saving robots' world, we shall get a manager!!
 public interface RobotManager {
-     
+
     //WARNING: INITIALIZE FloorPositions FIRST!!!!!!!!!!!!!!
     /*DOCUMENTAION: OrderIsComing is the "MAIN" function for RobotManager, no other functions are needed*/
-    public void OrderIsComing(Order order, Inventory_Interface input , FloorPositions src);
+    public void Background( S_Manager input, FloorPositions src);
+    public void SetOrder(Order input); // set order
+    public boolean IsDone(); // show if order is done, will return true if everything is finished
+    /*USER MANUAL(right now can only run single order):
+      0. initialize shelfmaneger and floorpositions
+      1. SetOrder        (warining : just a single Order)
+      1. Background(shelfmanager, floorpositions)
+      2. run, while keep checking IsDone()
+      3. if IsDone() == true, get a new order and SetOrder again!
+    TO BE CONTINUED
+    */
 }

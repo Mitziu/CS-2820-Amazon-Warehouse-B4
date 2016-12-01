@@ -183,8 +183,8 @@ public class Inventory_Test {
 		assertEquals(0, SM.Contained_In(10).get(0).intValue());
 	}
 	@Test
-	public void testContainer_Count() throws ParseException, IOException{
-		Inv.Inventory_Intialize("Inventory_CSV");
+	public void testContainer_Count() throws IOException{
+		Inv.Inventory_Intialize("CSVFiles/Inventory_CSV");
 		SM.Put_Container(6, 11, 100);
 		SM.Put_Container(6, 22, 200);
 		assertEquals(100, SM.Container_Count(6, 11));

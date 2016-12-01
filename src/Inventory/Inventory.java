@@ -120,6 +120,7 @@ public class Inventory{
 		    while((line=br.readLine())!=null){
 		            String arr[] = line.split(",");
 		            Add_Inventory(Integer.valueOf(arr[0]), arr[1]);
+		            Main_Inventory.get(Integer.valueOf(arr[0])).Qty_Update(100);
 		    }
 	}
 	

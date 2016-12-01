@@ -7,18 +7,14 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 public class Inventory_Test {
-
-	Inventory Inv;
-
+	
 	//Before//
-	@Before
-	public void setup() {
-		Inv = new Inventory();
-	}
-
+	Inventory Inv = new Inventory();
+	Shelf_Manager SM = new Shelf_Manager(Inv);
+	
 	@Test
 	public void testconstructor(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 0);
 		assertEquals(75450, Inv.Get_Inventory_ID("Baseball"));
 		assertEquals("Baseball", Inv.Get_Item_Name(75450));
 		assertEquals(0, Inv.Get_Item_Qty(75450));
@@ -29,8 +25,8 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In1(){
-		Inv.Add_Inventory(75450, "Baseball");
-		int testvar = Inv.Contained_In(75450).get(0);
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		int testvar = SM.Contained_In(75450).get(0);
 		assertEquals(0, testvar);
 	}
 	
@@ -39,9 +35,9 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In2(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
-		assertEquals(11, Inv.Contained_In(75450).get(0).intValue());
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
+		assertEquals(11, SM.Contained_In(75450).get(0).intValue());
 		assertEquals(13, Inv.Get_Item_Qty(75450));
 	}
 	/**
@@ -49,19 +45,19 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In3(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
-		Inv.Add_Inventory(75451, "Softball");
-		Inv.Add_Inventory(75452, "Ballcap");
-		Inv.Put_Container(75451, 12, 27);
-		Inv.Put_Container(75452, 13, 38);
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
+		Inv.Add_Inventory(75451, "Softball", 0);
+		Inv.Add_Inventory(75452, "Ballcap", 0);
+		SM.Put_Container(75451, 12, 27);
+		SM.Put_Container(75452, 13, 38);
 		
 		
-		assertEquals(11, Inv.Contained_In(75450).get(0).intValue());
+		assertEquals(11, SM.Contained_In(75450).get(0).intValue());
 		assertEquals(13, Inv.Get_Item_Qty(75450));
-		assertEquals(12, Inv.Contained_In(75451).get(0).intValue());
+		assertEquals(12, SM.Contained_In(75451).get(0).intValue());
 		assertEquals(27, Inv.Get_Item_Qty(75451));
-		assertEquals(13, Inv.Contained_In(75452).get(0).intValue());
+		assertEquals(13, SM.Contained_In(75452).get(0).intValue());
 		assertEquals(38, Inv.Get_Item_Qty(75452));
 	}
 	
@@ -70,17 +66,17 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_in4(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
 		
-		Inv.Put_Container(75450, 12, 17);
-		assertEquals(12, Inv.Contained_In(75450).get(1).intValue());
+		SM.Put_Container(75450, 12, 17);
+		assertEquals(12, SM.Contained_In(75450).get(1).intValue());
 		assertEquals(30, Inv.Get_Item_Qty(75450));
 		
-		Inv.Put_Container(75450, 33, 27);
-		assertTrue(Inv.Contained_In(75450).get(0).intValue() == 11 || Inv.Contained_In(75450).get(0).intValue() == 12 || Inv.Contained_In(75450).get(0).intValue() == 33);
-		assertTrue(Inv.Contained_In(75450).get(1).intValue() == 11 || Inv.Contained_In(75450).get(1).intValue() == 12 || Inv.Contained_In(75450).get(1).intValue() == 33);
-		assertTrue(Inv.Contained_In(75450).get(2).intValue() == 11 || Inv.Contained_In(75450).get(2).intValue() == 12 || Inv.Contained_In(75450).get(2).intValue() == 33);
+		SM.Put_Container(75450, 33, 27);
+		assertTrue(SM.Contained_In(75450).get(0).intValue() == 11 || SM.Contained_In(75450).get(0).intValue() == 12 || SM.Contained_In(75450).get(0).intValue() == 33);
+		assertTrue(SM.Contained_In(75450).get(1).intValue() == 11 || SM.Contained_In(75450).get(1).intValue() == 12 || SM.Contained_In(75450).get(1).intValue() == 33);
+		assertTrue(SM.Contained_In(75450).get(2).intValue() == 11 || SM.Contained_In(75450).get(2).intValue() == 12 || SM.Contained_In(75450).get(2).intValue() == 33);
 		assertEquals(57, Inv.Get_Item_Qty(75450));
 	}
 	/**
@@ -88,9 +84,9 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container1(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
-		Inv.Take_Container(75450, 11, 7);
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
+		SM.Take_Container(75450, 11, 7);
 		assertEquals(6, Inv.Get_Item_Qty(75450));
 	}
 	
@@ -99,21 +95,21 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container2(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
-		Inv.Add_Inventory(75451, "Softball");
-		Inv.Add_Inventory(75452, "Ballcap");
-		Inv.Put_Container(75451, 12, 27);
-		Inv.Put_Container(75452, 13, 38);
-		Inv.Take_Container(75450, 11, 7);
-		Inv.Take_Container(75451, 12, 7);
-		Inv.Take_Container(75452, 13, 7);
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
+		Inv.Add_Inventory(75451, "Softball", 0);
+		Inv.Add_Inventory(75452, "Ballcap", 0);
+		SM.Put_Container(75451, 12, 27);
+		SM.Put_Container(75452, 13, 38);
+		SM.Take_Container(75450, 11, 7);
+		SM.Take_Container(75451, 12, 7);
+		SM.Take_Container(75452, 13, 7);
 		
-		assertEquals(11, Inv.Contained_In(75450).get(0).intValue());
+		assertEquals(11, SM.Contained_In(75450).get(0).intValue());
 		assertEquals(6, Inv.Get_Item_Qty(75450));
-		assertEquals(12, Inv.Contained_In(75451).get(0).intValue());
+		assertEquals(12, SM.Contained_In(75451).get(0).intValue());
 		assertEquals(20, Inv.Get_Item_Qty(75451));
-		assertEquals(13, Inv.Contained_In(75452).get(0).intValue());
+		assertEquals(13, SM.Contained_In(75452).get(0).intValue());
 		assertEquals(31, Inv.Get_Item_Qty(75452));
 	}
 	
@@ -122,18 +118,18 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container3(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
-		Inv.Put_Container(75450, 12, 17);
-		Inv.Take_Container(75450, 12, 15);
-		assertEquals(12, Inv.Contained_In(75450).get(1).intValue());
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
+		SM.Put_Container(75450, 12, 17);
+		SM.Take_Container(75450, 12, 15);
+		assertEquals(12, SM.Contained_In(75450).get(1).intValue());
 		assertEquals(15, Inv.Get_Item_Qty(75450));
 		
-		Inv.Put_Container(75450, 33, 27);
-		Inv.Take_Container(75450, 33, 15);
-		assertTrue(Inv.Contained_In(75450).get(0).intValue() == 11 || Inv.Contained_In(75450).get(0).intValue() == 12 || Inv.Contained_In(75450).get(0).intValue() == 33);
-		assertTrue(Inv.Contained_In(75450).get(1).intValue() == 11 || Inv.Contained_In(75450).get(1).intValue() == 12 || Inv.Contained_In(75450).get(1).intValue() == 33);
-		assertTrue(Inv.Contained_In(75450).get(2).intValue() == 11 || Inv.Contained_In(75450).get(2).intValue() == 12 || Inv.Contained_In(75450).get(2).intValue() == 33);
+		SM.Put_Container(75450, 33, 27);
+		SM.Take_Container(75450, 33, 15);
+		assertTrue(SM.Contained_In(75450).get(0).intValue() == 11 || SM.Contained_In(75450).get(0).intValue() == 12 || SM.Contained_In(75450).get(0).intValue() == 33);
+		assertTrue(SM.Contained_In(75450).get(1).intValue() == 11 || SM.Contained_In(75450).get(1).intValue() == 12 || SM.Contained_In(75450).get(1).intValue() == 33);
+		assertTrue(SM.Contained_In(75450).get(2).intValue() == 11 || SM.Contained_In(75450).get(2).intValue() == 12 || SM.Contained_In(75450).get(2).intValue() == 33);
 		assertEquals(27, Inv.Get_Item_Qty(75450));
 	}
 	/**
@@ -141,21 +137,21 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testEmpty_Container(){
-		Inv.Add_Inventory(75450, "Baseball");
-		Inv.Put_Container(75450, 11, 13);
-		Inv.Put_Container(75450, 12, 17);
+		Inv.Add_Inventory(75450, "Baseball", 0);
+		SM.Put_Container(75450, 11, 13);
+		SM.Put_Container(75450, 12, 17);
 		
-		assertTrue(Inv.Contained_In(75450).get(0).intValue() == 11 || Inv.Contained_In(75450).get(0).intValue() == 12);
-		assertTrue(Inv.Contained_In(75450).get(1).intValue() == 11 || Inv.Contained_In(75450).get(1).intValue() == 12);
-		assertTrue(Inv.Contained_In(75450).size() == 2);
-		Inv.Take_Container(75450, 11, 13);
+		assertTrue(SM.Contained_In(75450).get(0).intValue() == 11 || SM.Contained_In(75450).get(0).intValue() == 12);
+		assertTrue(SM.Contained_In(75450).get(1).intValue() == 11 || SM.Contained_In(75450).get(1).intValue() == 12);
+		assertTrue(SM.Contained_In(75450).size() == 2);
+		SM.Take_Container(75450, 11, 13);
 		
-		assertTrue(Inv.Contained_In(75450).get(0).intValue() == 12);
-		assertTrue(Inv.Contained_In(75450).size() == 1);
+		assertTrue(SM.Contained_In(75450).get(0).intValue() == 12);
+		assertTrue(SM.Contained_In(75450).size() == 1);
 		
-		Inv.Take_Container(75450, 12, 17);
+		SM.Take_Container(75450, 12, 17);
 		
-		assertTrue(Inv.Contained_In(75450).get(0).intValue() == 0);
+		assertTrue(SM.Contained_In(75450).get(0).intValue() == 0);
 		
 		assertEquals(0, Inv.Get_Item_Qty(75450));
 	}

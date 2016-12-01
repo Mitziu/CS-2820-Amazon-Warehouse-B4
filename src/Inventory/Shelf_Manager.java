@@ -166,9 +166,8 @@ public class Shelf_Manager implements S_Manager{
 		//each item and places it on a shelf 
 		if (Shelf_IDs.size() >= Inv.Pass_Inventory().size()){
 			for (int i = 0; i < Inv.Pass_Inventory().size(); i++){
-				Shelf_Details Shelf_Use = Shelf.get(Shelf_IDs.get(i));
 				int Item_Use = Inv.Pass_Inventory().get(i);
-				Shelf_Use.Items.put(Item_Use, Inv.Get_Item_Qty(Item_Use));
+				Put_Container(Item_Use, Shelf_IDs.get(i), Inv.Get_Item_Qty(Item_Use));
 			
 			}
 		}
@@ -181,17 +180,15 @@ public class Shelf_Manager implements S_Manager{
 			int y= 0;
 			for (int x = 0; x < Inv.Pass_Inventory().size(); x++){
 				if (y < Shelf_IDs.size() && x < Inv.Pass_Inventory().size()){
-					Shelf_Details Shelf_Use = Shelf.get(Shelf_IDs.get(y));
 					int Item_Use = Inv.Pass_Inventory().get(x);
-					Shelf_Use.Items.put(Item_Use, Inv.Get_Item_Qty(Item_Use));
+					Put_Container(Item_Use, Shelf_IDs.get(y), Inv.Get_Item_Qty(Item_Use));
 					y++;
 				}
 				
 				else if(x < Inv.Pass_Inventory().size()) {
 					y = 0;
-					Shelf_Details Shelf_Use = Shelf.get(Shelf_IDs.get(y));
 					int Item_Use = Inv.Pass_Inventory().get(x);
-					Shelf_Use.Items.put(Item_Use, Inv.Get_Item_Qty(Item_Use));
+					Put_Container(Item_Use, Shelf_IDs.get(y), Inv.Get_Item_Qty(Item_Use));
 					y++;
 				}
 			}

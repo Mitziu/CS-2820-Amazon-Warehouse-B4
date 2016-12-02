@@ -7,15 +7,11 @@ import Floor.*;
  * Created by Matt on 11/14/2016.
  * @author Matt McCan
  *
- * Note: this will be refactored to work better with observer
  */
 public class VisRunner implements Observer {
-    private long timeDiff;
-    private long time;
     Visualizer visualizer;
     FloorPositions floorPositions;
     List warehouseHistory;
-    int counter = 0;
 
     /**
      * @author Matt
@@ -27,6 +23,7 @@ public class VisRunner implements Observer {
     }
 
     /**
+     * @author Matt
      * @param o
      * @param arg
      */
@@ -40,26 +37,22 @@ public class VisRunner implements Observer {
 
     /**
      * @author Matt
+     * @param newMap
      */
     public void givePositions (Map<String, Point> newMap) {
         //Currently uses dummy values
         visualizer.updateFloor(newMap);
     }
 
+    /**
+     * @author Matt
+     * @param newMap
+     * Stores positions in warehouseHistory
+     */
     public void storePositions (Map<String, Point> newMap) {
-        warehouseHistory.add(newMap);
+        if (visualizer != null) warehouseHistory.add(newMap);
+        else visualizer.run((LinkedList<HashMap<String, Point>>)warehouseHistory);
     }
 
-    public HashMap<String, Point> getNextMap() {
-        counter++;
-        if (warehouseHistory.size() - 1 <= counter) {
-            return (HashMap<String, Point>) warehouseHistory.get(counter - 1);
-        }
-        else {
-            counter--;
-            System.out.println("You have reached the end of the simulation!");
-            return (HashMap<String, Point>) warehouseHistory.get(counter - 1);
-        }
 
-    }
 }

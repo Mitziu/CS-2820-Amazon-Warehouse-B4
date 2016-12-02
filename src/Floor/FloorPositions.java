@@ -2,6 +2,7 @@ package Floor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Matt on 11/10/2016.
@@ -45,7 +46,6 @@ public interface FloorPositions {
     void clearPath();// for robot to re-run the routefinding method
 
     ArrayList<Point> getAllPoints();
-
 
     /* User Manual:
     0. how visualizer gonna get location: 

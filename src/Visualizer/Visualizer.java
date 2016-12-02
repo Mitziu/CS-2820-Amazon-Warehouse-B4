@@ -39,14 +39,14 @@ public class Visualizer {
      */
     private HashMap<String, Point> getNextMap() {
         counter++;
-        if (warehouseHistory.size() - 1 <= counter) {
+        if (warehouseHistory.size() - 1 >= counter) {
             return warehouseHistory.get(counter - 1);
         }
         else {
             counter--;
             System.out.println("You have reached the end of the simulation!");
             done = true;
-            return warehouseHistory.get(counter - 1);
+            return warehouseHistory.get(counter);
         }
 
     }

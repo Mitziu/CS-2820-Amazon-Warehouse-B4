@@ -1,7 +1,6 @@
 package Floor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by Mitziu on 11/15/16.
@@ -20,10 +19,10 @@ public class MockFloor implements FloorPositions {
     @Override
     public void Initialize() {
         floorMap = new HashMap<>();
+    }
 
-        floorMap.put("Bender_Is_The_Greatest_Robot_Ever", new Point(3, 5));
-        floorMap.put("A_Shelf", new Point(3, 6));
-        floorMap.put("Any_Other_Object_In_Warehouse", new Point(1, 1));
+    public void changeFloorMap (HashMap<String, Point> newMap) {
+        floorMap = newMap;
     }
 
     @Override

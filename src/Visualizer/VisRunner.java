@@ -31,18 +31,18 @@ public class VisRunner implements Observer {
     public void update (Observable o, Object arg) {
         //TODO: Get latest map from Floor
         Map tempMap = new HashMap<>(floorPositions.getAllPositions());
-        givePositions(tempMap);
         storePositions(tempMap);
     }
 
     /**
      * @author Matt
      * @param newMap
-     */
+     * unused at the moment
+     */ /*
     public void givePositions (Map<String, Point> newMap) {
         //Currently uses dummy values
         visualizer.updateFloor(newMap);
-    }
+    }*/
 
     /**
      * @author Matt
@@ -50,7 +50,7 @@ public class VisRunner implements Observer {
      * Stores positions in warehouseHistory
      */
     public void storePositions (Map<String, Point> newMap) {
-        if (visualizer != null) warehouseHistory.add(newMap);
+        if (!newMap.isEmpty()) warehouseHistory.add(newMap);
         else visualizer.run((LinkedList<HashMap<String, Point>>)warehouseHistory);
     }
 

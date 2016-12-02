@@ -147,7 +147,8 @@ public class GoldenManager implements RobotManager, Observer {
         }
         if (King.getLoc() == src.getPicker().getLoc()) {
             King.IsPicked();
-
+            //TODO: Pass Picker as parameter for constructor GoldManager ( args....., Picker picker)
+            //TODO: picker.shelfArrived ( King.m_shelf.id );
         }
         if (Queen.getLoc() == src.getPicker().getLoc()) {
             Queen.IsPicked();

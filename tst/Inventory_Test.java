@@ -11,12 +11,13 @@ import java.text.ParseException;
 public class Inventory_Test {
 	
 	//Before//
-	Inventory Inv = new Inventory();
-	Shelf_Manager SM = new Shelf_Manager(Inv);
+	Shelf_Manager SM = new Shelf_Manager();
+	LinkedList<Integer> MockShelf_IDs =	new LinkedList<Integer>();
+	Inventory Inv = new Inventory(SM);
 	
 	@Test
 	public void testconstructor(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 0);
 		assertEquals(75450, Inv.Get_Inventory_ID("Baseball"));
 		assertEquals("Baseball", Inv.Get_Item_Name(75450));
 		assertEquals(0, Inv.Get_Item_Qty(75450));
@@ -27,7 +28,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In1(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 1);
 		int testvar = SM.Contained_In(75450).get(0);
 		assertEquals(0, testvar);
 	}
@@ -37,7 +38,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In2(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, 11, 13);
 		assertEquals(11, SM.Contained_In(75450).get(0).intValue());
 		assertEquals(13, Inv.Get_Item_Qty(75450));
@@ -47,10 +48,10 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_In3(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, 11, 13);
-		Inv.Add_Inventory(75451, "Softball");
-		Inv.Add_Inventory(75452, "Ballcap");
+		Inv.Add_Inventory(75451, "Softball", 27);
+		Inv.Add_Inventory(75452, "Ballcap", 38);
 		SM.Put_Container(75451, 12, 27);
 		SM.Put_Container(75452, 13, 38);
 		
@@ -68,7 +69,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testContained_in4(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, 11, 13);
 		
 		SM.Put_Container(75450, 12, 17);
@@ -85,11 +86,16 @@ public class Inventory_Test {
 	 * Testing after one item is loaded
 	 */
 	@Test
-	public void testTake_Container1(){
-		Inv.Add_Inventory(75450, "Baseball");
-		SM.Put_Container(75450, 11, 13);
-		SM.Take_Container(75450, 11, 7);
-		assertEquals(6, Inv.Get_Item_Qty(75450));
+	public void testTake_Container1()throws ParseException, IOException{
+		for (int i = 1; i <=9; i++){
+			MockShelf_IDs.add(i);
+		}
+		Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		Inv.Add_Inventory(75450, "Baseball", 100);
+		SM.Put_Container(75450, 1, 100);
+		Inv.Order_Claim(75450, 7);
+		SM.Take_Container(75450, 1, 7);
+		assertEquals(93, Inv.Get_Item_Qty(75450));
 	}
 	
 	/**
@@ -97,10 +103,10 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container2(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, 11, 13);
-		Inv.Add_Inventory(75451, "Softball");
-		Inv.Add_Inventory(75452, "Ballcap");
+		Inv.Add_Inventory(75451, "Softball", 27);
+		Inv.Add_Inventory(75452, "Ballcap", 38);
 		SM.Put_Container(75451, 12, 27);
 		SM.Put_Container(75452, 13, 38);
 		SM.Take_Container(75450, 11, 7);
@@ -120,7 +126,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testTake_Container3(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 30);
 		SM.Put_Container(75450, 11, 13);
 		SM.Put_Container(75450, 12, 17);
 		SM.Take_Container(75450, 12, 15);
@@ -139,7 +145,7 @@ public class Inventory_Test {
 	 */
 	@Test
 	public void testEmpty_Container(){
-		Inv.Add_Inventory(75450, "Baseball");
+		Inv.Add_Inventory(75450, "Baseball", 30);
 		SM.Put_Container(75450, 11, 13);
 		SM.Put_Container(75450, 12, 17);
 		
@@ -159,8 +165,11 @@ public class Inventory_Test {
 	}
 	
 	@Test
-	public void testInitializer() throws IOException, ParseException {
-		Inv.Inventory_Intialize("Inventory_CSV");
+	public void testInitializer() throws ParseException, IOException{
+		for (int i = 1; i <=9; i++){
+			MockShelf_IDs.add(i);
+		}
+		Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
 		assertEquals("Cat Food", Inv.Get_Item_Name(7));
 		assertEquals("Poster1", Inv.Get_Item_Name(9));
 		assertEquals(7, Inv.Get_Inventory_ID("Cat Food"));
@@ -185,8 +194,8 @@ public class Inventory_Test {
 		assertEquals(0, SM.Contained_In(10).get(0).intValue());
 	}
 	@Test
-	public void testContainer_Count() throws IOException, ParseException{
-		Inv.Inventory_Intialize("CSVFiles/Inventory_CSV");
+	public void testContainer_Count() throws ParseException, IOException{
+		Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
 		SM.Put_Container(6, 11, 100);
 		SM.Put_Container(6, 22, 200);
 		assertEquals(100, SM.Container_Count(6, 11));

@@ -9,11 +9,9 @@ import java.util.*;
 public class Shelf_Manager implements S_Manager{
 	
 	public HashMap <Integer, Shelf_Details> Shelf;
-	public Inventory Inv;
 	
-	public Shelf_Manager(Inventory Inv){
+	public Shelf_Manager(){
 		Shelf = new HashMap <Integer, Shelf_Details>();
-		this.Inv = Inv;
 	}
 	
 	/**
@@ -100,17 +98,15 @@ public class Shelf_Manager implements S_Manager{
 		int tempvar = Shelf_Use.Items.get(Item_ID);
 		tempvar -= Qty;
 		
-		//Changed this condition to add 15 if the quantity becomes too low.  Thereby "magically" 
-		//refilling the items.  Instead of checking for a quantity of 0 and then removing the item
-		//from the list of items for this Shelf.
-		//Also updates the Quantity in the Main Inventory to keep the two counts in sync
-		if (tempvar < 5){
-			tempvar += 15;
-			int Current_Qty = Inv.Get_Item_Qty(Item_ID);
-			Inv.Main_Inventory.get(Item_ID).Qty_Update(Current_Qty + 15);
+		//Checks if the new quantity for the shelf is 0 and then removes the item from the list 
+		//of items contained in the Shelf if it is.
+		if (tempvar == 0){
+			Shelf_Use.Items.remove(Item_ID);
 		}
-			
-		Shelf_Use.Items.put(Item_ID, tempvar);	
+		
+		else{
+			Shelf_Use.Items.put(Item_ID, tempvar);	
+		}
 	}
 	
 	/**
@@ -155,8 +151,9 @@ public class Shelf_Manager implements S_Manager{
 	 */
 	//This assumes that the Inventory has been generated and Initialized before this method
 	//is called.
-	public void Shelf_Manager_Init(LinkedList<Integer> Shelf_IDs){
+	public void Shelf_Manager_Init(LinkedList<Integer> Shelf_IDs, LinkedList<Integer> Inv, LinkedList<Integer> Qty){
 		//Adding shelf entries to the Shelf HashMap 
+		
 		for (int i=0; i < Shelf_IDs.size(); i++){
 			Shelf_Details New_Shelf = new Shelf_Details(Shelf_IDs.get(i));
 			Shelf.put(New_Shelf.Shelf_ID, New_Shelf);
@@ -164,10 +161,9 @@ public class Shelf_Manager implements S_Manager{
 		
 		//If there are as many or more shelves than Items in inventory it simply cycles through
 		//each item and places it on a shelf 
-		if (Shelf_IDs.size() >= Inv.Pass_Inventory().size()){
-			for (int i = 0; i < Inv.Pass_Inventory().size(); i++){
-				int Item_Use = Inv.Pass_Inventory().get(i);
-				Put_Container(Item_Use, Shelf_IDs.get(i), Inv.Get_Item_Qty(Item_Use));
+		if (Shelf_IDs.size() >= Inv.size()){
+			for (int i = 0; i < Inv.size(); i++){
+				Put_Container(Inv.get(i), Shelf_IDs.get(i), Qty.get(i));
 			
 			}
 		}
@@ -178,17 +174,15 @@ public class Shelf_Manager implements S_Manager{
 		//until every item has been placed on a shelf
 		else{
 			int y= 0;
-			for (int x = 0; x < Inv.Pass_Inventory().size(); x++){
-				if (y < Shelf_IDs.size() && x < Inv.Pass_Inventory().size()){
-					int Item_Use = Inv.Pass_Inventory().get(x);
-					Put_Container(Item_Use, Shelf_IDs.get(y), Inv.Get_Item_Qty(Item_Use));
+			for (int x = 0; x < Inv.size(); x++){
+				if (y < Shelf_IDs.size() && x < Inv.size()){
+					Put_Container(Inv.get(x), Shelf_IDs.get(y), Qty.get(x));
 					y++;
 				}
 				
-				else if(x < Inv.Pass_Inventory().size()) {
+				else if(x < Inv.size()) {
 					y = 0;
-					int Item_Use = Inv.Pass_Inventory().get(x);
-					Put_Container(Item_Use, Shelf_IDs.get(y), Inv.Get_Item_Qty(Item_Use));
+					Put_Container(Inv.get(x), Shelf_IDs.get(y), Qty.get(x));
 					y++;
 				}
 			}

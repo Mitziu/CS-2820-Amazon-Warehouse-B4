@@ -18,7 +18,7 @@ public class Shelf implements Thing {
         length = 1;
         name = "Great Shelf NO:" + id;
         this.id = id;
-        
+
         //items.put();
     }
 

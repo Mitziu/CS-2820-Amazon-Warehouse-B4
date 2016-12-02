@@ -17,15 +17,17 @@ public interface RobotManager {
 
     //WARNING: INITIALIZE FloorPositions FIRST!!!!!!!!!!!!!!
     /*DOCUMENTAION: OrderIsComing is the "MAIN" function for RobotManager, no other functions are needed*/
-    public void Background( S_Manager input, FloorPositions src);
+    public void Background(S_Manager input, FloorPositions src);
+
     public void SetOrder(Order input); // set order
+
     public boolean IsDone(); // show if order is done, will return true if everything is finished
     /*USER MANUAL(right now can only run single order):
-      0. initialize shelfmaneger and floorpositions
+      0. initialize shelfmaneger and floorpositions, and create the object with its own constructor
       1. SetOrder        (warining : just a single Order)
-      1. Background(shelfmanager, floorpositions)
+      
       2. run, while keep checking IsDone()
       3. if IsDone() == true, get a new order and SetOrder again!
     TO BE CONTINUED
-    */
+     */
 }

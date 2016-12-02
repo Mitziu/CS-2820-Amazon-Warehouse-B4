@@ -5,6 +5,8 @@
  */
 package Floor;
 
+import Belt.Picker;
+import Belt.PickerImpl;
 import Inventory.S_Manager;
 import Ordering.Order;
 import java.util.Observer;
@@ -32,12 +34,16 @@ public class GoldenManager implements RobotManager, Observer {
     public Station picker;
     public Order order;
     public boolean done = false;
-
-    @Override
+    public Picker m_picker;
 
     /* QUESTIONS: not sure about how to get amount of the item on one shelf( so just made it 1)
                                    not sure about getItemIDList(), perhaps, (itemId, qty)?
      */
+    public GoldenManager(S_Manager input, FloorPositions srcInput) {
+        Background(input, srcInput);
+    }
+
+    @Override
     public void Background(S_Manager input, FloorPositions srcInput) {
         //COMMENT: order handling, split orders into the shelves that robots need to visit
         m_inventory = input;
@@ -147,18 +153,20 @@ public class GoldenManager implements RobotManager, Observer {
         }
         if (King.getLoc() == src.getPicker().getLoc()) {
             King.IsPicked();
+            m_picker.shelfArrived(King.m_shelf.id);
             //TODO: Pass Picker as parameter for constructor GoldManager ( args....., Picker picker)
             //TODO: picker.shelfArrived ( King.m_shelf.id );
         }
         if (Queen.getLoc() == src.getPicker().getLoc()) {
             Queen.IsPicked();
+            m_picker.shelfArrived(Queen.m_shelf.id);
         }
         if (King.getLoc() == King.OrginOfShelf) {
-            if(King.picked&&King.Carried){
+            if (King.picked && King.Carried) {
                 King.Drop();
-            }else if(!King.Carried){
-                for(int i =0;i<m_shelves.size();i++){
-                    if(m_shelves.get(i).getLoc() ==King.OrginOfShelf){
+            } else if (!King.Carried) {
+                for (int i = 0; i < m_shelves.size(); i++) {
+                    if (m_shelves.get(i).getLoc() == King.OrginOfShelf) {
                         King.CarryUp(m_shelves.get(i));
                     }
                 }
@@ -166,11 +174,11 @@ public class GoldenManager implements RobotManager, Observer {
 
         }
         if (Queen.getLoc() == Queen.OrginOfShelf) {
-            if(Queen.picked&&Queen.Carried){
+            if (Queen.picked && Queen.Carried) {
                 Queen.Drop();
-            }else if(!Queen.Carried){
-                for(int i =0;i<m_shelves.size();i++){
-                    if(m_shelves.get(i).getLoc() ==Queen.OrginOfShelf){
+            } else if (!Queen.Carried) {
+                for (int i = 0; i < m_shelves.size(); i++) {
+                    if (m_shelves.get(i).getLoc() == Queen.OrginOfShelf) {
                         Queen.CarryUp(m_shelves.get(i));
                     }
                 }

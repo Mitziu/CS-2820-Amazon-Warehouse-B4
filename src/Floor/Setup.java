@@ -245,7 +245,7 @@ public class Setup implements FloorPositions {
         TotalPath.clear();
     }
 
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         
         
         Setup s = new Setup();
@@ -258,5 +258,5 @@ public class Setup implements FloorPositions {
         for (int i = 0; i < path.size(); i++) {
             System.out.println(path.get(i).GetX() + "," + path.get(i).GetY());
         }
-    }
+    }*/
 }

@@ -1,3 +1,4 @@
+import Floor.Setup;
 import Inventory.Inventory;
 import Inventory.Shelf_Manager;
 import java.util.*;
@@ -15,6 +16,7 @@ public class Inventory_Test {
 	Shelf_Manager SM = new Shelf_Manager();
 	LinkedList<Integer> MockShelf_IDs =	new LinkedList<Integer>();
 	Inventory Inv = new Inventory(SM);
+	Setup setup = new Setup();
 	
 	@Test
 	public void testconstructor(){
@@ -91,7 +93,8 @@ public class Inventory_Test {
 		for (int i = 1; i <=9; i++){
 			MockShelf_IDs.add(i);
 		}
-		Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		//Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		Inv.Inventory_Initialize("Inventory_CSV", setup);
 		Inv.Add_Inventory(75450, "Baseball", 100);
 		SM.Put_Container(75450, 1, 100);
 		Inv.Order_Claim(75450, 7);
@@ -170,7 +173,8 @@ public class Inventory_Test {
 		for (int i = 1; i <=9; i++){
 			MockShelf_IDs.add(i);
 		}
-		Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		//Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		Inv.Inventory_Initialize("Inventory_CSV", setup);
 		assertEquals("Cat Food", Inv.Get_Item_Name(7));
 		assertEquals("Poster1", Inv.Get_Item_Name(9));
 		assertEquals(7, Inv.Get_Inventory_ID("Cat Food"));
@@ -196,7 +200,8 @@ public class Inventory_Test {
 	}
 	@Test
 	public void testContainer_Count() throws ParseException, IOException{
-		Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		//Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
+		Inv.Inventory_Initialize("Inventory_CSV", setup);
 		SM.Put_Container(6, 11, 100);
 		SM.Put_Container(6, 22, 200);
 		assertEquals(100, SM.Container_Count(6, 11));
@@ -213,7 +218,8 @@ public class Inventory_Test {
 	
 	@Test (expected = IOException.class)
 	public void initializerExceptionThrown() throws IOException, ParseException{
-		Inv.Inventory_Intialize("Fake_CSV");
+		//Inv.Inventory_Intialize("Fake_CSV", setup);
+		Inv.Inventory_Initialize("Fake_CSV", setup);
 	}
 	
 }

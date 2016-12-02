@@ -6,6 +6,8 @@
  */
 
 import Belt.Belt;
+import Floor.FloorPositions;
+import Floor.Setup;
 import Ordering.OrderingSystem;
 import Ordering.Order;
 import org.junit.Assert;
@@ -49,8 +51,9 @@ public class OrderTest {
 
     public static void main(String[] args){
         Shelf_Manager testShelf = new Shelf_Manager();
+        FloorPositions floor = new Setup();
         Inventory testInvent = new Inventory(testShelf);
-        GoldenManager testRobot = new GoldenManager();
+        GoldenManager testRobot = new GoldenManager(testShelf, floor);
         BeltImpl testBelt = new BeltImpl(10,10);
         PickerImpl testPicker = new PickerImpl(testBelt, testShelf);
 

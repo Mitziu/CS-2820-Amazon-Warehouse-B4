@@ -20,7 +20,7 @@ import java.util.*;
 
 //Need class to be able to pass floor, inventory, belt, and robot objects
 //Use interfaces to be able to test
-public class OrderingSystem implements OrderInterface {
+public class OrderingSystem implements OrderInterface, Observer {
 
     //Instance variable is a map, the Key being orderIDs
     public Map<Integer, Order> OngoingOrders;
@@ -128,4 +128,8 @@ public class OrderingSystem implements OrderInterface {
 		
 	}
 
+    @Override
+    public void update(Observable o, Object arg) {
+        this.getShippedList();
+    }
 }

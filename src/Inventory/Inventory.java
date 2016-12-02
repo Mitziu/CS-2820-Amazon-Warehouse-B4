@@ -1,4 +1,5 @@
 package Inventory;
+import Floor.Setup;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -117,7 +118,7 @@ public class Inventory{
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public void Inventory_Initialize(String Filename, LinkedList<Integer> Shelf_IDs) throws ParseException, IOException{
+	public void Inventory_Initialize(String Filename) throws ParseException, IOException{
 		 BufferedReader br = new BufferedReader(new FileReader(Filename));
 		    String line =  null;
 
@@ -125,12 +126,20 @@ public class Inventory{
 		            String arr[] = line.split(",");
 		            Add_Inventory(Integer.valueOf(arr[0]), arr[1], 100);
 		    }
-		    
+		    //Getting Shelf IDs from the floor
+		    ArrayList<Shelf> Shelves = Setup.getShelves();
 		    LinkedList<Integer> ID_List = Pass_Inventory();
 			LinkedList<Integer> Qty_List = new LinkedList<Integer>();
+			LinkedList<Integer> Shelf_IDs = new LinkedList<Integer>();
+			
 			for (int i= 0; i < ID_List.size(); i++){
 				Qty_List.add(Get_Item_Qty(ID_List.get(i)));
 			}
+			//Converting Shelves to a linkedlist of just the shelf IDs
+			for (int x =0; x < Shelves.size(); x++){
+				Shelf_IDs.add(Shelves[i].id);
+			}
+			
 			SM.Shelf_Manager_Init(Shelf_IDs, ID_List, Qty_List);
 	}
 	
@@ -144,6 +153,7 @@ public class Inventory{
 		//Assuming there will be no orders for items not in inventory
 		int tempvar = Get_Item_Qty(Item_ID);
 		tempvar -= Qty;
+		//If an item count gets too low this adds 50 more of them
 		if(tempvar < 15){
 			int New_Qty = (50/SM.Contained_In(Item_ID).size());
 			for (int i =0; i < SM.Contained_In(Item_ID).size(); i++){

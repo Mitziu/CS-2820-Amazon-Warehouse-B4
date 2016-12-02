@@ -152,8 +152,8 @@ public class Shelf_Manager implements S_Manager{
 	//This assumes that the Inventory has been generated and Initialized before this method
 	//is called.
 	public void Shelf_Manager_Init(LinkedList<Integer> Shelf_IDs, LinkedList<Integer> Inv, LinkedList<Integer> Qty){
-		//Adding shelf entries to the Shelf HashMap 
 		
+		//Adding shelf entries to the Shelf HashMap 
 		for (int i=0; i < Shelf_IDs.size(); i++){
 			Shelf_Details New_Shelf = new Shelf_Details(Shelf_IDs.get(i));
 			Shelf.put(New_Shelf.Shelf_ID, New_Shelf);

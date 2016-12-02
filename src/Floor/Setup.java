@@ -10,7 +10,7 @@ public class Setup implements FloorPositions {
     Station packager;
     ChargingStation charge;
     m_belt f_belt;
-    ArrayList<Shelf> SA;
+    static ArrayList<Shelf> SA;
     ArrayList<Robots> RB;
     ArrayList<route> Routes;
     ArrayList<Point> TotalPath = new ArrayList<Point>();
@@ -244,16 +244,19 @@ public class Setup implements FloorPositions {
     public void clearPath() {
         TotalPath.clear();
     }
-    public static void main(String [ ] args)
-                     {
-                                Setup s = new Setup();
-                                s.Initialize();
-                                Point rob_loc = s.getRobots().get(0).getLoc();
-                                Point target = s.getShelves().get(0).getLoc();
-                                ArrayList<Point> path = new ArrayList<Point>();
-                                path = s.RouteFinding(target,rob_loc);
-                                for(int i =0 ;i<path.size();i++){
-                                           System.out.println(path.get(i).GetX()+","+path.get(i).GetY());
-                                }
-                     }
+
+    public static void main(String[] args) {
+        
+        
+        Setup s = new Setup();
+        s.Initialize();
+        System.out.println("ammmout"+ SA.size());
+        Point rob_loc = s.getRobots().get(0).getLoc();
+        Point target = s.getShelves().get(0).getLoc();
+        ArrayList<Point> path = new ArrayList<Point>();
+        path = s.RouteFinding(target, rob_loc);
+        for (int i = 0; i < path.size(); i++) {
+            System.out.println(path.get(i).GetX() + "," + path.get(i).GetY());
+        }
+    }
 }

@@ -113,6 +113,7 @@ public class GoldenManager implements RobotManager, Observer {
 
     public void TripForShelf(Robots r, Shelf s) {
         ArrayList<Point> temp;
+        r.OrginOfShelf = s.getLoc();
         temp = src.RouteFinding(s.getLoc(), r.getLoc());
         for (int i = 0; i < temp.size(); i++) {
             r.commands.add(temp.get(i));
@@ -143,6 +144,36 @@ public class GoldenManager implements RobotManager, Observer {
         if (Queen.getLoc() == src.getChargingStation().getLoc()) {
             Queen.battery = 1.00;
             Queen.needCharge = false;
+        }
+        if (King.getLoc() == src.getPicker().getLoc()) {
+            King.IsPicked();
+
+        }
+        if (Queen.getLoc() == src.getPicker().getLoc()) {
+            Queen.IsPicked();
+        }
+        if (King.getLoc() == King.OrginOfShelf) {
+            if(King.picked&&King.Carried){
+                King.Drop();
+            }else if(!King.Carried){
+                for(int i =0;i<m_shelves.size();i++){
+                    if(m_shelves.get(i).getLoc() ==King.OrginOfShelf){
+                        King.CarryUp(m_shelves.get(i));
+                    }
+                }
+            }
+
+        }
+        if (Queen.getLoc() == Queen.OrginOfShelf) {
+            if(Queen.picked&&Queen.Carried){
+                Queen.Drop();
+            }else if(!Queen.Carried){
+                for(int i =0;i<m_shelves.size();i++){
+                    if(m_shelves.get(i).getLoc() ==Queen.OrginOfShelf){
+                        Queen.CarryUp(m_shelves.get(i));
+                    }
+                }
+            }
         }
         if (!King.commands.isEmpty()) {
             if (NextForKing.GetX() == NextForQueen.GetX() && NextForKing.GetY() == NextForQueen.GetY()) {

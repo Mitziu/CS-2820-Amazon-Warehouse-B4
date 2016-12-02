@@ -8,18 +8,19 @@ public class Robots implements Thing { //contains robots and shelves
     public int h = 1;
     public int id;
     public Shelf m_shelf;
-    public int Carried = -1;
+    public boolean Carried = false;
     public int x_loc;
     public int y_loc;
     public int width;
     public int length;
     public boolean moveable = true;
     public boolean needCharge = false;
-    int priority;
+
     public double battery = 1.00;
     public ArrayList<Point> commands;
     public Point OrginOfShelf;
     public Setup m_setup;
+    public boolean picked = false;
 
     public Robots(int x, int y, int s, Setup input) {
         x_loc = x;
@@ -27,9 +28,9 @@ public class Robots implements Thing { //contains robots and shelves
         width = w;
         length = h;
         id = s;
-        priority = x + y;
+
         m_setup = input;
-       
+
     }
 
     @Override
@@ -64,7 +65,9 @@ public class Robots implements Thing { //contains robots and shelves
                 if (moveable) {
                     x_loc = x;
                     y_loc = y;
-                    m_shelf.move(x,y);
+                    if (this.Carried) {
+                        m_shelf.move(x, y);
+                    }
                 }
                 commands.remove(0);
                 this.battery = this.battery - 0.0001;
@@ -82,7 +85,9 @@ public class Robots implements Thing { //contains robots and shelves
         if (moveable) {
             x_loc = x;
             y_loc = y;
-            m_shelf.move(x,y);
+            if (this.Carried) {
+                m_shelf.move(x, y);
+            }
             commands.remove(0);
         }
     }
@@ -91,13 +96,23 @@ public class Robots implements Thing { //contains robots and shelves
         return new Point(x_loc, y_loc);
     }
 
-    public int HasShelf() {
+    public boolean HasShelf() {
         return this.Carried;
     }
 
+    public void IsPicked() {
+        picked = true;
+    }
+
     public void CarryUp(Shelf input) {
-        this.Carried = this.Carried*(-1);
+        this.Carried = true;
+        this.picked = false;
         m_shelf = input;
+    }
+
+    public void Drop() {
+        this.Carried = false;
+        m_shelf = null;
     }
 
     public void Charging() {

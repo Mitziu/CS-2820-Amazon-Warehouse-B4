@@ -57,6 +57,10 @@ public interface FloorPositions {
     3. how robot gonna grab shelf:
             a. in Robots Class, we have a method called HasShelf() that could check if the robot is occupied, and if not we can 
             b.Use a method called Carryup(Shelf input)in Robots class, which will carry one shelf on robot
+    4. how to get all shelves and get arrtibutes from it:
+            a. use getShelves() to get an arraylist of all shelves
+            b. use .id to get id of any shelf(for example : int id = shelfExample.id;)
+            c. use .getLoc() to get location of any shelf(for example : Point loc = shelfExample.getLoc();)
     .....
    TO BE CONTINUED
      */

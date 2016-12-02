@@ -15,6 +15,7 @@ import Belt.BeltImpl;
 import Inventory.Inventory;
 import Floor.RobotManager;
 import Belt.PickerImpl;
+import Inventory.Shelf_Manager;
 import Floor.GoldenManager;
 
 
@@ -47,7 +48,8 @@ public class OrderTest {
         //Need getHistory test
 
     public static void main(String[] args){
-        Inventory testInvent = new Inventory();
+        Shelf_Manager testShelf = new Shelf_Manager();
+        Inventory testInvent = new Inventory(testShelf);
         GoldenManager testRobot = new GoldenManager();
         BeltImpl testBelt = new BeltImpl(10,10);
         PickerImpl testPicker = new PickerImpl(testBelt);

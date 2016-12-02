@@ -1,5 +1,6 @@
 import Inventory.Inventory;
 import Inventory.Shelf_Manager;
+import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -58,7 +58,7 @@ public class Inventory{
 	
 	/**
 	 * Returns how many of a particular item are stocked in the warehouse
-	 * @param int Item ID number
+	 * @param ID int Item ID number
 	 * @return int Amount of Item currently in stock
 	 */
 	public int Get_Item_Qty(int ID){
@@ -67,7 +67,7 @@ public class Inventory{
 
 	/**
 	 * Returns the name of the item when given the item ID number
-	 * @param int Item ID number
+	 * @param ID int Item ID number
 	 * @return String Item's name
 	 * @author William Anderson
 	 */
@@ -77,7 +77,7 @@ public class Inventory{
 
 	/**
 	 * Returns the Item's ID number given the Item name
-	 * @param String Name of Item
+	 * @param name String Name of Item
 	 * @return int Item ID number
 	 * @author William Anderson
 	 */
@@ -87,8 +87,9 @@ public class Inventory{
 
 	/**
 	 * Adds an Item to the Main_Inventory HashMap.
-	 * @param int Item ID number
-	 * @param Item Name
+	 * @param ID int Item ID number
+	 * @param Name Item Name
+	 * @param Qty int quantity
 	 * @author William Anderson
 	 */
 	//Currently this assumes that no one will try to add the same Item or Item ID number twice.
@@ -118,7 +119,7 @@ public class Inventory{
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public void Inventory_Initialize(String Filename) throws ParseException, IOException{
+	public void Inventory_Initialize(String Filename, Setup setup) throws ParseException, IOException{
 		 BufferedReader br = new BufferedReader(new FileReader(Filename));
 		    String line =  null;
 
@@ -127,7 +128,7 @@ public class Inventory{
 		            Add_Inventory(Integer.valueOf(arr[0]), arr[1], 100);
 		    }
 		    //Getting Shelf IDs from the floor
-		    ArrayList<Shelf> Shelves = Setup.getShelves();
+		    ArrayList<Floor.Shelf> Shelves = setup.getShelves();
 		    LinkedList<Integer> ID_List = Pass_Inventory();
 			LinkedList<Integer> Qty_List = new LinkedList<Integer>();
 			LinkedList<Integer> Shelf_IDs = new LinkedList<Integer>();
@@ -137,7 +138,7 @@ public class Inventory{
 			}
 			//Converting Shelves to a linkedlist of just the shelf IDs
 			for (int x =0; x < Shelves.size(); x++){
-				Shelf_IDs.add(Shelves[i].id);
+				Shelf_IDs.add(Shelves.get(x).id);
 			}
 			
 			SM.Shelf_Manager_Init(Shelf_IDs, ID_List, Qty_List);

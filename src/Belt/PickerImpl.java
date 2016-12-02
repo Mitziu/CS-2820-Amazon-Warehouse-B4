@@ -1,5 +1,6 @@
 package Belt;
 
+import Inventory.S_Manager;
 import Ordering.Order;
 
 import java.util.ArrayList;
@@ -24,12 +25,15 @@ public class PickerImpl implements Picker, Observer {
 
     private List<OrderToFulfill> ongoingOrders;
     private Belt myBelt;
+    private S_Manager shelfManager;
+    private Integer shelfID;
 
     private Queue<OrderToFulfill> finishedOrdersQueue;
 
-    public PickerImpl (Belt belt) {
+    public PickerImpl (Belt belt, S_Manager shelfManager) {
         this.ongoingOrders = new ArrayList<>();
         this.myBelt = belt;
+        this.shelfManager = shelfManager;
         finishedOrdersQueue = new LinkedList<>();
     }
 
@@ -48,13 +52,14 @@ public class PickerImpl implements Picker, Observer {
     /**
      * Informs the Picker that a new shelf has arrived with items to fulfill an order
      * @author Mitziu
-     * @param shelf Belt.Shelf has arrived
+     * @param shelfID Belt.Shelf has arrived
      */
     @Override
-    //TODO: Should be shelf ID
-    public void shelfArrived(Shelf shelf) {
-        shelf.itemsOnShelf().stream()
-                .forEach(itemID -> pickItemsFromShelf(itemID));
+    public void shelfArrived(Integer shelfID) {
+        this.shelfID = shelfID;
+
+        shelfManager.Item_List(shelfID).stream()
+                .forEach(itemID -> pickItemsFromShelf((Integer) itemID));
     }
 
     /**
@@ -62,9 +67,18 @@ public class PickerImpl implements Picker, Observer {
      * @param itemID ID of item
      */
     private void pickItemsFromShelf(Integer itemID) {
-        ongoingOrders.stream()
+        List<OrderToFulfill> ongoingOrdersThatNeedItem = ongoingOrders.stream()
                 .filter(currentOrder -> currentOrder.orderNeedsItem(itemID))
-                .forEach(currentOrder -> currentOrder.removeItem(itemID));
+                .collect(Collectors.toList());
+
+        ongoingOrdersThatNeedItem.stream()
+                .forEach(orderToFulfill -> {
+                    Integer itemsNeeded = orderToFulfill.qtyNeeded(itemID);
+                    if (shelfManager.Container_Count(itemID, shelfID) >= itemsNeeded) {
+                        shelfManager.Take_Container(itemID, shelfID, itemsNeeded);
+                        orderToFulfill.removeItem(itemID);
+                    }
+                });
     }
 
     /**
@@ -146,6 +160,10 @@ public class PickerImpl implements Picker, Observer {
          */
         public void removeItem(Integer itemID) {
             items.remove(itemID);
+        }
+
+        public Integer qtyNeeded (Integer itemID) {
+            return items.get(itemID);
         }
 
         /**

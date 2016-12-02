@@ -23,9 +23,8 @@ public interface Picker {
      * @author Mitziu
      * @author Max
      * @author Eduardo
-     * @param shelf Belt.Shelf has arrived
+     * @param shelfID ID of the shelf at the picker station
      */
-    public void shelfArrived (Shelf shelf);
-    //TODO: Need to create a single shelf class
+    public void shelfArrived (Integer shelfID);
 
 }

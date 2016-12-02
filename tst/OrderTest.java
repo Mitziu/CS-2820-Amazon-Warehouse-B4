@@ -52,7 +52,7 @@ public class OrderTest {
         Inventory testInvent = new Inventory(testShelf);
         GoldenManager testRobot = new GoldenManager();
         BeltImpl testBelt = new BeltImpl(10,10);
-        PickerImpl testPicker = new PickerImpl(testBelt);
+        PickerImpl testPicker = new PickerImpl(testBelt, testShelf);
 
         OrderingSystem testOrderSystem = new OrderingSystem(testInvent, testBelt, testRobot, testPicker);
 

@@ -10,7 +10,7 @@ package Ordering;
 
 import Belt.BeltImpl;
 import Inventory.Inventory;
-import RobotScheduler.RobotScheduler;
+import Floor.RobotManager;
 import Belt.Picker;
 
 import java.util.HashMap;
@@ -26,13 +26,13 @@ public class OrderingSystem implements OrderInterface {
     public Map<Integer, Order> OngoingOrders;
     public Inventory inventory;
     public BeltImpl belt;
-    public RobotScheduler robot;
+    public RobotManager robot;
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
     public Integer OrderID;
 
 
-    public OrderingSystem(Inventory inventory, BeltImpl belt, RobotScheduler robot, Picker picker){
+    public OrderingSystem(Inventory inventory, BeltImpl belt, RobotManager robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;
@@ -76,14 +76,12 @@ public class OrderingSystem implements OrderInterface {
 
     //Need to work with robot to send it item number or shelf location to have it pick up items
     public void getItem(Order order){
-
+        robot.SetOrder(order);
     }
 
     //Need to work with floor to get location of item
     //(11/17) do I need to even do this anymore?
-    public void getItemLocation(int itemid){
 
-    }
 
     public Map<Integer, Order> getCurrentOrders(){
         return this.OngoingOrders;
@@ -99,13 +97,13 @@ public class OrderingSystem implements OrderInterface {
         }
     }
 
-    //Tells belt that order is ready to move on belt
-    //(11/17) should I send an integer of orderID, or just an order?
-	//(11/17) commented out because picker will now tell belt to start, not orders
-    /*public void startBelt(Integer orderID){
-        belt.pack(orderID);
-
-    }*/
+    public void getShippedList(){
+        List<Integer> newlyShipped = belt.getShippedItems();
+        for (int x = 0; x < newlyShipped.size(); x++){
+            Integer newFinishedOrder = newlyShipped.get(x);
+            finishOrder(newFinishedOrder);
+        }
+    }
 
 
     //removes item by orderID

@@ -19,7 +19,6 @@ public interface OrderInterface{
     //Used to send the belt a notification that a complete order is on the belt and ready to move
     
     //Get the shelf on which the item is on
-    public void getItemLocation(int itemid);
     
     
     //Check to see if item is in stock

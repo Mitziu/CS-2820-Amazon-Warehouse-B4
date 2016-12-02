@@ -12,9 +12,6 @@ public class MockOrderingSystem implements OrderInterface {
     public void getItem(Order order) {
     }
 
-    @Override
-    public void getItemLocation(int itemid) {
-    }
 
     @Override
     public boolean isItemInStock(Integer itemid) {

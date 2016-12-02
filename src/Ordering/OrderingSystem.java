@@ -12,10 +12,10 @@ import Belt.BeltImpl;
 import Inventory.Inventory;
 import Floor.RobotManager;
 import Belt.Picker;
+import Floor.GoldenManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.*;
 
 //Need class to be able to pass floor, inventory, belt, and robot objects
@@ -26,13 +26,13 @@ public class OrderingSystem implements OrderInterface {
     public Map<Integer, Order> OngoingOrders;
     public Inventory inventory;
     public BeltImpl belt;
-    public RobotManager robot;
+    public GoldenManager robot;
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
     public Integer OrderID;
 
 
-    public OrderingSystem(Inventory inventory, BeltImpl belt, RobotManager robot, Picker picker){
+    public OrderingSystem(Inventory inventory, BeltImpl belt, GoldenManager robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;

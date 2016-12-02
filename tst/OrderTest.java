@@ -13,8 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 import Belt.BeltImpl;
 import Inventory.Inventory;
-import RobotScheduler.RobotScheduler;
+import Floor.RobotManager;
 import Belt.PickerImpl;
+import Floor.GoldenManager;
 
 
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class OrderTest {
 
     public static void main(String[] args){
         Inventory testInvent = new Inventory();
-        RobotScheduler testRobot = new RobotScheduler("TestRobot");
+        GoldenManager testRobot = new GoldenManager();
         BeltImpl testBelt = new BeltImpl(10,10);
         PickerImpl testPicker = new PickerImpl(testBelt);
 

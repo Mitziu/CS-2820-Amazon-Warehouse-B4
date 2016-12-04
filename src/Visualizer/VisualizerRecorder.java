@@ -8,7 +8,7 @@ import Floor.*;
  * @author Matt McCan
  *
  */
-public class VisRunner implements Observer {
+public class VisualizerRecorder implements Observer {
     Visualizer visualizer;
     FloorPositions floorPositions;
     List warehouseHistory;
@@ -16,7 +16,7 @@ public class VisRunner implements Observer {
     /**
      * @author Matt
      */
-    public VisRunner(FloorPositions floorPositions) {
+    public VisualizerRecorder(FloorPositions floorPositions) {
         this.floorPositions = floorPositions;
         visualizer = new Visualizer();
         warehouseHistory = new LinkedList<HashMap<String, Point>>();

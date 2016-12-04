@@ -37,10 +37,8 @@ public class Inventory{
 			this.Containers = new HashMap<Integer, Integer>();
 		}
 
-		/** 
-		 * Updates the quantity of an item by adding up all of the quantities stored in the shelves
-		 * @author William Anderson
-		 */
+
+		 //Updates the quantity of an item by adding up all of the quantities stored in the shelves
 		public void Qty_Update(int New_Qty){
 			this.Item_Quantity = New_Qty;
 		}
@@ -119,7 +117,7 @@ public class Inventory{
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public void Inventory_Initialize(String Filename, Setup setup) throws ParseException, IOException{
+	public void Inventory_Initialize(String Filename, Setup Setup) throws ParseException, IOException{
 		 BufferedReader br = new BufferedReader(new FileReader(Filename));
 		    String line =  null;
 
@@ -128,7 +126,7 @@ public class Inventory{
 		            Add_Inventory(Integer.valueOf(arr[0]), arr[1], 100);
 		    }
 		    //Getting Shelf IDs from the floor
-		    ArrayList<Floor.Shelf> Shelves = setup.getShelves();
+		    ArrayList<Floor.Shelf> Shelves = Setup.getShelves();
 		    LinkedList<Integer> ID_List = Pass_Inventory();
 			LinkedList<Integer> Qty_List = new LinkedList<Integer>();
 			LinkedList<Integer> Shelf_IDs = new LinkedList<Integer>();

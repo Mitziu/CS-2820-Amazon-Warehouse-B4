@@ -29,8 +29,20 @@ public class Shelf_Manager implements S_Manager{
 			this.Items = new HashMap<Integer, Integer>();
 		}
 		
-	}	
-	
+	}
+
+	/**
+	 * Returns a LinkedList of all the shelf IDs currently recognized
+	 * by the Shelf_Manager
+	 * @return LinkedList of all the Shelf_IDs in Shelf_Manager
+	 */
+	public LinkedList<Integer> Get_All_Shelves(){
+		Set Temp_Set = Shelf.keySet();
+		LinkedList Ret_List = new LinkedList();
+		Ret_List.addAll(Temp_Set);
+		return Ret_List;
+	}
+
 	/**
 	 * Provides a list of items the shelf holds
 	 * @param Shelf_ID ID number for the shelf
@@ -46,7 +58,7 @@ public class Shelf_Manager implements S_Manager{
 	/**
 	 * Returns the Number of a specific Item in a specific Container
 	 * @param Item_ID ID number for the Item
-	 * @param Container_ID	ID number for the Container
+	 * @param Shelf_ID	ID number for the Container
 	 * @return Number of Items in that container
 	 */
 	public int Container_Count(int Item_ID, int Shelf_ID){
@@ -64,7 +76,7 @@ public class Shelf_Manager implements S_Manager{
 	 * Adds an Item to the container by either adding that item and the amount contained to the 
 	 * Shelf's HashMap of items or updates the value for that item in the HashMap
 	 * @param Item_ID Item ID number
-	 * @param Container_ID Container ID number
+	 * @param Shelf_ID Container ID number
 	 * @param Qty Quantity to be added
 	 * @author William Anderson
 	 */
@@ -87,7 +99,7 @@ public class Shelf_Manager implements S_Manager{
 	 * Takes an item out of a container by editing the quantity for that item in the Shelf's HashMap
 	 * Also it will add more of that specific item to that shelf if the quantity drops too low
 	 * @param Item_ID Item ID number
-	 * @param Container_ID Container ID number
+	 * @param Shelf_ID Container ID number
 	 * @param Qty Quantity to be taken
 	 * @author William Anderson
 	 */

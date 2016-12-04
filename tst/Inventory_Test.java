@@ -17,9 +17,11 @@ public class Inventory_Test {
 	LinkedList<Integer> MockShelf_IDs =	new LinkedList<Integer>();
 	Inventory Inv = new Inventory(SM);
 	Setup setup = new Setup();
+
 	
 	@Test
 	public void testconstructor(){
+		setup.Initialize();
 		Inv.Add_Inventory(75450, "Baseball", 0);
 		assertEquals(75450, Inv.Get_Inventory_ID("Baseball"));
 		assertEquals("Baseball", Inv.Get_Item_Name(75450));
@@ -93,12 +95,12 @@ public class Inventory_Test {
 		for (int i = 1; i <=9; i++){
 			MockShelf_IDs.add(i);
 		}
-		//Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
-		Inv.Inventory_Initialize("Inventory_CSV", setup);
+		setup.Initialize();
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
 		Inv.Add_Inventory(75450, "Baseball", 100);
-		SM.Put_Container(75450, 1, 100);
+		SM.Put_Container(75450, 40, 100);
 		Inv.Order_Claim(75450, 7);
-		SM.Take_Container(75450, 1, 7);
+		SM.Take_Container(75450, 40, 7);
 		assertEquals(93, Inv.Get_Item_Qty(75450));
 	}
 	
@@ -106,49 +108,76 @@ public class Inventory_Test {
 	 * Testing after multiple different items are loaded
 	 */
 	@Test
-	public void testTake_Container2(){
+	public void testTake_Container2()throws ParseException, IOException{
+		setup.Initialize();
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+
 		Inv.Add_Inventory(75450, "Baseball", 13);
-		SM.Put_Container(75450, 11, 13);
+		SM.Put_Container(75450, SM.Get_All_Shelves().get(0) , 13);
 		Inv.Add_Inventory(75451, "Softball", 27);
 		Inv.Add_Inventory(75452, "Ballcap", 38);
-		SM.Put_Container(75451, 12, 27);
-		SM.Put_Container(75452, 13, 38);
-		SM.Take_Container(75450, 11, 7);
-		SM.Take_Container(75451, 12, 7);
-		SM.Take_Container(75452, 13, 7);
-		
-		assertEquals(11, SM.Contained_In(75450).get(0).intValue());
-		assertEquals(6, Inv.Get_Item_Qty(75450));
-		assertEquals(12, SM.Contained_In(75451).get(0).intValue());
-		assertEquals(20, Inv.Get_Item_Qty(75451));
-		assertEquals(13, SM.Contained_In(75452).get(0).intValue());
-		assertEquals(31, Inv.Get_Item_Qty(75452));
+		SM.Put_Container(75451, SM.Get_All_Shelves().get(1), 27);
+		SM.Put_Container(75452, SM.Get_All_Shelves().get(2), 38);
+		SM.Take_Container(75450, SM.Get_All_Shelves().get(0), 7);
+		SM.Take_Container(75451, SM.Get_All_Shelves().get(1), 7);
+		SM.Take_Container(75452, SM.Get_All_Shelves().get(2), 7);
+
+		//Checking that the items are all in the Shelves they are supposed to be
+		assertEquals(SM.Get_All_Shelves().get(0).intValue(), SM.Contained_In(75450).get(0).intValue());
+		assertEquals(SM.Get_All_Shelves().get(1).intValue(), SM.Contained_In(75451).get(0).intValue());
+		assertEquals(SM.Get_All_Shelves().get(2).intValue(), SM.Contained_In(75452).get(0).intValue());
+
+		//Checking that their quantities in the Main_Inventory haven't changed
+		assertEquals(13, Inv.Get_Item_Qty(75450));
+		assertEquals(27, Inv.Get_Item_Qty(75451));
+		assertEquals(38, Inv.Get_Item_Qty(75452));
+
+		//Checking that their Shelf quantities have changed
+		assertEquals(6, SM.Container_Count(75450, SM.Get_All_Shelves().get(0)));
+		assertEquals(20, SM.Container_Count(75451, SM.Get_All_Shelves().get(1)));
+		assertEquals(31, SM.Container_Count(75452, SM.Get_All_Shelves().get(2)));
 	}
 	
 	/**
 	 * Testing after multiple of the same item are loaded
 	 */
 	@Test
-	public void testTake_Container3(){
-		Inv.Add_Inventory(75450, "Baseball", 30);
-		SM.Put_Container(75450, 11, 13);
-		SM.Put_Container(75450, 12, 17);
-		SM.Take_Container(75450, 12, 15);
-		assertEquals(12, SM.Contained_In(75450).get(1).intValue());
-		assertEquals(15, Inv.Get_Item_Qty(75450));
-		
-		SM.Put_Container(75450, 33, 27);
-		SM.Take_Container(75450, 33, 15);
-		assertTrue(SM.Contained_In(75450).get(0).intValue() == 11 || SM.Contained_In(75450).get(0).intValue() == 12 || SM.Contained_In(75450).get(0).intValue() == 33);
-		assertTrue(SM.Contained_In(75450).get(1).intValue() == 11 || SM.Contained_In(75450).get(1).intValue() == 12 || SM.Contained_In(75450).get(1).intValue() == 33);
-		assertTrue(SM.Contained_In(75450).get(2).intValue() == 11 || SM.Contained_In(75450).get(2).intValue() == 12 || SM.Contained_In(75450).get(2).intValue() == 33);
-		assertEquals(27, Inv.Get_Item_Qty(75450));
+	public void testTake_Container3()throws ParseException, IOException{
+		setup.Initialize();
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+
+		Inv.Add_Inventory(75450, "Baseball", 50);
+		SM.Put_Container(75450, SM.Get_All_Shelves().get(0), 13);
+		SM.Put_Container(75450, SM.Get_All_Shelves().get(1), 17);
+		SM.Put_Container(75450, SM.Get_All_Shelves().get(2), 15);
+		SM.Take_Container(75450, SM.Get_All_Shelves().get(1), 15);
+		SM.Take_Container(75450, SM.Get_All_Shelves().get(2), 10);
+
+		//Testing that it will load an item correctly into multiple different shelves and
+		assertEquals(SM.Get_All_Shelves().get(0).intValue(), SM.Contained_In(75450).get(0).intValue());
+		assertEquals(SM.Get_All_Shelves().get(1).intValue(), SM.Contained_In(75450).get(1).intValue());
+		assertEquals(SM.Get_All_Shelves().get(2).intValue(), SM.Contained_In(75450).get(2).intValue());
+
+		//Testing that the Take_Container method doesn't change the Main_Inventory Quantity
+		//But does change the Shelf Quantity
+		assertEquals(50, Inv.Get_Item_Qty(75450));
+		assertEquals(2, SM.Container_Count(75450, SM.Get_All_Shelves().get(1)));
+		assertEquals(5, SM.Container_Count(75450, SM.Get_All_Shelves().get(2)));
+
+		SM.Put_Container(75450, SM.Get_All_Shelves().get(4), 27);
+		SM.Take_Container(75450, SM.Get_All_Shelves().get(4), 15);
+
+		assertEquals(50, Inv.Get_Item_Qty(75450));
+		assertEquals(12, SM.Container_Count(75450, SM.Get_All_Shelves().get(4)));
 	}
 	/**
 	 * tests that the container is removed from the list if it is emptied of an item
 	 */
 	@Test
-	public void testEmpty_Container(){
+	public void testEmpty_Container()throws ParseException, IOException{
+		setup.Initialize();
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+
 		Inv.Add_Inventory(75450, "Baseball", 30);
 		SM.Put_Container(75450, 11, 13);
 		SM.Put_Container(75450, 12, 17);

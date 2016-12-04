@@ -39,8 +39,9 @@ public class GoldenManager implements RobotManager, Observer {
     /* QUESTIONS: not sure about how to get amount of the item on one shelf( so just made it 1)
                                    not sure about getItemIDList(), perhaps, (itemId, qty)?
      */
-    public GoldenManager(S_Manager input, Setup srcInput) {
+    public GoldenManager(S_Manager input, Setup srcInput, Order orderinput) {
         Background(input, srcInput);
+        order = orderinput;
     }
 
     @Override

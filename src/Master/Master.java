@@ -42,9 +42,9 @@ public class Master implements Observer {
         checkNewOrders();
     }
 
-    public Master() {
+    public Master(OrderInterface orderSystem) {
         upcomingOrders = new LinkedList<>();
-        orderSystem = new MockOrderingSystem();
+        this.orderSystem = orderSystem;
 
         loadOrderQueue();
     }

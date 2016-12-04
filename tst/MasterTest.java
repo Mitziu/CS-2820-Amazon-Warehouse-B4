@@ -1,5 +1,6 @@
 import Clock.Clock;
 import Master.Master;
+import Ordering.MockOrderingSystem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class MasterTest {
     @Before
     public void setup() {
         clock = new Clock();
-        master = new Master();
+        master = new Master(new MockOrderingSystem());
         clock.addObserver(master);
     }
 

@@ -8,7 +8,7 @@ package Ordering;
  *
  */
 
-import Belt.BeltImpl;
+import Belt.*;
 import Inventory.Inventory;
 import Floor.RobotManager;
 import Belt.Picker;
@@ -25,14 +25,14 @@ public class OrderingSystem implements OrderInterface, Observer {
     //Instance variable is a map, the Key being orderIDs
     public Map<Integer, Order> OngoingOrders;
     public Inventory inventory;
-    public BeltImpl belt;
+    public Belt belt;
     public GoldenManager robot;
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
     public Integer OrderID;
 
 
-    public OrderingSystem(Inventory inventory, BeltImpl belt, GoldenManager robot, Picker picker){
+    public OrderingSystem(Inventory inventory, Belt belt, GoldenManager robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;

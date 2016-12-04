@@ -27,7 +27,7 @@ public class GoldenManager implements RobotManager, Observer {
     public S_Manager m_inventory;
     Robots King;
     Robots Queen;
-    public FloorPositions src;
+    public Setup src;
     public ArrayList<Integer> PlaceNeedToGo;
     public ArrayList<Robots> m_robots;
     public ArrayList<Shelf> m_shelves;
@@ -39,12 +39,12 @@ public class GoldenManager implements RobotManager, Observer {
     /* QUESTIONS: not sure about how to get amount of the item on one shelf( so just made it 1)
                                    not sure about getItemIDList(), perhaps, (itemId, qty)?
      */
-    public GoldenManager(S_Manager input, FloorPositions srcInput) {
+    public GoldenManager(S_Manager input, Setup srcInput) {
         Background(input, srcInput);
     }
 
     @Override
-    public void Background(S_Manager input, FloorPositions srcInput) {
+    public void Background(S_Manager input, Setup srcInput) {
         //COMMENT: order handling, split orders into the shelves that robots need to visit
         m_inventory = input;
         src = srcInput;

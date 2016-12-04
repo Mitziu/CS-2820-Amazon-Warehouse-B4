@@ -17,7 +17,7 @@ public interface RobotManager {
 
     //WARNING: INITIALIZE FloorPositions FIRST!!!!!!!!!!!!!!
     /*DOCUMENTAION: OrderIsComing is the "MAIN" function for RobotManager, no other functions are needed*/
-    public void Background(S_Manager input, FloorPositions src);
+    public void Background(S_Manager input, Setup src);
 
     public void SetOrder(Order input); // set order
 

@@ -1,9 +1,12 @@
 package RobotScheduler;
 import java.util.*;
 import Floor.Point;
+import Floor.Shelf;
 import Ordering.*;
 
 /**
+ * @author Matt
+ * @author Mitziu
  * Created by Matt on 12/4/2016.
  */
 public class MattsRobot {
@@ -12,6 +15,7 @@ public class MattsRobot {
     Queue<Point> path;
     Point location;
     public boolean loaded = false;
+    Shelf loadedShelf;
 
     /**
      * @author Matt
@@ -71,6 +75,7 @@ public class MattsRobot {
 
     /**
      * @author Matt
+     * @author Mitziu
      * @return next place robot is going
      */
     public Point nextLocation () {
@@ -97,10 +102,42 @@ public class MattsRobot {
 
     /**
      * @author Matt
+     * @author Mitziu
      * moves the robot to the next place
      */
     public void move () {
         location = path.poll();
+        if (loaded) {
+            loadedShelf.move(location.GetX(), location.GetY());
+        }
+    }
+
+    /**
+     * @author Matt
+     * @param shelf
+     * Load shelf on robot
+     */
+    public void mountShelf(Shelf shelf) {
+        loadedShelf = shelf;
+        loaded = true;
+    }
+
+    /**
+     * @author Matt
+     * @return if robot is loaded
+     * Getter for loaded
+     */
+    public boolean isLoaded () {
+        return loaded;
+    }
+
+    /**
+     * @author Matt
+     * @param loaded
+     * Setter for loaded
+     */
+    public void changeLoaded (boolean loaded) {
+        this.loaded = loaded;
     }
 
 }

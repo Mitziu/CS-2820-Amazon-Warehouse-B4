@@ -4,9 +4,16 @@ import Ordering.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+//TODO: robot/scheduler should know what shelf they are carrying;
+//TODO: robotScheduler should take picker in constructor, and call newOrder method when robot has reached picker;
+//TODO: figure out which shelf to go to--look at shelf manager, call containedIn method;
+//TODO: figure out which shelf a robot should go to via robotScheduler;
+//TODO: add Queue of shelveIDs to go to to fulfill order
+
 /**
  * Created by Matt on 12/4/2016.
  * @author Matt
+ * @author Mitziu
  */
 public class MattsRobotScheduler implements Observer {
     List<MattsRobot> robots;
@@ -15,6 +22,7 @@ public class MattsRobotScheduler implements Observer {
     /**
      * constructor
      * @author Matt
+     * @author Mitziu
      */
     public MattsRobotScheduler () {
         robots = new LinkedList<MattsRobot>();
@@ -23,6 +31,7 @@ public class MattsRobotScheduler implements Observer {
 
     /**
      * @author Matt
+     * @author Mitziu
      * @param robots
      * constructor Starts with robots and/or orders already
      */
@@ -56,11 +65,12 @@ public class MattsRobotScheduler implements Observer {
     }
 
     /**
+     * @author Mitziu
      * @author Matt
      * moves robots, preventing collisions
      */
     private void moveRobot (MattsRobot thisRobot) {
-        int occupied = robots.stream().
+        int occupied = robots.stream(). //How many robots are at the next location? If n = 0, then move robot.
                 filter(myRobot -> myRobot.getLocation().GetX() == thisRobot.nextLocation().GetX()).
                 filter(myRobot -> myRobot.getLocation().GetY() == thisRobot.nextLocation().GetY()).
                 collect(Collectors.toList()).size();
@@ -69,6 +79,7 @@ public class MattsRobotScheduler implements Observer {
     }
 
     /**
+     * @author Mitziu
      * @author Matt
      * @param o
      * @param e

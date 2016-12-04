@@ -1,7 +1,7 @@
 import Clock.Clock;
 import Floor.MockFloor;
 import Floor.Point;
-import Visualizer.Visualizer;
+import Visualizer.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class VisualizerTest {
 
-    Visualizer.VisualizerRecorder vs;
+    VisualizerRecorder vs;
     Clock clk;
 
     HashMap<String, Point> dumVals;
@@ -27,7 +27,7 @@ public class VisualizerTest {
     @Before
     public void setup() {
         floorPositions = new MockFloor();
-        vs = new Visualizer.VisualizerRecorder(floorPositions);
+        vs = new VisualizerRecorder(floorPositions);
         clk = new Clock();
         clk.addObserver(vs);
         dumVals = new HashMap<>();

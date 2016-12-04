@@ -10,12 +10,12 @@ import Ordering.*;
  * Created by Matt on 12/4/2016.
  */
 public class MattsRobot {
-    public boolean idle = true;
-    Order currentOrder;
-    Queue<Point> path;
-    Point location;
-    public boolean loaded = false;
-    Shelf loadedShelf;
+    private boolean idle = true;
+    private Order currentOrder;
+    private Queue<Point> path;
+    private Point location;
+    private boolean loaded = false;
+    private Shelf loadedShelf;
 
     /**
      * @author Matt
@@ -24,8 +24,6 @@ public class MattsRobot {
     public MattsRobot (Point location) {
         this.location = location;
     }
-
-    //SETTERS AND GETTERS FOR VARIABLES BELOW:
 
     /**
      * @author Matt
@@ -50,7 +48,7 @@ public class MattsRobot {
      * @param newOrder
      * setter for currentOrder
      */
-    public void setCurrentOrder (Order newOrder) {
+    public void setCurrentTask(Order newOrder) {
         currentOrder = newOrder;
         idle = false;
     }
@@ -117,9 +115,13 @@ public class MattsRobot {
      * @param shelf
      * Load shelf on robot
      */
-    public void mountShelf(Shelf shelf) {
+    public void loadShelf(Shelf shelf) {
         loadedShelf = shelf;
         loaded = true;
+    }
+
+    public Shelf getLoadedShelf () {
+        return loadedShelf;
     }
 
     /**
@@ -133,11 +135,10 @@ public class MattsRobot {
 
     /**
      * @author Matt
-     * @param loaded
      * Setter for loaded
      */
-    public void changeLoaded (boolean loaded) {
-        this.loaded = loaded;
+    public void unloadShelf () {
+        loaded = false;
     }
 
 }

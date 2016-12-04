@@ -1,14 +1,15 @@
 package RobotScheduler;
-import Floor.*;
+import Belt.Picker;
 import Ordering.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//TODO: robot/scheduler should know what shelf they are carrying;
-//TODO: robotScheduler should take picker in constructor, and call newOrder method when robot has reached picker;
+//TODO: get out of the way to avoid blocking picker
+//TODO: call newOrder method when robot has reached picker; I SHOULDN'T NEED TO, RIGHT? NEW ORDERS ASSIGNED EVERY TICK.
 //TODO: figure out which shelf to go to--look at shelf manager, call containedIn method;
 //TODO: figure out which shelf a robot should go to via robotScheduler;
 //TODO: add Queue of shelveIDs to go to to fulfill order
+//TODO: isIdle and isDone redundant?
 
 /**
  * Created by Matt on 12/4/2016.
@@ -18,13 +19,16 @@ import java.util.stream.Collectors;
 public class MattsRobotScheduler implements Observer {
     List<MattsRobot> robots;
     Queue<Order> pendingOrders;
+    Picker picker;
+
 
     /**
      * constructor
      * @author Matt
      * @author Mitziu
      */
-    public MattsRobotScheduler () {
+    public MattsRobotScheduler (Picker picker) {
+        this.picker = picker;
         robots = new LinkedList<MattsRobot>();
         pendingOrders = new LinkedList<Order>();
     }
@@ -35,7 +39,8 @@ public class MattsRobotScheduler implements Observer {
      * @param robots
      * constructor Starts with robots and/or orders already
      */
-    public MattsRobotScheduler (List<MattsRobot> robots, Queue<Order> pendingOrders) {
+    public MattsRobotScheduler (Picker picker, List<MattsRobot> robots, Queue<Order> pendingOrders) {
+        this.picker = picker;
         this.robots = robots;
         this.pendingOrders = pendingOrders;
     }
@@ -86,14 +91,26 @@ public class MattsRobotScheduler implements Observer {
      * Moves robots, etc.
      */
     public void update (Observable o, Object e) {
+        //Make list of tasks
+        if (!pendingOrders.isEmpty()) {
 
-        if (!pendingOrders.isEmpty()) { //Assign idle robots orders to fulfill
-            robots.stream().filter(myRobot -> myRobot.idle == true).forEach(myRobot -> {
-                if (!pendingOrders.isEmpty()) myRobot.currentOrder = pendingOrders.poll();
+        }
+
+        //Assign idle robots task to fulfill
+        if (!pendingOrders.isEmpty()) {
+            robots.stream().
+                    filter(myRobot -> myRobot.isIdle()).forEach(myRobot -> {
+                    if (!pendingOrders.isEmpty()) {
+                        myRobot.setCurrentTask(pendingOrders.poll());
+                    }
             });
         }
 
-        robots.forEach(myRobot -> moveRobot(myRobot)); //move robots
+        //Load or unload, as needed
+
+
+        //move robots
+        robots.forEach(myRobot -> moveRobot(myRobot));
 
     }
 

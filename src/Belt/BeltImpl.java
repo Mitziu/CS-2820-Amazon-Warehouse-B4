@@ -1,101 +1,73 @@
 package Belt;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  * Created by Eduardo   on 11/3/16.
  * Group B4
+ * the belt is in charge of receiving orders from the picker and ship them
+ * belt also reports status of order to anyone in the warehouse if requested
  */
 
 public class BeltImpl implements Observer, Belt
 {
-	public ArrayList<Integer> shippedItemIDList;
-	public int x_loc_pick;
-	public int y_loc_pick;
-	private Deque<Bin> pickerQueue;
-	private Deque<Bin> packerQueue;
-	private Integer sizeOfPickerBelt;
-	private Integer sizeOfPackerBelt;
-	private Belt2 beltUnit;
+	public ArrayList<Integer> shippedOrdersList;
+    private Integer[] ordersOnBelt;
 
-
-	public BeltImpl (Integer sizeOfPickerBelt , Integer sizeOfPackerBelt)
+    /**
+     * Initialize Belt to a certain size
+     * @author Eduardo
+     */
+	public BeltImpl (Integer beltSize)
 	{
-		this.sizeOfPackerBelt = sizeOfPackerBelt;
-		this.sizeOfPickerBelt = sizeOfPickerBelt;
-		pickerQueue = new LinkedList<>();//use methods to fill this list
-		packerQueue = new LinkedList<>();//use methods to fill this list
-		beltUnit = new Belt2();
-
-
-		fillQueues();
+		shippedOrdersList = new ArrayList<Integer>();
+        ordersOnBelt = new Integer[beltSize];
 	}
 
-	private void fillQueues () {
-		fillQueue(pickerQueue, sizeOfPickerBelt);
-		fillQueue(packerQueue, sizeOfPackerBelt);
-	}
-
-	private void fillQueue (Deque<Bin> queue, Integer sizeOfBelt){
-		for (int i = 0; i < sizeOfBelt; i++) {
-			queue.addFirst(new Bin());
-		}
-	}
-	
-	//Picker receives item from Robot, and sends to belt to reach packer
+    /**
+     * Picker receives item from Robot, and sends to belt to reach packer
+     * @author Eduardo
+     */
 	public void pick(Integer orderID)
 	{
-		pickerQueue.getFirst().addItem(orderID);
-		beltUnit.addItemBelt(orderID);//add order ID to beltUnit for report purposes
+        ordersOnBelt[0] = orderID;
 	}
 
-	public List<Integer> reportContent()
-	{
-		return pickerQueue.getFirst().getAllItems();
-	}
-	
-	//ships out of warehouse   and store in list of shipped orders
-	private void ship(Bin bin)
-	{
-		shippedItemIDList.addAll(bin.getAllItems());
-	}
+    /**
+     * allows anyone in the warehouse to view the items on the belt
+     * @author Eduardo
+     */
+    public List<Integer> getOrdersOnBelt()
+    {
+        return Arrays.asList(ordersOnBelt);
+    }
 
-	//method that finish process, Item gets packed and out of Belt, also takes order ID out from public list beltUnit
-	private void packer(Bin bin) {
-		packerQueue.getFirst().addAllItems(bin);
-		for (Integer OrderID : bin.getAllItems())
-		{
-			beltUnit.removeItemBelt(OrderID);
-		}
-
-	}
-	
-	public String onSite_Pick(int x, int y)// happens when robot reaches picker station
-	{
-		Integer orderID = 0;
-		if(x_loc_pick ==  x && y_loc_pick ==  y)
-		{
-			pick(orderID);
-            //print msg : "order at picker station"
-            return ("order at picker station");
-		}
-		return ("NOT THERE YET");
-	}
-	
+    /**
+     * move the belt
+     * @author Eduardo
+     */
 	@Override
     public void update(Observable o, Object arg)
 	{
-		pickerQueue.addFirst(new Bin());
-		packerQueue.addFirst(new Bin());
+        //ship the order located at the end of the belt if one exists
+        if (ordersOnBelt[ordersOnBelt.length-1] != null)
+            ship(ordersOnBelt[ordersOnBelt.length-1]);
 
-		packer(pickerQueue.removeLast());
-		ship(packerQueue.removeLast());
+        //shift orders one slot down the belt
+        for (int i = ordersOnBelt.length-2; i >= 0; --i)
+            ordersOnBelt[i+1] = ordersOnBelt[i];
+        //clear the starting slot on belt
+        ordersOnBelt[0] = null;
 	}
+
+    /**
+     * ships order out of warehouse and store in list of shipped orders
+     * @author Eduardo
+     */
+    private void ship(Integer orderID)
+    {
+        shippedOrdersList.add(orderID);
+    }
 
 	/**
 	 * Gets list of shipped orders
@@ -104,8 +76,8 @@ public class BeltImpl implements Observer, Belt
 	 * @author Max
 	 * @return
 	 */
-	public List<Integer> getShippedItems() {
-		List<Integer> listToReturn = (List<Integer>) shippedItemIDList.clone();
+	public List<Integer> getShippedOrders() {
+		List<Integer> listToReturn = (List<Integer>) shippedOrdersList.clone();
 		resetShippedList();
 		return listToReturn;
 	}
@@ -117,55 +89,6 @@ public class BeltImpl implements Observer, Belt
 	 * @author Max
 	 */
 	private void resetShippedList() {
-		shippedItemIDList.clear();
+		shippedOrdersList.clear();
 	}
-
-	/**
-	 * Private class for belt to contain items inside bin
-	 * Author: Mitziu
-	 */
-	private class Bin {
-
-		private List<Integer> itemsInside;
-
-	public Bin() {
-		itemsInside = new ArrayList<>();// array that has items identified by order ID
-	}
-
-	public void addItem(Integer orderID) {
-		itemsInside.add(orderID);//include items inside array "itemsInside"
-	}
-
-	public List<Integer> getAllItems() {
-		return itemsInside;
-	}
-
-	public void addAllItems(Bin itemsToAdd) {
-		itemsInside.addAll(itemsToAdd.getAllItems());
-	}
-}
-
-    private class Belt2
-    {
-        private List<Integer> itemsOnBeltList;
-        public Belt2()
-        {
-            itemsOnBeltList = new ArrayList<>();// creation of array that has items identified by order ID
-        }
-
-        public void addItemBelt(Integer orderID)
-        {
-            itemsOnBeltList.add(orderID);//include items inside array "itemsOnBeltList"
-        }
-        public List<Integer> getAllItems()
-        {
-            return itemsOnBeltList;//retrieve all items present on Belt
-        }
-		public void removeItemBelt(Integer orderID)
-        {
-            itemsOnBeltList.remove(orderID);
-        }
-    }
-// create new class that extends private belt2
-
 }

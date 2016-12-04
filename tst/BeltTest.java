@@ -13,28 +13,38 @@ import java.util.List;
 
 public class BeltTest
 {
+    /**
+     * verify existence of order at belt
+     * @author Eduardo
+     */
     @Test
-    public void BeltPick()//insert robot location to verify it is at picker station
+    public void Test_Picked_Order_Is_Placed_On_Belt()
     {
-        BeltImpl test01Belt = new BeltImpl(10,10);
+        Integer orderId = 1111111;
+        BeltImpl test01Belt = new BeltImpl(10);
 
-        String result = test01Belt.onSite_Pick(0, 0);
+        test01Belt.pick(orderId);
+        List<Integer> testOrdersBelt =  test01Belt.getOrdersOnBelt();
 
-        System.out.println("on site and tested");//onSite_Pick should print  "order at picker station"
-
-        Assert.assertTrue(result.equals("order at picker station"));
+        Assert.assertTrue(testOrdersBelt.size() == 10);
+        Assert.assertTrue(testOrdersBelt.contains(orderId));
     }
-        @Test
-        public void testBelt2() {
-            Integer orderId = 1;
-            BeltImpl Test02 = new BeltImpl(1,1);
-            Test02.pick(orderId);
-            List<Integer> actualItemsOnBeltList = Test02.reportContent();
-            List<Integer> expectedItemsOnBeltList = new ArrayList<>();
-            expectedItemsOnBeltList.add(orderId);
 
-            Assert.assertTrue(actualItemsOnBeltList.size()==expectedItemsOnBeltList.size());
+    /**
+     * tests if order is shipped once reaches end of belt
+     * @author Eduardo
+     */
+    @Test
+    public void Test_Order_Is_Shipped_When_Reaches_End_Of_Belt()
+    {
+        Integer orderId = 222222;
+        BeltImpl Test02 = new BeltImpl(1);
 
-            Assert.assertTrue(actualItemsOnBeltList.get(0) == expectedItemsOnBeltList.get(0));
-        }
+        Test02.pick(orderId);
+        Test02.update(null, null);
+        List<Integer> shippedOrdersList = Test02.getShippedOrders();
+
+        Assert.assertTrue(shippedOrdersList.size() == 1);
+        Assert.assertTrue(shippedOrdersList.contains(orderId));
+    }
 }

@@ -13,6 +13,6 @@ public interface Belt {
      */
     public void pick (Integer orderID );
 
-    public List<Integer> getShippedItems();
+    public List<Integer> getShippedOrders();
 
 }

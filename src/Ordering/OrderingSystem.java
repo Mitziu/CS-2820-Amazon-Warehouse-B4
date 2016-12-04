@@ -98,7 +98,7 @@ public class OrderingSystem implements OrderInterface, Observer {
     }
 
     public void getShippedList(){
-        List<Integer> newlyShipped = belt.getShippedItems();
+        List<Integer> newlyShipped = belt.getShippedOrders();
         for (int x = 0; x < newlyShipped.size(); x++){
             Integer newFinishedOrder = newlyShipped.get(x);
             finishOrder(newFinishedOrder);

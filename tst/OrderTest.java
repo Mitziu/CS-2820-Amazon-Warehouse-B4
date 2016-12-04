@@ -54,7 +54,7 @@ public class OrderTest {
         FloorPositions floor = new Setup();
         Inventory testInvent = new Inventory(testShelf);
         GoldenManager testRobot = new GoldenManager(testShelf, floor);
-        BeltImpl testBelt = new BeltImpl(10,10);
+        BeltImpl testBelt = new BeltImpl(10);
         PickerImpl testPicker = new PickerImpl(testBelt, testShelf);
 
         OrderingSystem testOrderSystem = new OrderingSystem(testInvent, testBelt, testRobot, testPicker);

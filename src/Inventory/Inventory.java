@@ -159,7 +159,7 @@ public class Inventory{
 				SM.Put_Container(Item_ID, SM.Contained_In(Item_ID).get(i), New_Qty);
 			}
 			if (50%SM.Contained_In(Item_ID).size() != 0){
-				SM.Put_Container(Item_ID, SM.Contained_In(Item_ID).peekLast(), 50%SM.Contained_In(Item_ID).size());
+				SM.Put_Container(Item_ID, SM.Contained_In(Item_ID).get(SM.Contained_In(Item_ID).size() - 11), 50%SM.Contained_In(Item_ID).size());
 			}
 			tempvar += 50;
 		}

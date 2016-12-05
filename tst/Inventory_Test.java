@@ -1,7 +1,6 @@
 import Floor.Setup;
 import Inventory.Inventory;
 import Inventory.Shelf_Manager;
-import java.util.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,11 +11,16 @@ import java.text.ParseException;
 
 public class Inventory_Test {
 	
-	//Before//
-	Shelf_Manager SM = new Shelf_Manager();
-	Inventory Inv = new Inventory(SM);
-	Setup setup = new Setup();
+	private Shelf_Manager SM;
+	private Inventory Inv;
+	private Setup setup;
 
+	@Before
+	public void setUp() {
+		SM = new Shelf_Manager();
+		Inv = new Inventory(SM);
+		setup = new Setup();
+	}
 	
 	@Test
 	public void testconstructor(){
@@ -32,8 +36,7 @@ public class Inventory_Test {
 	@Test
 	public void testContained_In1(){
 		Inv.Add_Inventory(75450, "Baseball", 1);
-		int testvar = SM.Contained_In(75450).get(0);
-		assertEquals(0, testvar);
+		assertTrue(SM.Contained_In(75450).isEmpty());
 	}
 	
 	/**
@@ -203,9 +206,9 @@ public class Inventory_Test {
 		assertTrue(SM.Contained_In(75450).size() == 1);
 		
 		SM.Take_Container(75450, SM.Get_All_Shelves().get(1), 17);
-		
-		assertTrue(SM.Contained_In(75450).get(0) == 0);
-		
+
+		assertTrue(SM.Contained_In(75450).isEmpty());
+
 		assertEquals(30, Inv.Get_Item_Qty(75450));
 	}
 	

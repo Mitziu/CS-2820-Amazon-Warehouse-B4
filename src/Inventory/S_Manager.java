@@ -8,7 +8,7 @@ import java.util.*;
 public interface S_Manager {
 	
 	//Returns list of items contained in that shelf
-	public LinkedList Item_List(int Shelf_ID);
+	public List Item_List(int Shelf_ID);
 	
 	//Returns amount of Item in that shelf
 	public int Container_Count(int Item_ID, int Shelf_ID);
@@ -20,5 +20,7 @@ public interface S_Manager {
 	public void Take_Container(int Item_ID, int Shelf_ID, int Qty);
 	
 	//Returns a List of every shelf that contains that item
-	public LinkedList<Integer> Contained_In(int Item_ID);
+	public List<Integer> Contained_In(int Item_ID);
+
+	public Shelf getShelf (int Shelf_ID);
 }

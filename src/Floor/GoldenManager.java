@@ -39,9 +39,9 @@ public class GoldenManager implements RobotManager, Observer {
     /* QUESTIONS: not sure about how to get amount of the item on one shelf( so just made it 1)
                                    not sure about getItemIDList(), perhaps, (itemId, qty)?
      */
-    public GoldenManager(S_Manager input, Setup srcInput, Order orderinput) {
+    public GoldenManager(S_Manager input, Setup srcInput) {
         Background(input, srcInput);
-        order = orderinput;
+        //order = orderinput;
     }
 
     @Override
@@ -54,28 +54,28 @@ public class GoldenManager implements RobotManager, Observer {
         Items = order.getItemIDList();
         LinkedList<Integer> places;
         PlaceNeedToGo = new ArrayList<>();
-        for (Integer i : Items.keySet()) {
-            places = m_inventory.Contained_In(i);
-            ListIterator<Integer> m_iterator = places.listIterator();
-            while (m_iterator.hasNext()) {
-                if (Items.isEmpty()) {
-                    break;
-                }
-                if (Items.get(i) <= 0) {
-                    Items.remove(i);
-                } else {
-                    PlaceNeedToGo.add(m_iterator.next());
-                    Items.put(i, Items.get(i) - m_inventory.Container_Count(i, m_iterator.next()));
-                }
-            }
-        }
+//        for (Integer i : Items.keySet()) {
+//            places = m_inventory.Contained_In(i);
+//            ListIterator<Integer> m_iterator = places.listIterator();
+//            while (m_iterator.hasNext()) {
+//                if (Items.isEmpty()) {
+//                    break;
+//                }
+//                if (Items.get(i) <= 0) {
+//                    Items.remove(i);
+//                } else {
+//                    PlaceNeedToGo.add(m_iterator.next());
+//                    Items.put(i, Items.get(i) - m_inventory.Container_Count(i, m_iterator.next()));
+//                }
+//            }
+//        }
         // initiate all the objects we need for later use
         m_robots = src.getRobots();
         m_shelves = src.getShelves();
         picker = src.getPicker();
         King = m_robots.get(0);
         Queen = m_robots.get(1);
-        // find the shelf we need then calclulate all the points for running 
+        // find the shelf we need then calclulate all the points for running
         makeTrip();
         // not really sure about how to do it in runtime, efficency or accuracy?
         /*  for(int j =0;j<King.commands.size();j++){
@@ -105,7 +105,7 @@ public class GoldenManager implements RobotManager, Observer {
             }
         }
     }
-//tell me, which shelf should i go to? 
+//tell me, which shelf should i go to?
 
     public Integer MatchShelf(int id, ArrayList<Shelf> inputList) {
         int result = -1;

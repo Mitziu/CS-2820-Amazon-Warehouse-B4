@@ -48,7 +48,7 @@ public class Production {
         picker = new PickerImpl(belt, shelfManager);
         visualizer = new VisualizerRecorder(floor);
 
-        robotManager = new GoldenManager(shelfManager, floor);
+        //robotManager = new GoldenManager(shelfManager, floor);
         //GoldenManager
 
         orderingSystem = new OrderingSystem(inventory, belt, robotManager, picker);

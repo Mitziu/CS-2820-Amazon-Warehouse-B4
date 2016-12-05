@@ -8,6 +8,7 @@ import RobotScheduler.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -18,6 +19,11 @@ import java.util.Queue;
  * @author zuoyuan
  */
 public class FloorImpl implements FloorPositions {
+
+    private final Integer hwySouth = 5;
+    private final Integer hwyNorth = 10;
+    private final Integer hwyEast = 5;
+    private final Integer hwyWest = 95;
 
     List<MattsRobot> robots;
     List<Inventory.Shelf> shelves;
@@ -36,10 +42,40 @@ public class FloorImpl implements FloorPositions {
         setupLocations();
     }
 
-    //TODO: Create Route
-    public Queue<Point> createRoute (Point source, Point dest) {
+    public Queue<Point> robotToShelf(Point src, Point dest) {
         return null;
     }
+
+    public Queue<Point> returnShelf(Point src, Point dest) {
+        return null;
+    }
+
+    public Queue<Point> shelfToPicker(Point src) {
+        return null;
+    }
+
+
+
+    //TODO: Create Route
+    public Queue<Point> createRoute (Point source, Point dest) {
+        Queue<Point> route = new LinkedList<>();
+
+        srctoHwy(source, route);
+
+
+        return null;
+    }
+
+    private void srctoHwy(Point source, Queue<Point> route) {
+
+        if (source.GetX() < 5) {
+            for (int i = source.GetX(); i < hwySouth; i++) {
+
+            }
+        }
+
+    }
+
 
     private void setupLocations () {
         //Creates representation of belt for visualizer

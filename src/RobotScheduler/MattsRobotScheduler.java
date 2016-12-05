@@ -1,6 +1,7 @@
 package RobotScheduler;
 import Belt.Picker;
 import Ordering.*;
+import Inventory.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -10,27 +11,31 @@ import java.util.stream.Collectors;
 //TODO: figure out which shelf a robot should go to via robotScheduler;
 //TODO: add Queue of shelveIDs to go to to fulfill order
 //TODO: isIdle and isDone redundant?
+//TODO: Is a Set really the right data structure? Why not a map?
 
 /**
  * Created by Matt on 12/4/2016.
  * @author Matt
  * @author Mitziu
  */
-public class MattsRobotScheduler implements Observer {
-    List<MattsRobot> robots;
-    Queue<Order> pendingOrders;
-    Picker picker;
-
+public class MattsRobotScheduler implements Observer, RobotScheduler {
+    private List<MattsRobot> robots;
+    private Shelf_Manager shelfManager;
+    private Queue<Order> pendingOrders;
+    private Picker picker;
+    private List<Integer> shelvesNeeded;
 
     /**
      * constructor
      * @author Matt
      * @author Mitziu
      */
-    public MattsRobotScheduler (Picker picker) {
+    public MattsRobotScheduler (Picker picker, Shelf_Manager shelfManager) {
         this.picker = picker;
+        this.shelfManager = shelfManager;
         robots = new LinkedList<MattsRobot>();
-        pendingOrders = new LinkedList<Order>();
+        pendingOrders = new LinkedList<>();
+        shelvesNeeded = new LinkedList<>();
     }
 
     /**
@@ -39,10 +44,12 @@ public class MattsRobotScheduler implements Observer {
      * @param robots
      * constructor Starts with robots and/or orders already
      */
-    public MattsRobotScheduler (Picker picker, List<MattsRobot> robots, Queue<Order> pendingOrders) {
+    public MattsRobotScheduler (Picker picker, Shelf_Manager shelfManager, List<MattsRobot> robots, Queue<Order> pendingOrders) {
+        this.shelfManager = shelfManager;
         this.picker = picker;
         this.robots = robots;
         this.pendingOrders = pendingOrders;
+        shelvesNeeded = new LinkedList<>();
     }
 
     /**
@@ -84,6 +91,16 @@ public class MattsRobotScheduler implements Observer {
     }
 
     /**
+     * @author Matt
+     * @param itemsNeeded
+     */
+    private void getShelvesNeeded (Set<Integer> itemsNeeded) {
+        Set<Integer> tempSet = new HashSet<>();
+        itemsNeeded.forEach(item -> tempSet.addAll(shelfManager.Contained_In(item)));
+        tempSet.forEach(id -> shelvesNeeded.add(id));
+    }
+
+    /**
      * @author Mitziu
      * @author Matt
      * @param o
@@ -91,23 +108,46 @@ public class MattsRobotScheduler implements Observer {
      * Moves robots, etc.
      */
     public void update (Observable o, Object e) {
-        //Make list of tasks
-        if (!pendingOrders.isEmpty()) {
+        Set<Integer> tempItemList = new HashSet<>();
 
+        //Make set of items needed
+        if (!pendingOrders.isEmpty()) {
+            pendingOrders.forEach(myOrder -> tempItemList.addAll(myOrder.getItemIDMap().keySet()));
         }
 
-        //Assign idle robots task to fulfill
-        if (!pendingOrders.isEmpty()) {
+        //Make a set of shelves based on items needed
+        getShelvesNeeded(tempItemList);
+
+        //Assign idle robots shelves to get
+        if (!shelvesNeeded.isEmpty()) {
             robots.stream().
                     filter(myRobot -> myRobot.isIdle()).forEach(myRobot -> {
-                    if (!pendingOrders.isEmpty()) {
-                        myRobot.setCurrentTask(pendingOrders.poll());
+                    if (!shelvesNeeded.isEmpty()) {
+                        myRobot.setShelfID(shelvesNeeded.remove(0));
+                        myRobot.setCurrentTask("Get Shelf");
                     }
             });
         }
 
-        //Load or unload, as needed
+        //Set task for robot, TODO: Refactor this!!
+        robots.forEach( myRobot -> {
+            String task = myRobot.getCurrentTask();
 
+            if (task == "Get Shelf") {
+                if (myRobot.isDone() && !myRobot.isLoaded()) {
+                    myRobot.loadShelf(shelfManager.getShelf(myRobot.getShelfID()));
+                }
+                else if (myRobot.isDone() && myRobot.isLoaded()) {
+                    picker.shelfArrived(myRobot.getShelfID());
+                    myRobot.setCurrentTask("Return Shelf");
+                }
+            }
+            else if (task == "Return Shelf") {
+                if (myRobot.isDone()) {
+                    myRobot.unloadShelf();
+                }
+            }
+        });
 
         //move robots
         robots.forEach(myRobot -> moveRobot(myRobot));

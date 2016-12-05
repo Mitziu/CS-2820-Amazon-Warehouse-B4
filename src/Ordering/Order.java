@@ -10,21 +10,21 @@ public class Order {
 	//instance variables for order ID, Address, Locations, and a hashmap that will use Item ID's as keys
 	//and a list of integers to count the amount they want of a certain object
 	public Integer OrderID;
-	public Map<Integer, Integer> ItemIDList;
+	public Map<Integer, Integer> itemIDMap;
 	public String Address;
 	public String OrderLocation;
 	
 	
-	public Order(Integer OrderID, Map<Integer, Integer> ItemIDList, String Address){
+	public Order(Integer OrderID, Map<Integer, Integer> itemIDMap, String Address){
 		this.OrderID = OrderID;
-		this.ItemIDList = ItemIDList;
+		this.itemIDMap = itemIDMap;
 		this.Address = Address;
 		this.OrderLocation = "Start";
 	}
 	
 	
-	public Map<Integer,Integer> getItemIDList(){
-		return this.ItemIDList;
+	public Map<Integer,Integer> getItemIDMap(){
+		return this.itemIDMap;
 	}
 	//Gets order ID from Ordering.Order
 	public Integer getOrderID(){

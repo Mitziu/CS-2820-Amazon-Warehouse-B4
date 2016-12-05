@@ -1,7 +1,8 @@
 package RobotScheduler;
 import java.util.*;
+import Inventory.*;
+import Floor.ObjectInWarehouse;
 import Floor.Point;
-import Floor.Shelf;
 import Ordering.*;
 
 /**
@@ -9,20 +10,23 @@ import Ordering.*;
  * @author Mitziu
  * Created by Matt on 12/4/2016.
  */
-public class MattsRobot {
+public class MattsRobot implements ObjectInWarehouse {
     private boolean idle = true;
-    private Order currentOrder;
     private Queue<Point> path;
     private Point location;
     private boolean loaded = false;
     private Shelf loadedShelf;
+    private Integer ID;
+    private Integer shelfID;
+    private String currentTask;
 
     /**
      * @author Matt
      * constructor
      */
-    public MattsRobot (Point location) {
+    public MattsRobot (Point location, Integer ID) {
         this.location = location;
+        this.ID = ID;
     }
 
     /**
@@ -45,22 +49,26 @@ public class MattsRobot {
 
     /**
      * @author Matt
-     * @param newOrder
+     * @param newShelf
      * setter for currentOrder
      */
-    public void setCurrentTask(Order newOrder) {
-        currentOrder = newOrder;
+    public void setShelfID(Integer newShelf) {
+        shelfID = newShelf;
         idle = false;
     }
 
-    /**
-     * @author Matt
-     * @return
-     * getter for currentOrder
-     */
-    public Order getCurrentOrder () {
-        return currentOrder;
+    public void setCurrentTask (String task) {
+        currentTask = task;
     }
+
+    public String getCurrentTask () {
+        return currentTask;
+    }
+
+    public Integer getShelfID () {
+        return shelfID;
+    }
+
 
     /**
      * @author matt
@@ -112,6 +120,16 @@ public class MattsRobot {
 
     /**
      * @author Matt
+     * @param x
+     * @param y
+     * Fulfills interface requirements, probably won't be used.
+     */
+    public void move(Integer x, Integer y) {
+        location = new Point(x, y);
+    }
+
+    /**
+     * @author Matt
      * @param shelf
      * Load shelf on robot
      */
@@ -141,4 +159,7 @@ public class MattsRobot {
         loaded = false;
     }
 
+    public Integer getID() {
+        return ID;
+    }
 }

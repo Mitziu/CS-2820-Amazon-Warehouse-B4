@@ -44,7 +44,7 @@ public class PickerImpl implements Picker, Observer {
      */
     @Override
     public void newOrder(Order newOrder) {
-        Map<Integer, Integer> items = new HashMap<>(newOrder.getItemIDList());
+        Map<Integer, Integer> items = new HashMap<>(newOrder.getItemIDMap());
         Integer orderID = newOrder.getOrderID();
         ongoingOrders.add(new OrderToFulfill(items, orderID));
     }

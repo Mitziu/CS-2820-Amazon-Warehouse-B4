@@ -1,5 +1,7 @@
 package Belt;
 
+import Floor.ObjectInWarehouse;
+import Floor.Point;
 import Inventory.S_Manager;
 import Ordering.Order;
 
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
  * Until the order is completely fulfilled it does not get passed to Belt
  * Created by Mitziu on 11/17/16.
  */
-public class PickerImpl implements Picker, Observer {
+public class PickerImpl implements Picker, Observer, ObjectInWarehouse {
 
     //TODO: Pass Shelf Manager and deduct items from it
 
@@ -29,6 +31,7 @@ public class PickerImpl implements Picker, Observer {
     private Integer shelfID;
 
     private Queue<OrderToFulfill> finishedOrdersQueue;
+    private Point location;
 
     public PickerImpl (Belt belt, S_Manager shelfManager) {
         this.ongoingOrders = new ArrayList<>();
@@ -127,6 +130,24 @@ public class PickerImpl implements Picker, Observer {
 
         sendToBelt();
     }
+
+    @Override
+    public Point getLocation() {
+        return location;
+    }
+
+    @Override
+    public void move(Integer x, Integer y) {
+        location = new Point(x , y);
+    }
+
+    //UNUSED, HAVE TO OVERRIDE DUE TO OBJECTINWAREHOUSE INTERFACE
+    @Override
+    public Integer getID() {
+        return null;
+    }
+
+
 
     /**
      * Private class to fulfill Orders that are passed to Picker

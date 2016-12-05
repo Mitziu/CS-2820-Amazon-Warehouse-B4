@@ -13,6 +13,7 @@ import Inventory.Inventory;
 import Floor.RobotManager;
 import Belt.Picker;
 import Floor.GoldenManager;
+import RobotScheduler.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +27,13 @@ public class OrderingSystem implements OrderInterface, Observer {
     public Map<Integer, Order> OngoingOrders;
     public Inventory inventory;
     public Belt belt;
-    public GoldenManager robot;
+    public MattsRobotScheduler robot;
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
     public Integer OrderID;
 
 
-    public OrderingSystem(Inventory inventory, Belt belt, GoldenManager robot, Picker picker){
+    public OrderingSystem(Inventory inventory, Belt belt, MattsRobotScheduler robot, Picker picker){
         this.OngoingOrders = new HashMap<>();
         this.inventory = inventory;
         this.belt = belt;
@@ -76,7 +77,7 @@ public class OrderingSystem implements OrderInterface, Observer {
 
     //Need to work with robot to send it item number or shelf location to have it pick up items
     public void getItem(Order order){
-        robot.SetOrder(order);
+        robot.takeOrder(order);
     }
 
     //Need to work with floor to get location of item

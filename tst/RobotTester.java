@@ -19,7 +19,7 @@ public class RobotTester {
     FloorImpl floor;
     Shelf_Manager shelfManager;
     RobotScheduler robotScheduler;
-    Picker picker;
+    PickerImpl picker;
     BeltImpl belt;
 
 

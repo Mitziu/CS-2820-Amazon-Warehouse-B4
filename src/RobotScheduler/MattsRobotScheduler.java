@@ -1,5 +1,6 @@
 package RobotScheduler;
 import Belt.Picker;
+import Belt.PickerImpl;
 import Ordering.*;
 import Inventory.*;
 import java.util.*;
@@ -23,7 +24,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
      * @author Matt
      * @author Mitziu
      */
-    public MattsRobotScheduler (Picker picker, Shelf_Manager shelfManager) {
+    public MattsRobotScheduler (PickerImpl picker, Shelf_Manager shelfManager) {
         this.picker = picker;
         this.shelfManager = shelfManager;
         robots = new LinkedList<MattsRobot>();

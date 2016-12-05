@@ -19,11 +19,12 @@ import java.util.Observable;
 /**
  *
  * @author zuoyuan
- */
+*/
 // I'm a golden manager, here to take the offer from robots' world! :) Let's go!
 //THIS IS "another robot scheduler".
-public class GoldenManager implements RobotManager, Observer {
 
+public class GoldenManager /*implements RobotManager, Observer*/ {
+/*
     public S_Manager m_inventory;
     Robots King;
     Robots Queen;
@@ -39,6 +40,7 @@ public class GoldenManager implements RobotManager, Observer {
     /* QUESTIONS: not sure about how to get amount of the item on one shelf( so just made it 1)
                                    not sure about getItemIDList(), perhaps, (itemId, qty)?
      */
+/*
     public GoldenManager(S_Manager input, Setup srcInput) {
         Background(input, srcInput);
         //order = orderinput;
@@ -86,7 +88,7 @@ public class GoldenManager implements RobotManager, Observer {
                      Point next = Queen.commands.get(j);
                      Queen.move(next.GetX(), next.GetY());
                  }*/
-
+/*
     }
 // calculate the whole route for both robots
 
@@ -259,5 +261,5 @@ public class GoldenManager implements RobotManager, Observer {
     @Override
     public boolean IsDone() {
         return done;
-    }
+    } */
 }

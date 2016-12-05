@@ -10,6 +10,7 @@ import Floor.FloorPositions;
 import Floor.Setup;
 import Ordering.OrderingSystem;
 import Ordering.Order;
+import RobotScheduler.MattsRobotScheduler;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,9 +54,10 @@ public class OrderTest {
         Shelf_Manager testShelf = new Shelf_Manager();
         Setup floor = new Setup();
         Inventory testInvent = new Inventory(testShelf);
-        GoldenManager testRobot = new GoldenManager(testShelf, floor);
         BeltImpl testBelt = new BeltImpl(10);
         PickerImpl testPicker = new PickerImpl(testBelt, testShelf);
+        MattsRobotScheduler testRobot = new MattsRobotScheduler(testPicker, testShelf);
+
 
         OrderingSystem testOrderSystem = new OrderingSystem(testInvent, testBelt, testRobot, testPicker);
 

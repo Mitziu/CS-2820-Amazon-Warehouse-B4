@@ -4,6 +4,7 @@ import Floor.*;
 import Inventory.*;
 import Master.*;
 import Ordering.*;
+import RobotScheduler.MattsRobotScheduler;
 import Visualizer.*;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class Production {
     private static Setup floor;
     private static Inventory inventory;
     private static Master master;
-    private static GoldenManager robotManager;
+    private static MattsRobotScheduler robotManager;
     private static Shelf_Manager shelfManager;
     private static OrderingSystem orderingSystem;
     private static PickerImpl picker;
@@ -48,7 +49,7 @@ public class Production {
         picker = new PickerImpl(belt, shelfManager);
         visualizer = new VisualizerRecorder(floor);
 
-        //robotManager = new GoldenManager(shelfManager, floor);
+        robotManager = new MattsRobotScheduler(picker, shelfManager);
         //GoldenManager
 
         orderingSystem = new OrderingSystem(inventory, belt, robotManager, picker);

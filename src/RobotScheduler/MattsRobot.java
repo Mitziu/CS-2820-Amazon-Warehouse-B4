@@ -1,5 +1,7 @@
 package RobotScheduler;
 import java.util.*;
+
+import Floor.FloorImpl;
 import Inventory.*;
 import Floor.ObjectInWarehouse;
 import Floor.Point;
@@ -19,14 +21,18 @@ public class MattsRobot implements ObjectInWarehouse {
     private Integer ID;
     private Integer shelfID;
     private String currentTask;
+    private FloorImpl floor;
+    private Shelf_Manager shelfManager;
 
     /**
      * @author Matt
      * constructor
      */
-    public MattsRobot (Point location, Integer ID) {
+    public MattsRobot (Point location, Integer ID, FloorImpl floor, Shelf_Manager shelfManager) {
         this.location = location;
         this.ID = ID;
+        this.floor = floor;
+        this.shelfManager = shelfManager;
     }
 
     /**
@@ -69,13 +75,12 @@ public class MattsRobot implements ObjectInWarehouse {
         return shelfID;
     }
 
-
     /**
      * @author matt
      * @param newPath
      * Setter for path
      */
-    public void setPath(Queue<Point> newPath) {
+    private void setPath(Queue<Point> newPath) {
         path = newPath;
     }
 
@@ -112,7 +117,19 @@ public class MattsRobot implements ObjectInWarehouse {
      * moves the robot to the next place
      */
     public void move () {
-        location = path.poll();
+        if (path.isEmpty()) {
+            if (currentTask == "Get Shelf") {
+                path = floor.createRoute(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
+            }
+            else if (currentTask == "Return Shelf" && !idle) {
+                path = floor.createRoute(getLocation(), loadedShelf.getOriginalPosition());
+            }
+        }
+
+        if (!path.isEmpty()) {
+            location = path.poll();
+        }
+
         if (loaded) {
             loadedShelf.move(location.GetX(), location.GetY());
         }
@@ -157,6 +174,7 @@ public class MattsRobot implements ObjectInWarehouse {
      */
     public void unloadShelf () {
         loaded = false;
+        setIdle(true);
     }
 
     public Integer getID() {

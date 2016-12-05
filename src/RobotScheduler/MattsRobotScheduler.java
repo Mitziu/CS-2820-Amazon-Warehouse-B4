@@ -129,7 +129,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
             });
         }
 
-        //Set task for robot, TODO: Refactor this!!
+        //Set task for robot, TODO: Refactor this!! Use an enum.
         robots.forEach( myRobot -> {
             String task = myRobot.getCurrentTask();
 
@@ -143,7 +143,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
                 }
             }
             else if (task == "Return Shelf") {
-                if (myRobot.isDone()) {
+                if (myRobot.isDone() && !myRobot.isIdle()) {
                     myRobot.unloadShelf();
                 }
             }

@@ -1,11 +1,15 @@
 package Floor;
 
+import Belt.BeltImpl;
+import Belt.BeltPiece;
+import Belt.PickerImpl;
 import Inventory.S_Manager;
 import RobotScheduler.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -15,24 +19,90 @@ public class FloorImpl implements FloorPositions {
 
     List<MattsRobot> robots;
     List<Inventory.Shelf> shelves;
+    List<BeltPiece> piecesOfBelt;
+    ObjectInWarehouse picker;
+    BeltImpl belt;
 
-    public FloorImpl(S_Manager shelfManager, RobotScheduler robotScheduler) {
+    public FloorImpl(S_Manager shelfManager, RobotScheduler robotScheduler, PickerImpl picker, BeltImpl belt) {
         robots = robotScheduler.listRobots();
         shelves = shelfManager.listShelves();
+        piecesOfBelt = new ArrayList<>();
+
+        this.picker = picker;
+        this.belt = belt;
+
+        setupLocations();
     }
 
+    //TODO: Create Route
     public Queue<Point> createRoute (Point source, Point dest) {
         return null;
     }
+
+    private void setupLocations () {
+        //Creates representation of belt for visualizer
+        for (int i = 0; i < belt.getSize(); i++) {
+            BeltPiece piece = new BeltPiece(i);
+            piece.setEmpty(true);
+            piece.move(0, (100 - (belt.getSize() - 1 - i)));
+        }
+
+        //Positions picker next to the belt at the beginning
+        picker.move(1, (100 - (belt.getSize() - 1)));
+
+        Integer shelfCtr = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (shelfCtr == shelves.size())
+                    break;
+                shelves.get(shelfCtr).move(20 + (i  * 10), 20 + (j  * 10));
+            }
+        }
+
+        for (int i = 0; i < robots.size(); i++) {
+            robots.get(i).move(160, i * 10);
+        }
+    }
+
+    private void updateBelt() {
+        for (int i = 0; i < piecesOfBelt.size(); i++) {
+            piecesOfBelt.get(i).setEmpty(true);
+        }
+
+        for (int i = 0; i < piecesOfBelt.size(); i++) {
+            if (belt.getOrdersOnBelt().get(i) != null) piecesOfBelt.get(i).setEmpty(false);
+        }
+    }
+
+    @Override
+    public HashMap<String, Point> getAllPositions() {
+        updateBelt();
+        HashMap<String, Point> positionsMap = new HashMap<>();
+
+        piecesOfBelt.stream()
+                .filter(piece -> piece.getEmpty())
+                .forEach(piece -> positionsMap.put("BeltEmpty-" + piece.getID(), piece.getLocation()));
+
+        piecesOfBelt.stream()
+                .filter(piece -> !piece.getEmpty())
+                .forEach(piece -> positionsMap.put("BeltNotEmpty-" + piece.getID(), piece.getLocation()));
+
+        robots.stream()
+                .forEach(robot -> positionsMap.put("Robot-"+ robot.getID(), robot.getLocation()));
+
+        shelves.stream()
+                .forEach(shelf -> positionsMap.put("Shelf-" + shelf.getID(), shelf.getLocation()));
+
+        positionsMap.put("Picker", picker.getLocation());
+
+        return positionsMap;
+    }
+
 
     @Override
     public void Initialize() {
     }
 
-    @Override
-    public HashMap<String, Point> getAllPositions() {
-        return null;
-    }
 
     @Override
     public ArrayList<Shelf> getShelves() {

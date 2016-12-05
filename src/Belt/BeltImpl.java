@@ -1,5 +1,8 @@
 package Belt;
 
+import Floor.ObjectInWarehouse;
+import Floor.Point;
+
 import java.util.*;
 
 /**
@@ -9,10 +12,12 @@ import java.util.*;
  * belt also reports status of order to anyone in the warehouse if requested
  */
 
-public class BeltImpl implements Observer, Belt
-{
+public class BeltImpl implements Observer, Belt, ObjectInWarehouse {
 	public ArrayList<Integer> shippedOrdersList;
     private Integer[] ordersOnBelt;
+
+	private Point location;
+	private Integer size;
 
     /**
      * Initialize Belt to a certain size
@@ -22,6 +27,11 @@ public class BeltImpl implements Observer, Belt
 	{
 		shippedOrdersList = new ArrayList<Integer>();
         ordersOnBelt = new Integer[beltSize];
+		this.size = beltSize;
+	}
+
+	public Integer getSize () {
+		return size;
 	}
 
     /**
@@ -90,5 +100,22 @@ public class BeltImpl implements Observer, Belt
 	 */
 	private void resetShippedList() {
 		shippedOrdersList.clear();
+	}
+
+
+	@Override
+	public Point getLocation() {
+		return location;
+	}
+
+	//UNUSED, BROUGHT FROM IMPLEMENTING OBJECTINWAREHOUSE INTERFACE
+	@Override
+	public Integer getID() {
+		return null;
+	}
+
+	@Override
+	public void move(Integer x, Integer y) {
+		location = new Point(x,y);
 	}
 }

@@ -5,7 +5,6 @@ import Floor.FloorImpl;
 import Inventory.*;
 import Floor.ObjectInWarehouse;
 import Floor.Point;
-import Ordering.*;
 
 /**
  * @author Matt
@@ -122,7 +121,7 @@ public class MattsRobot implements ObjectInWarehouse {
                 path = floor.createRoute(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
             }
             else if (currentTask == "Return Shelf" && !idle) {
-                path = floor.createRoute(getLocation(), loadedShelf.getOriginalPosition());
+                path = floor.createRoute(getLocation(), loadedShelf.getOriginalLocation());
             }
         }
 

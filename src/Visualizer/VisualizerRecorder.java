@@ -7,11 +7,16 @@ import Floor.*;
  * Created by Matt on 11/14/2016.
  * @author Matt McCan
  *
+ * README: To use this, create a new VisualizerRecorder, with initial FloorPositions, which can be empty if you like.
+ * Once you've created this object, add it as a subscriber to the clock.
+ * Finally, once the simulation is over, call simulationEnded() to display the visualizer.
+ * Note: visualizer is text only here, and prints to the console.
  */
 public class VisualizerRecorder implements Observer {
-    Visualizer visualizer;
-    FloorPositions floorPositions;
-    List warehouseHistory;
+    private Visualizer visualizer;
+    private FloorPositions floorPositions;
+    private List warehouseHistory;
+    private boolean done = false;
 
     /**
      * @author Matt
@@ -50,8 +55,12 @@ public class VisualizerRecorder implements Observer {
      * Stores positions in warehouseHistory
      */
     public void storePositions (Map<String, Point> newMap) {
-        if (!newMap.isEmpty()) warehouseHistory.add(newMap);
+        if (!done) warehouseHistory.add(newMap);
         else visualizer.run((LinkedList<HashMap<String, Point>>)warehouseHistory);
+    }
+
+    public void simulationEnded () {
+        done = true;
     }
 
 

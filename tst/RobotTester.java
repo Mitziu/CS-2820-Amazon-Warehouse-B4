@@ -33,10 +33,8 @@ public class RobotTester {
         picker = new PickerImpl(belt, shelfManager);
         robotScheduler = new MattsRobotScheduler(picker, shelfManager);
         floor = new FloorImpl(shelfManager, robotScheduler, picker, belt);
-        robots.add(new MattsRobot(points[1][1], 101, floor, shelfManager));
-        robots.add(new MattsRobot(points[1][2], 102, floor, shelfManager));
-
-
+        robots.add(new MattsRobot(points[1][1], 101, shelfManager, picker));
+        robots.add(new MattsRobot(points[1][2], 102, shelfManager, picker));
     }
 
     @Test

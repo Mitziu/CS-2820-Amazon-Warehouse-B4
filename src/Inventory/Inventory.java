@@ -116,6 +116,8 @@ public class Inventory{
 	 * @param Filename Name of the CSV file to be read
 	 * @throws ParseException
 	 * @throws IOException
+	 * @author William
+	 * @author Mitziu
 	 */
 	public void Inventory_Initialize(String Filename, Setup Setup) throws ParseException, IOException{
 		 BufferedReader br = new BufferedReader(new FileReader(Filename));

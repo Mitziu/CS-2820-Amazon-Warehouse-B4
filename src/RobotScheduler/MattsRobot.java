@@ -1,6 +1,8 @@
 package RobotScheduler;
 import java.util.*;
 
+import Belt.Picker;
+import Belt.PickerImpl;
 import Floor.FloorImpl;
 import Inventory.*;
 import Floor.ObjectInWarehouse;
@@ -21,18 +23,18 @@ public class MattsRobot implements ObjectInWarehouse {
     private Integer ID;
     private Integer shelfID;
     private String currentTask;
-    private FloorImpl floor;
     private Shelf_Manager shelfManager;
+    private RouteFinder routeFinder;
 
     /**
      * @author Matt
      * constructor
      */
-    public MattsRobot (Point location, Integer ID, FloorImpl floor, Shelf_Manager shelfManager) {
+    public MattsRobot (Point location, Integer ID, Shelf_Manager shelfManager, Picker picker) {
         this.location = location;
         this.ID = ID;
-        this.floor = floor;
         this.shelfManager = shelfManager;
+        routeFinder = new RouteFinder((PickerImpl) picker);
     }
 
     /**
@@ -133,14 +135,14 @@ public class MattsRobot implements ObjectInWarehouse {
         if (path.isEmpty()) {
             if (currentTask == "Get Shelf") {
                 if (getLocation().GetX() == shelfManager.getShelf(getShelfID()).getLocation().GetX() && getLocation().GetY() == shelfManager.getShelf(getShelfID()).getLocation().GetY()){
-                    path = floor.shelfToPicker(getLocation());
+                    path = routeFinder.shelfToPicker(getLocation());
                 }
                 else {
-                    path = floor.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
+                    path = routeFinder.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
                 }
             }
             else if (currentTask == "Return Shelf" && !idle) {
-                path = floor.returnShelf(getLocation(), loadedShelf.getOriginalLocation());
+                path = routeFinder.returnShelf(getLocation(), loadedShelf.getOriginalLocation());
             }
         }
 

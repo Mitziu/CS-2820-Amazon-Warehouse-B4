@@ -32,4 +32,9 @@ public class Shelf implements ObjectInWarehouse {
     public Integer getID() {
         return ID;
     }
+
+    @Override
+    public void move(Integer x, Integer y) {
+        currentPosition = new Point(x, y);
+    }
 }

@@ -1,26 +1,29 @@
 package Floor;
 
 import Inventory.S_Manager;
-import RobotScheduler.RobotScheduler;
+import RobotScheduler.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by Mitziu on 12/4/16.
  */
 public class FloorImpl implements FloorPositions {
 
-    List<Robots> robots;
-    List<Shelf> shelves;
+    List<MattsRobot> robots;
+    List<Inventory.Shelf> shelves;
 
     public FloorImpl(S_Manager shelfManager, RobotScheduler robotScheduler) {
-
-
+        robots = robotScheduler.listRobots();
+        shelves = shelfManager.listShelves();
     }
 
-
+    public Queue<Point> createRoute (Point source, Point dest) {
+        return null;
+    }
 
     @Override
     public void Initialize() {

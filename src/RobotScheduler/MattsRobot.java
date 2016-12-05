@@ -132,13 +132,15 @@ public class MattsRobot implements ObjectInWarehouse {
     public void move () {
         if (path.isEmpty()) {
             if (currentTask == "Get Shelf") {
-                path = floor.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
+                if (getLocation().GetX() == shelfManager.getShelf(getShelfID()).getLocation().GetX() && getLocation().GetY() == shelfManager.getShelf(getShelfID()).getLocation().GetY()){
+                    path = floor.shelfToPicker(getLocation());
+                }
+                else {
+                    path = floor.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
+                }
             }
             else if (currentTask == "Return Shelf" && !idle) {
                 path = floor.returnShelf(getLocation(), loadedShelf.getOriginalLocation());
-            }
-            else if (currentTask == "To Picker") {
-                path = floor.shelfToPicker(getLocation());
             }
         }
 

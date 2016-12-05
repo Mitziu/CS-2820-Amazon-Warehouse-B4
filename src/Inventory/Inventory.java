@@ -126,20 +126,22 @@ public class Inventory{
 		            Add_Inventory(Integer.valueOf(arr[0]), arr[1], 100);
 		    }
 		    //Getting Shelf IDs from the floor
-		    ArrayList<Floor.Shelf> Shelves = Setup.getShelves();
+//		    ArrayList<Floor.Shelf> Shelves = Setup.getShelves();
 		    LinkedList<Integer> ID_List = Pass_Inventory();
 			LinkedList<Integer> Qty_List = new LinkedList<Integer>();
-			LinkedList<Integer> Shelf_IDs = new LinkedList<Integer>();
+//			LinkedList<Integer> Shelf_IDs = new LinkedList<Integer>();
 			
 			for (int i= 0; i < ID_List.size(); i++){
 				Qty_List.add(Get_Item_Qty(ID_List.get(i)));
 			}
 			//Converting Shelves to a linkedlist of just the shelf IDs
-			for (int x =0; x < Shelves.size(); x++){
-				Shelf_IDs.add(Shelves.get(x).id);
-			}
-			
-			SM.Shelf_Manager_Init(Shelf_IDs, ID_List, Qty_List);
+//			for (int x =0; x < Shelves.size(); x++){
+//				Shelf_IDs.add(Shelves.get(x).id);
+//			}
+
+
+			//TODO: Change constructor to let the user decide on how many shelves
+			SM.Shelf_Manager_Init(5, ID_List, Qty_List);
 	}
 	
 	/**

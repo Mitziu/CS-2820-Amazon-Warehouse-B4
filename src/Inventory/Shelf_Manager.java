@@ -136,19 +136,19 @@ public class Shelf_Manager implements S_Manager{
 	/**
 	 * Takes a list of ID number for the shelves and creates a reference HashMap to check quantity
 	 * of items on a shelf by shelf basis. As well as places items already in the Main Inventory on shelves.
-	 * @param Shelf_IDs ID number for the shelves to be generated
+	 * @param numOfShelves Number of shelves that will be managed
 	 * @author William Anderson
 	 * @author Mitziu
 	 */
 	//This assumes that the Inventory has been generated and Initialized before this method
 	//is called.
-	public void Shelf_Manager_Init(LinkedList<Integer> Shelf_IDs, LinkedList<Integer> Inv, LinkedList<Integer> Qty){
-		for (int i = 0; i < Shelf_IDs.size(); i++) {
-			shelves.put(i, new Shelf(Shelf_IDs.get(i), new HashMap<>()));
+	public void Shelf_Manager_Init(Integer numOfShelves, LinkedList<Integer> Inv, LinkedList<Integer> Qty){
+		for (int i = 0; i < numOfShelves; i++) {
+			shelves.put(i, new Shelf(i, new HashMap<>()));
 		}
 
 		for (int i = 0; i < Inv.size(); i++) {
-			shelves.get(i % Shelf_IDs.size()).items.put(Inv.get(i), Qty.get(i));
+			shelves.get(i % numOfShelves).items.put(Inv.get(i), Qty.get(i));
 		}
 	}
 

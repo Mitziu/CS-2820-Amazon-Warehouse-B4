@@ -13,10 +13,19 @@ public class Shelf implements ObjectInWarehouse {
     public Map<Integer, Integer> items;
     public Integer ID;
     public Point currentPosition;
+    public Point originalPosition;
 
     public Shelf(Integer ID, Map<Integer, Integer> items) {
         this.items = items;
         this.ID = ID;
+    }
+
+    public void setOriginalPosition (Point originalPosition) {
+        this.originalPosition = originalPosition;
+    }
+
+    public Point getOriginalPosition() {
+        return originalPosition;
     }
 
     public void setPoint(Point newLocation) {
@@ -37,4 +46,6 @@ public class Shelf implements ObjectInWarehouse {
     public void move(Integer x, Integer y) {
         currentPosition = new Point(x, y);
     }
+
+
 }

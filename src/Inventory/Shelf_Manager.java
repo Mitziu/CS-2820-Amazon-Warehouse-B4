@@ -26,6 +26,14 @@ public class Shelf_Manager implements S_Manager{
 		return new ArrayList<>(shelves.keySet());
 	}
 
+	public List<Shelf> listShelves() {
+		List<Shelf> listOfShelves = new ArrayList<>();
+		shelves.entrySet()
+				.forEach(entry -> listOfShelves.add(entry.getValue()));
+
+		return listOfShelves;
+	}
+
 	/**
 	 * Provides a list of items the shelf holds
 	 * @param Shelf_ID ID number for the shelf

@@ -23,4 +23,6 @@ public interface S_Manager {
 	public List<Integer> Contained_In(int Item_ID);
 
 	public Shelf getShelf (int Shelf_ID);
+
+	public List<Shelf> listShelves();
 }

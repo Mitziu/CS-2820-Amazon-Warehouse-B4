@@ -62,14 +62,27 @@ public class MattsRobot implements ObjectInWarehouse {
         idle = false;
     }
 
+    /**
+     * @author Matt
+     * @param task
+     * sets the task for this robot
+     */
     public void setCurrentTask (String task) {
         currentTask = task;
     }
 
+    /**
+     * @author Matt
+     * @return the current task this robot is working on
+     */
     public String getCurrentTask () {
         return currentTask;
     }
 
+    /**
+     * @author Matt
+     * @return ID of shelf on this robot
+     */
     public Integer getShelfID () {
         return shelfID;
     }
@@ -98,7 +111,7 @@ public class MattsRobot implements ObjectInWarehouse {
      * @author Matt
      * @return if robot is done
      */
-    public boolean isDone () {
+    public boolean hasArrived() {
         return path.isEmpty();
     }
 
@@ -176,6 +189,10 @@ public class MattsRobot implements ObjectInWarehouse {
         setIdle(true);
     }
 
+    /**
+     * @author Matt
+     * @return object ID of this robot
+     */
     public Integer getID() {
         return ID;
     }

@@ -5,13 +5,6 @@ import Inventory.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//TODO: get out of the way to avoid blocking picker
-//TODO: call newOrder method when robot has reached picker; I SHOULDN'T NEED TO, RIGHT? NEW ORDERS ASSIGNED EVERY TICK.
-//TODO: figure out which shelf to go to--look at shelf manager, call containedIn method;
-//TODO: figure out which shelf a robot should go to via robotScheduler;
-//TODO: add Queue of shelveIDs to go to to fulfill order
-//TODO: isIdle and isDone redundant?
-//TODO: Is a Set really the right data structure? Why not a map?
 
 /**
  * Created by Matt on 12/4/2016.
@@ -92,12 +85,13 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
 
     /**
      * @author Matt
+     * @author Mitziu
      * @param itemsNeeded
      */
     private void getShelvesNeeded (Set<Integer> itemsNeeded) {
         Set<Integer> tempSet = new HashSet<>();
-        itemsNeeded.forEach(item -> tempSet.addAll(shelfManager.Contained_In(item)));
-        tempSet.forEach(id -> shelvesNeeded.add(id));
+        itemsNeeded.forEach(item -> tempSet.add(shelfManager.Contained_In(item).get(0)));
+        shelvesNeeded.addAll(tempSet);
     }
 
     /**
@@ -134,16 +128,16 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
             String task = myRobot.getCurrentTask();
 
             if (task == "Get Shelf") {
-                if (myRobot.isDone() && !myRobot.isLoaded()) {
+                if (myRobot.hasArrived() && !myRobot.isLoaded()) {
                     myRobot.loadShelf(shelfManager.getShelf(myRobot.getShelfID()));
                 }
-                else if (myRobot.isDone() && myRobot.isLoaded()) {
+                else if (myRobot.hasArrived() && myRobot.isLoaded()) {
                     picker.shelfArrived(myRobot.getShelfID());
                     myRobot.setCurrentTask("Return Shelf");
                 }
             }
             else if (task == "Return Shelf") {
-                if (myRobot.isDone() && !myRobot.isIdle()) {
+                if (myRobot.hasArrived() && !myRobot.isIdle()) {
                     myRobot.unloadShelf();
                 }
             }

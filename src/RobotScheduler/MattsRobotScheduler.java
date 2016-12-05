@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
  * Created by Matt on 12/4/2016.
  * @author Matt
  * @author Mitziu
+ * @author zuoyuan
  */
 public class MattsRobotScheduler implements Observer, RobotScheduler {
     private List<MattsRobot> robots;

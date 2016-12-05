@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -20,10 +19,10 @@ import java.util.Queue;
  */
 public class FloorImpl implements FloorPositions {
 
-    private final Integer hwySouth = 5;
-    private final Integer hwyNorth = 10;
-    private final Integer hwyEast = 5;
-    private final Integer hwyWest = 95;
+    private final Integer HWYSOUTH = 5;
+    private final Integer HWYNORTH = 10;
+    private final Integer HWYEAST = 5;
+    private final Integer HWYWEST = 95;
 
     List<MattsRobot> robots;
     List<Inventory.Shelf> shelves;
@@ -43,39 +42,95 @@ public class FloorImpl implements FloorPositions {
     }
 
     public Queue<Point> robotToShelf(Point src, Point dest) {
-        return null;
-    }
+        Queue<Point> route = new LinkedList<>();
+        Point lastPoint;
 
-    public Queue<Point> returnShelf(Point src, Point dest) {
-        return null;
+        lastPoint = goWest(src, HWYNORTH, route);
+        lastPoint = goNorth(lastPoint, dest.GetY(), route);
+        lastPoint = goEast(lastPoint, dest.GetX(), route);
+
+        return route;
     }
 
     public Queue<Point> shelfToPicker(Point src) {
-        return null;
-    }
-
-
-
-    //TODO: Create Route
-    public Queue<Point> createRoute (Point source, Point dest) {
         Queue<Point> route = new LinkedList<>();
+        Point lastPoint;
 
-        srctoHwy(source, route);
+        lastPoint = goSouth(src, src.GetY() + 1, route);
+        lastPoint = goWest(lastPoint, HWYNORTH, route);
+        lastPoint = goNorth(lastPoint, HWYWEST, route);
+        lastPoint = goWest(lastPoint, HWYSOUTH, route);
+        lastPoint = goSouth(lastPoint, picker.getLocation().GetY() - 1, route);
+        lastPoint = goWest(lastPoint, picker.getLocation().GetX(), route);
+        lastPoint = goSouth(lastPoint, picker.getLocation().GetY(), route);
+        return route;
+    }
 
+    public Queue<Point> returnShelf(Point src, Point dest) {
+        Queue<Point> route = new LinkedList<>();
+        Point lastPoint;
+
+        lastPoint = goEast(src, HWYSOUTH, route);
+        lastPoint = goSouth(lastPoint, HWYEAST, route);
+        lastPoint = goEast(lastPoint, HWYNORTH, route);
+        lastPoint = goNorth(lastPoint, dest.GetY() -1, route);
+        lastPoint = goEast(lastPoint, dest.GetX(), route);
+        lastPoint = goSouth(lastPoint, dest.GetY(), route);
 
         return null;
     }
 
-    private void srctoHwy(Point source, Queue<Point> route) {
+    private Point goWest(Point currentLocation, Integer limit, Queue<Point> route) {
+        Integer currentX = currentLocation.GetX();
+        Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
 
-        if (source.GetX() < 5) {
-            for (int i = source.GetX(); i < hwySouth; i++) {
-
-            }
+        while (currentX >= limit) {
+            route.add(new Point(currentX, currentLocation.GetY()));
+            lastPoint = new Point(currentX, currentLocation.GetY());
+            currentX--;
         }
 
+        return lastPoint;
     }
 
+    private Point goEast(Point currentLocation, Integer limit, Queue<Point> route) {
+        Integer currentX = currentLocation.GetX();
+        Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
+
+        while (currentX <= limit) {
+            route.add(new Point(currentX, currentLocation.GetY()));
+            lastPoint = new Point(currentX, currentLocation.GetY());
+            currentX ++;
+        }
+
+        return lastPoint;
+    }
+
+    private Point goNorth(Point currentLocation, Integer limit, Queue<Point> route) {
+        Integer currentY = currentLocation.GetY();
+        Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
+
+        while (currentY >= limit) {
+            route.add(new Point(currentLocation.GetX(), currentY));
+            lastPoint = new Point(currentLocation.GetX(), currentY);
+            currentY--;
+        }
+
+        return lastPoint;
+    }
+
+    private Point goSouth(Point currentLocation, Integer limit, Queue<Point> route) {
+        Integer currentY = currentLocation.GetY();
+        Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
+
+        while (currentY <= limit) {
+            route.add(new Point(currentLocation.GetX(), currentY));
+            lastPoint = new Point(currentLocation.GetX(), currentY);
+            currentY++;
+        }
+
+        return lastPoint;
+    }
 
     private void setupLocations () {
         //Creates representation of belt for visualizer

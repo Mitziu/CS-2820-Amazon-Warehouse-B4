@@ -5,6 +5,9 @@ import Floor.Point;
 
 /**
  * Created by Mitziu on 12/4/16.
+ * Class to help floor and Visualizer represent the belt
+ * @author Mitziu
+ * @author Matthew
  */
 public class BeltPiece implements ObjectInWarehouse {
 

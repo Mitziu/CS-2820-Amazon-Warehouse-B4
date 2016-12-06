@@ -8,6 +8,8 @@ import java.util.Queue;
 
 /**
  * Created by Mitziu on 12/5/16.
+ * @author Mitziu
+ * Class to help robot calculate the route
  */
 public class RouteFinder {
 
@@ -22,6 +24,12 @@ public class RouteFinder {
         this.picker = picker;
     }
 
+    /**
+     * Creates the route from Robot --> Shelf
+     * @param src Point of robot
+     * @param dest Point of shelf
+     * @return
+     */
     public Queue<Point> robotToShelf(Point src, Point dest) {
         Queue<Point> route = new LinkedList<>();
         Point lastPoint;
@@ -33,6 +41,11 @@ public class RouteFinder {
         return route;
     }
 
+    /**
+     * Creates the route from Shelf --> Picker
+     * @param src Point of Robot/Shelf
+     * @return
+     */
     public Queue<Point> shelfToPicker(Point src) {
         Queue<Point> route = new LinkedList<>();
         Point lastPoint;
@@ -47,6 +60,12 @@ public class RouteFinder {
         return route;
     }
 
+    /**
+     * Creates the route from Picker --> Original Point of shelf
+     * @param src
+     * @param dest
+     * @return
+     */
     public Queue<Point> returnShelf(Point src, Point dest) {
         Queue<Point> route = new LinkedList<>();
         Point lastPoint;
@@ -61,6 +80,13 @@ public class RouteFinder {
         return null;
     }
 
+    /**
+     * Adds to a queue points going West (Left)
+     * @param currentLocation Starting Point
+     * @param limit End Axis
+     * @param route Queue where to add the set of Points
+     * @return
+     */
     private Point goWest(Point currentLocation, Integer limit, Queue<Point> route) {
         Integer currentX = currentLocation.GetX();
         Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
@@ -74,6 +100,13 @@ public class RouteFinder {
         return lastPoint;
     }
 
+    /**
+     * Adds to a queue points going East (Right)
+     * @param currentLocation Starting Point
+     * @param limit End Axis
+     * @param route Queue where to add the set of Points
+     * @return
+     */
     private Point goEast(Point currentLocation, Integer limit, Queue<Point> route) {
         Integer currentX = currentLocation.GetX();
         Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
@@ -87,6 +120,13 @@ public class RouteFinder {
         return lastPoint;
     }
 
+    /**
+     * Adds to a queue points going North (Up)
+     * @param currentLocation Starting Point
+     * @param limit End Axis
+     * @param route Queue where to add the set of Points
+     * @return
+     */
     private Point goNorth(Point currentLocation, Integer limit, Queue<Point> route) {
         Integer currentY = currentLocation.GetY();
         Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());
@@ -100,6 +140,13 @@ public class RouteFinder {
         return lastPoint;
     }
 
+    /**
+     * Adds to a queue points going South (Down)
+     * @param currentLocation Starting Point
+     * @param limit End Axis
+     * @param route Queue where to add the set of Points
+     * @return
+     */
     private Point goSouth(Point currentLocation, Integer limit, Queue<Point> route) {
         Integer currentY = currentLocation.GetY();
         Point lastPoint = new Point(currentLocation.GetX(), currentLocation.GetY());

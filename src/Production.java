@@ -13,6 +13,7 @@ import java.text.ParseException;
 /**
  * Created by Mitziu on 12/2/16.
  * Class to run simulation of the entire warehouse
+ * @author Mitziu
  */
 public class Production {
 

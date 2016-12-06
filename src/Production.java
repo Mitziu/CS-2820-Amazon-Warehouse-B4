@@ -18,7 +18,10 @@ public class Production {
 
     private static BeltImpl belt;
     private static Clock clock;
-    private static Setup floor;
+    //private static Setup floor;
+
+    private static FloorImpl floor;
+
     private static Inventory inventory;
     private static Master master;
     private static MattsRobotScheduler robotManager;
@@ -31,15 +34,15 @@ public class Production {
 
         clock = new Clock();
         belt = new BeltImpl(10);
-
-        floor = new Setup();
-        floor.Initialize();
+//
+//        floor = new Setup();
+//        floor.Initialize();
 
         shelfManager = new Shelf_Manager();
         inventory = new Inventory(shelfManager);
 
         try {
-            inventory.Inventory_Initialize("CSVFiles/Inventory_CSV", floor);
+            inventory.Inventory_Initialize("CSVFiles/Inventory_CSV");
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -47,7 +50,6 @@ public class Production {
         }
 
         picker = new PickerImpl(belt, shelfManager);
-        visualizer = new VisualizerRecorder(floor);
 
         robotManager = new MattsRobotScheduler(picker, shelfManager);
         //GoldenManager
@@ -55,6 +57,8 @@ public class Production {
         orderingSystem = new OrderingSystem(inventory, belt, robotManager, picker);
         //OrderingSystem
 
+        floor = new FloorImpl(shelfManager, robotManager, picker, belt);
+        visualizer = new VisualizerRecorder(floor);
         master = new Master(orderingSystem);
         //Master
 
@@ -64,6 +68,10 @@ public class Production {
         clock.addObserver(belt);
         clock.addObserver(picker);
         clock.addObserver(robotManager);
+
+        while(true) {
+            clock.tick();
+        }
 
 
     }

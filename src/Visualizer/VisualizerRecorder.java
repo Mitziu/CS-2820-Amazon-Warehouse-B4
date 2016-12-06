@@ -35,7 +35,8 @@ public class VisualizerRecorder implements Observer {
     @Override
     public void update (Observable o, Object arg) {
         //TODO: Get latest map from Floor
-        Map tempMap = new HashMap<>(floorPositions.getAllPositions());
+        //Map tempMap = new HashMap<>(floorPositions.getAllPositions());
+        Map tempMap = floorPositions.getAllPositions();
         storePositions(tempMap);
     }
 

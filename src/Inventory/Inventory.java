@@ -119,7 +119,7 @@ public class Inventory{
 	 * @author William
 	 * @author Mitziu
 	 */
-	public void Inventory_Initialize(String Filename, Setup Setup) throws ParseException, IOException{
+	public void Inventory_Initialize(String Filename) throws ParseException, IOException{
 		 BufferedReader br = new BufferedReader(new FileReader(Filename));
 		    String line =  null;
 

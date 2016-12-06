@@ -129,7 +129,7 @@ public class Master implements Observer {
      * Checks for new orders when the clock ticks
      */
     private void checkNewOrders() {
-        while (upcomingOrders.peek().getTimeToOrder() == time) {
+        while (!upcomingOrders.isEmpty() && upcomingOrders.peek().getTimeToOrder() == time) {
             UpcomingOrder currentOrder = upcomingOrders.poll();
             orderSystem.placeOrder(currentOrder.getItems() , currentOrder.getAddress());
         }

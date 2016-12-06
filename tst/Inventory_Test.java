@@ -45,7 +45,7 @@ public class Inventory_Test {
 	@Test
 	public void testContained_In2()throws ParseException, IOException{
         setup.Initialize();
-        Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+        Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 	    Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, SM.Get_All_Shelves().get(0), 13);
 
@@ -58,7 +58,7 @@ public class Inventory_Test {
 	@Test
 	public void testContained_In3()throws ParseException, IOException{
         setup.Initialize();
-        Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+        Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 
 	    Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, SM.Get_All_Shelves().get(0), 13);
@@ -88,7 +88,7 @@ public class Inventory_Test {
 	@Test
 	public void testContained_in4()throws ParseException, IOException{
         setup.Initialize();
-        Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+        Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 
 	    Inv.Add_Inventory(75450, "Baseball", 100);
 		SM.Put_Container(75450, SM.Get_All_Shelves().get(0), 13);
@@ -111,7 +111,7 @@ public class Inventory_Test {
 	public void testTake_Container1()throws ParseException, IOException{
 
 		setup.Initialize();
-		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 		Inv.Add_Inventory(75450, "Baseball", 100);
 		SM.Put_Container(75450, 40, 100);
 		Inv.Order_Claim(75450, 7);
@@ -125,7 +125,7 @@ public class Inventory_Test {
 	@Test
 	public void testTake_Container2()throws ParseException, IOException{
 		setup.Initialize();
-		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 
 		Inv.Add_Inventory(75450, "Baseball", 13);
 		SM.Put_Container(75450, SM.Get_All_Shelves().get(0) , 13);
@@ -159,7 +159,7 @@ public class Inventory_Test {
 	@Test
 	public void testTake_Container3()throws ParseException, IOException{
 		setup.Initialize();
-		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 
 		Inv.Add_Inventory(75450, "Baseball", 50);
 		SM.Put_Container(75450, SM.Get_All_Shelves().get(0), 13);
@@ -191,7 +191,7 @@ public class Inventory_Test {
 	@Test
 	public void testEmpty_Container()throws ParseException, IOException{
 		setup.Initialize();
-		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 
 		Inv.Add_Inventory(75450, "Baseball", 30);
 		SM.Put_Container(75450, SM.Get_All_Shelves().get(0), 13);
@@ -216,7 +216,7 @@ public class Inventory_Test {
 	public void testInitializer() throws ParseException, IOException{
 		//Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
         setup.Initialize();
-		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 		assertEquals("Cat Food", Inv.Get_Item_Name(7));
 		assertEquals("Poster1", Inv.Get_Item_Name(9));
 		assertEquals(7, Inv.Get_Inventory_ID("Cat Food"));
@@ -252,7 +252,7 @@ public class Inventory_Test {
 	public void testContainer_Count() throws ParseException, IOException{
 		//Inv.Inventory_Initialize("Inventory_CSV", MockShelf_IDs);
         setup.Initialize();
-		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV", setup);
+		Inv.Inventory_Initialize("CSVFiles/Inventory_CSV");
 		SM.Put_Container(6, SM.Get_All_Shelves().get(0), 100);
 		SM.Put_Container(6, SM.Get_All_Shelves().get(10), 200);
 		assertEquals(100, SM.Container_Count(6, SM.Get_All_Shelves().get(0)));
@@ -272,7 +272,7 @@ public class Inventory_Test {
 	@Test (expected = IOException.class)
 	public void initializerExceptionThrown() throws IOException, ParseException{
 		//Inv.Inventory_Intialize("Fake_CSV", setup);
-		Inv.Inventory_Initialize("Fake_CSV", setup);
+		Inv.Inventory_Initialize("Fake_CSV");
 	}
 	
 }

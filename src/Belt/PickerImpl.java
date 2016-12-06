@@ -115,7 +115,9 @@ public class PickerImpl implements Picker, Observer, ObjectInWarehouse {
      * Sends the head of the queue to the Belt
      */
     private void sendToBelt () {
-        myBelt.pick(finishedOrdersQueue.poll().getOrderID());
+        if (!finishedOrdersQueue.isEmpty()) {
+            myBelt.pick(finishedOrdersQueue.poll().getOrderID());
+        }
     }
 
     /**

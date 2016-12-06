@@ -36,8 +36,15 @@ public class VisualizerRecorder implements Observer {
     public void update (Observable o, Object arg) {
         //TODO: Get latest map from Floor
         //Map tempMap = new HashMap<>(floorPositions.getAllPositions());
-        Map tempMap = floorPositions.getAllPositions();
+        Map<String, Point> tempMap = floorPositions.getAllPositions();
+        displayInformation(tempMap);
         storePositions(tempMap);
+    }
+
+    private void displayInformation(Map<String, Point> mapOfFloor) {
+        mapOfFloor.entrySet()
+                .forEach(entry -> System.out.println("ID: " + entry.getKey() +
+                        " Location: (" + entry.getValue().GetX() + " , " + entry.getValue().GetY() + " )"));
     }
 
     /**

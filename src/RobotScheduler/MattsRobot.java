@@ -22,7 +22,7 @@ public class MattsRobot implements ObjectInWarehouse {
     private Shelf loadedShelf;
     private Integer ID;
     private Integer shelfID;
-    private String currentTask;
+    private String currentTask = " ";
     private Shelf_Manager shelfManager;
     private RouteFinder routeFinder;
 
@@ -107,8 +107,9 @@ public class MattsRobot implements ObjectInWarehouse {
      * @return next place robot is going
      */
     public Point nextLocation () {
-        if (!path.isEmpty()) return path.peek();
-
+        if (path != null) {
+            if (!path.isEmpty()) return path.peek();
+        }
         return new Point(1000, 1000);
     }
 
@@ -117,7 +118,11 @@ public class MattsRobot implements ObjectInWarehouse {
      * @return if robot is done
      */
     public boolean hasArrived() {
-        return path.isEmpty();
+        if (path != null) {
+            return path.isEmpty();
+        }
+
+        return true;
     }
 
     /**
@@ -134,22 +139,23 @@ public class MattsRobot implements ObjectInWarehouse {
      * moves the robot to the next place
      */
     public void move () {
-        if (path.isEmpty()) {
-            if (currentTask == "Get Shelf") {
-                if (getLocation().GetX() == shelfManager.getShelf(getShelfID()).getLocation().GetX() && getLocation().GetY() == shelfManager.getShelf(getShelfID()).getLocation().GetY()){
-                    path = routeFinder.shelfToPicker(getLocation());
+        if (path != null) {
+            if (path.isEmpty()) {
+                if (currentTask == "Get Shelf") {
+                    if (getLocation().GetX() == shelfManager.getShelf(getShelfID()).getLocation().GetX() && getLocation().GetY() == shelfManager.getShelf(getShelfID()).getLocation().GetY()) {
+                        path = routeFinder.shelfToPicker(getLocation());
+                    } else {
+                        path = routeFinder.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
+                    }
+                } else if (currentTask == "Return Shelf" && !idle) {
+                    path = routeFinder.returnShelf(getLocation(), loadedShelf.getOriginalLocation());
                 }
-                else {
-                    path = routeFinder.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
-                }
-            }
-            else if (currentTask == "Return Shelf" && !idle) {
-                path = routeFinder.returnShelf(getLocation(), loadedShelf.getOriginalLocation());
             }
         }
-
-        if (!path.isEmpty()) {
-            location = path.poll();
+        if (path != null) {
+            if (!path.isEmpty()) {
+                location = path.poll();
+            }
         }
 
         if (loaded) {

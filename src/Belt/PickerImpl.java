@@ -66,6 +66,15 @@ public class PickerImpl implements Picker, Observer, ObjectInWarehouse {
     }
 
     /**
+     * @author Matt McCan
+     * @return location
+     */
+    @Override
+    public Point getPosition () {
+        return location;
+    }
+
+    /**
      * Picks the item(s) off of the shelf
      * @param itemID ID of item
      */

@@ -97,7 +97,7 @@ public class MattsRobot implements ObjectInWarehouse {
      * @param newPath
      * Setter for path
      */
-    private void setPath(Queue<Point> newPath) {
+    public void setPath(Queue<Point> newPath) {
         path = newPath;
     }
 
@@ -123,6 +123,20 @@ public class MattsRobot implements ObjectInWarehouse {
         }
 
         return true;
+
+
+    }
+
+    /**
+     * @author Matt
+     * @return boolean if path is empty
+     */
+    public boolean pathEmpty () {
+        if (path != null) {
+            if (path.isEmpty()) return true;
+        }
+
+        return false;
     }
 
     /**
@@ -139,19 +153,19 @@ public class MattsRobot implements ObjectInWarehouse {
      * moves the robot to the next place
      */
     public void move () {
-        if (path != null) {
-            if (path.isEmpty()) {
-                if (currentTask == "Get Shelf") {
-                    if (getLocation().GetX() == shelfManager.getShelf(getShelfID()).getLocation().GetX() && getLocation().GetY() == shelfManager.getShelf(getShelfID()).getLocation().GetY()) {
-                        path = routeFinder.shelfToPicker(getLocation());
-                    } else {
-                        path = routeFinder.robotToShelf(getLocation(), shelfManager.getShelf(getShelfID()).getLocation());
-                    }
-                } else if (currentTask == "Return Shelf" && !idle) {
-                    path = routeFinder.returnShelf(getLocation(), loadedShelf.getOriginalLocation());
-                }
-            }
+        if (path != null) { //nested if statements are messy, but prevent nullPointerException
+               if (currentTask == "Goto Shelf") {
+                   if (shelfManager.getShelf(shelfID).getLocation().isEqual(location)) {
+                       loadShelf(shelfManager.getShelf(shelfID));
+                   }
+               }
+               else if (currentTask == "Return Shelf") {
+                   if (location.isEqual(loadedShelf.getOriginalLocation())) {
+                       unloadShelf();
+                   }
+               }
         }
+
         if (path != null) {
             if (!path.isEmpty()) {
                 location = path.poll();
@@ -182,6 +196,7 @@ public class MattsRobot implements ObjectInWarehouse {
         loadedShelf = shelf;
         loaded = true;
     }
+
 
     public Shelf getLoadedShelf () {
         return loadedShelf;

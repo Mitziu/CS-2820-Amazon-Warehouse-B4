@@ -144,28 +144,47 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
                     filter(myRobot -> myRobot.isIdle()).forEach(myRobot -> {
                     if (!shelvesNeeded.isEmpty()) {
                         myRobot.setShelfID(shelvesNeeded.remove(0));
-                        myRobot.setCurrentTask("Get Shelf");
+                        myRobot.setCurrentTask("Goto Shelf");
                     }
             });
         }
 
         //Set task for robot, TODO: Refactor this!! Use an enum.
-        robots.forEach( myRobot -> {
+        robots.forEach(myRobot -> {
             String task = myRobot.getCurrentTask();
+            if (task == null) task = "No task at present"; myRobot.setIdle(true); myRobot.setCurrentTask(task);
 
-            if (task == "Get Shelf") {
-                if (myRobot.hasArrived() && !myRobot.isLoaded()) {
-                    myRobot.loadShelf(shelfManager.getShelf(myRobot.getShelfID()));
+            if (task == "Goto Shelf") {
+                if(!myRobot.isLoaded()) {
+                    task = "Deliver Shelf";
+                    myRobot.setCurrentTask(task);
                 }
-                else if (myRobot.hasArrived() && myRobot.isLoaded()) {
-                    picker.shelfArrived(myRobot.getShelfID());
-                    myRobot.setCurrentTask("Return Shelf");
+                else if (myRobot.pathEmpty())  {
+                    myRobot.setPath(routeFinder.robotToShelf(myRobot.getLocation(), shelfManager.getShelf(myRobot.getShelfID()).getLocation()));
                 }
+
             }
-            else if (task == "Return Shelf") {
-                if (myRobot.hasArrived() && !myRobot.isIdle()) {
-                    myRobot.unloadShelf();
+
+            if (task == "Deliver Shelf")  {
+                if (myRobot.getLocation() == picker.getPosition()) {
+                    task = "Return Shelf";
+                    myRobot.setCurrentTask(task);
+                    picker.shelfArrived(myRobot.getShelfID());
                 }
+                else if (myRobot.pathEmpty())  {
+                    myRobot.setPath(routeFinder.shelfToPicker(myRobot.getLocation()));
+                }
+
+            }
+
+            if (task == "Return Shelf") {
+                if (myRobot.getLocation() == myRobot.getLoadedShelf().getOriginalLocation()) {
+                    myRobot.setIdle(true);
+                }
+                else if (myRobot.pathEmpty()) {
+                    myRobot.setPath(routeFinder.returnShelf(myRobot.getLocation(), myRobot.getLoadedShelf().getOriginalLocation()));
+                }
+
             }
         });
 

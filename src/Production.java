@@ -75,7 +75,7 @@ public class Production {
             clock.tick();
         }
 
-
+        visualizer.simulationEnded();
     }
 
 

@@ -1,6 +1,7 @@
 package Belt;
 
 import Ordering.Order;
+import Floor.Point;
 
 /**
  * Created by Mitziu on 11/17/16.
@@ -16,6 +17,8 @@ public interface Picker {
      * @param newOrder Order to be fulfilled
      */
     public void newOrder (Order newOrder);
+
+    public Point getPosition ();
 
 
     /**

@@ -85,7 +85,8 @@ public class FloorImpl implements FloorPositions {
         }
 
         for (int i = 0; i < piecesOfBelt.size(); i++) {
-            if (belt.getOrdersOnBelt().get(i) != null) piecesOfBelt.get(i).setEmpty(false);
+            if (belt.getOrdersOnBelt().get(i) != null)
+                piecesOfBelt.get(i).setEmpty(false);
         }
     }
 

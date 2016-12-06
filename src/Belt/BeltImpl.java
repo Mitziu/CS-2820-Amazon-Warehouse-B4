@@ -27,6 +27,9 @@ public class BeltImpl implements Observer, Belt, ObjectInWarehouse {
 	{
 		shippedOrdersList = new ArrayList<Integer>();
         ordersOnBelt = new Integer[beltSize];
+		for(int i = 0; i < beltSize; i++) {
+			ordersOnBelt[i] = null;
+		}
 		this.size = beltSize;
 	}
 

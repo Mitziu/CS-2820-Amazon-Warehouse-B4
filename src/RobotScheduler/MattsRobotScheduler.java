@@ -20,6 +20,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
     private Queue<Order> pendingOrders;
     private Picker picker;
     private List<Integer> shelvesNeeded;
+    private RouteFinder routeFinder;
 
     /**
      * constructor
@@ -32,6 +33,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         robots = new LinkedList<MattsRobot>();
         pendingOrders = new LinkedList<>();
         shelvesNeeded = new LinkedList<>();
+        routeFinder = new RouteFinder(picker);
     }
 
     /**
@@ -46,11 +48,12 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         this.robots = robots;
         this.pendingOrders = pendingOrders;
         shelvesNeeded = new LinkedList<>();
+        routeFinder = new RouteFinder((PickerImpl) this.picker);
     }
 
     private void createRobots(Integer numOfRobots) {
         for (int i = 0; i < numOfRobots; i++) {
-            MattsRobot robot = new MattsRobot(new Point(0,0), i, shelfManager, picker);
+            MattsRobot robot = new MattsRobot(new Point(0,0), i, shelfManager, routeFinder);
             addRobot(robot);
         }
     }

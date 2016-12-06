@@ -30,11 +30,11 @@ public class MattsRobot implements ObjectInWarehouse {
      * @author Matt
      * constructor
      */
-    public MattsRobot (Point location, Integer ID, Shelf_Manager shelfManager, Picker picker) {
+    public MattsRobot (Point location, Integer ID, Shelf_Manager shelfManager, RouteFinder routeFinder) {
         this.location = location;
         this.ID = ID;
         this.shelfManager = shelfManager;
-        routeFinder = new RouteFinder((PickerImpl) picker);
+        this.routeFinder = routeFinder;
     }
 
     /**

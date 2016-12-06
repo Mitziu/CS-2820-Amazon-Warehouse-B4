@@ -47,7 +47,7 @@ public class BeltImpl implements Observer, Belt, ObjectInWarehouse {
 	}
 
     /**
-     * allows anyone in the warehouse to view the items on the belt
+     * allows EVERYONE in the warehouse to view the items on the belt
      * @author Eduardo
      */
     public List<Integer> getOrdersOnBelt()

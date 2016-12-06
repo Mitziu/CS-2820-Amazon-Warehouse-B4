@@ -109,7 +109,7 @@ public class MattsRobot implements ObjectInWarehouse {
     public Point nextLocation () {
         if (!path.isEmpty()) return path.peek();
 
-        return null;
+        return new Point(1000, 1000);
     }
 
     /**

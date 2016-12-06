@@ -35,6 +35,8 @@ public class MattsRobot implements ObjectInWarehouse {
         this.ID = ID;
         this.shelfManager = shelfManager;
         this.routeFinder = routeFinder;
+        path = new LinkedList<>();
+        path.add(location);
     }
 
     /**

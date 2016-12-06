@@ -34,6 +34,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         pendingOrders = new LinkedList<>();
         shelvesNeeded = new LinkedList<>();
         routeFinder = new RouteFinder(picker);
+        createRobots(5);
     }
 
     /**
@@ -49,6 +50,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         this.pendingOrders = pendingOrders;
         shelvesNeeded = new LinkedList<>();
         routeFinder = new RouteFinder((PickerImpl) this.picker);
+        createRobots(5);
     }
 
     private void createRobots(Integer numOfRobots) {

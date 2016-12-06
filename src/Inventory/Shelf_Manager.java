@@ -145,6 +145,7 @@ public class Shelf_Manager implements S_Manager{
 	public void Shelf_Manager_Init(Integer numOfShelves, LinkedList<Integer> Inv, LinkedList<Integer> Qty){
 		for (int i = 0; i < numOfShelves; i++) {
 			shelves.put(i, new Shelf(i, new HashMap<>()));
+			shelves.get(i).move(0,0);
 		}
 
 		for (int i = 0; i < Inv.size(); i++) {

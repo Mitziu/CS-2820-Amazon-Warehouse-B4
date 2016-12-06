@@ -21,7 +21,7 @@ public class BeltPiece implements ObjectInWarehouse {
 
     @Override
     public Point getLocation() {
-        return null;
+        return location;
     }
 
     @Override
@@ -31,6 +31,7 @@ public class BeltPiece implements ObjectInWarehouse {
 
     @Override
     public void move(Integer x, Integer y) {
+        location = new Point(x,y);
     }
 
     public void setEmpty(boolean empty) {

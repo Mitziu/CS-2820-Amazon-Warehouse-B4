@@ -52,6 +52,7 @@ public class FloorImpl implements FloorPositions {
             BeltPiece piece = new BeltPiece(i);
             piece.setEmpty(true);
             piece.move(0, (100 - (belt.getSize() - 1 - i)));
+            piecesOfBelt.add(i, piece);
         }
 
         //Positions picker next to the belt at the beginning
@@ -63,6 +64,7 @@ public class FloorImpl implements FloorPositions {
                 if (shelfCtr == shelves.size())
                     break;
                 shelves.get(shelfCtr).move(20 + (i  * 10), 20 + (j  * 10));
+                shelves.get(shelfCtr).originalLocation = new Point((20 + (i * 10)), (20 + (j * 10)));
             }
         }
 

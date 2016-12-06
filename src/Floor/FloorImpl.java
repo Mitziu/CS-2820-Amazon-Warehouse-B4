@@ -65,6 +65,7 @@ public class FloorImpl implements FloorPositions {
                     break;
                 shelves.get(shelfCtr).move(20 + (i  * 10), 20 + (j  * 10));
                 shelves.get(shelfCtr).originalLocation = new Point((20 + (i * 10)), (20 + (j * 10)));
+                shelfCtr++;
             }
         }
 

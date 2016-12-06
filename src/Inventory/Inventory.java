@@ -143,7 +143,7 @@ public class Inventory{
 
 
 			//TODO: Change constructor to let the user decide on how many shelves
-			SM.Shelf_Manager_Init(5, ID_List, Qty_List);
+			SM.Shelf_Manager_Init(1, ID_List, Qty_List);
 	}
 	
 	/**

@@ -116,6 +116,7 @@ public class PickerImpl implements Picker, Observer, ObjectInWarehouse {
      */
     private void sendToBelt () {
         if (!finishedOrdersQueue.isEmpty()) {
+            System.out.println("DEBUG: Picker, Sending Order # " + finishedOrdersQueue.peek().getOrderID() + " to Belt");
             myBelt.pick(finishedOrdersQueue.poll().getOrderID());
         }
     }

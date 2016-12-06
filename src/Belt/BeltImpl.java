@@ -76,6 +76,7 @@ public class BeltImpl implements Observer, Belt, ObjectInWarehouse {
      */
     private void ship(Integer orderID)
     {
+		System.out.println("DEBUG: Belt, Finished Order # " + orderID);
         shippedOrdersList.add(orderID);
     }
 

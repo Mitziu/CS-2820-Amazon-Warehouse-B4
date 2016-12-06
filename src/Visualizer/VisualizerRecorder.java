@@ -42,9 +42,9 @@ public class VisualizerRecorder implements Observer {
     }
 
     private void displayInformation(Map<String, Point> mapOfFloor) {
-        mapOfFloor.entrySet()
-                .forEach(entry -> System.out.println("ID: " + entry.getKey() +
-                        " Location: (" + entry.getValue().GetX() + " , " + entry.getValue().GetY() + " )"));
+        System.out.println("-----------------------------");
+        mapOfFloor.forEach((k,v) -> System.out.println("Name: "+k+" Position: "+v.GetX() + ", " + v.GetY()));
+        System.out.println("-----------------------------");
     }
 
     /**

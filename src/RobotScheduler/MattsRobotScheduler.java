@@ -90,12 +90,23 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
      * moves robots, preventing collisions
      */
     private void moveRobot (MattsRobot thisRobot) {
-        int occupied = robots.stream(). //How many robots are at the next location? If n = 0, then move robot.
-                filter(myRobot -> myRobot.getLocation().GetX() == thisRobot.nextLocation().GetX()).
-                filter(myRobot -> myRobot.getLocation().GetY() == thisRobot.nextLocation().GetY()).
-                collect(Collectors.toList()).size();
+//        int occupied = robots.stream(). //How many robots are at the next location? If n = 0, then move robot.
+//                filter(myRobot -> myRobot.getLocation().GetX() == thisRobot.nextLocation().GetX()).
+//                filter(myRobot -> myRobot.getLocation().GetY() == thisRobot.nextLocation().GetY()).
+//                collect(Collectors.toList()).size();
 
-        if (occupied == 0) thisRobot.move();
+        Integer locationUsed = 0;
+        for(MattsRobot robot: robots) {
+            if (robot == thisRobot) continue;;
+
+            if (robot.nextLocation() != null) {
+                if (thisRobot.getLocation().GetX() == robot.nextLocation().GetX() &&
+                        thisRobot.getLocation().GetX() == robot.nextLocation().GetY()) locationUsed++;
+            }
+
+        }
+
+        if (locationUsed == 0) thisRobot.move();
     }
 
     /**

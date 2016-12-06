@@ -31,6 +31,7 @@ public class OrderingSystem implements OrderInterface, Observer {
 	public Picker picker;
 	public ArrayList<Order> orderHistory;
     public Integer OrderID;
+    public Integer finishedOrders;
 
 
     public OrderingSystem(Inventory inventory, Belt belt, MattsRobotScheduler robot, Picker picker){
@@ -41,6 +42,7 @@ public class OrderingSystem implements OrderInterface, Observer {
 		this.picker = picker;
 		this.orderHistory = new ArrayList<>();
         this.OrderID = 100000;
+        finishedOrders = 0;
     }
 
     //Lets you add order with just Items wanted and address, creates OrderID and makes key with it
@@ -103,9 +105,13 @@ public class OrderingSystem implements OrderInterface, Observer {
         for (int x = 0; x < newlyShipped.size(); x++){
             Integer newFinishedOrder = newlyShipped.get(x);
             finishOrder(newFinishedOrder);
+            finishedOrders++;
         }
     }
 
+    public Integer finishedOrdersNumber() {
+        return finishedOrders;
+    }
 
     //removes item by orderID
     public void finishOrder(Integer OrderID){

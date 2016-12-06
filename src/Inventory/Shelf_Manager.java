@@ -1,4 +1,6 @@
 package Inventory;
+import Floor.Point;
+
 import java.util.*;
 
 /**
@@ -146,6 +148,7 @@ public class Shelf_Manager implements S_Manager{
 		for (int i = 0; i < numOfShelves; i++) {
 			shelves.put(i, new Shelf(i, new HashMap<>()));
 			shelves.get(i).move(0,0);
+			shelves.get(i).originalLocation = new Point(0,0);
 		}
 
 		for (int i = 0; i < Inv.size(); i++) {

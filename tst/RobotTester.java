@@ -21,6 +21,7 @@ public class RobotTester {
     RobotScheduler robotScheduler;
     PickerImpl picker;
     BeltImpl belt;
+    RouteFinder routeFinder;
 
 
     @Before
@@ -33,8 +34,9 @@ public class RobotTester {
         picker = new PickerImpl(belt, shelfManager);
         robotScheduler = new MattsRobotScheduler(picker, shelfManager);
         floor = new FloorImpl(shelfManager, robotScheduler, picker, belt);
-        robots.add(new MattsRobot(points[1][1], 101, shelfManager, picker));
-        robots.add(new MattsRobot(points[1][2], 102, shelfManager, picker));
+        routeFinder = new RouteFinder(picker);
+        robots.add(new MattsRobot(points[1][1], 101, shelfManager, routeFinder));
+        robots.add(new MattsRobot(points[1][2], 102, shelfManager, routeFinder));
     }
 
     @Test

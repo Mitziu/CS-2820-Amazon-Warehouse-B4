@@ -59,6 +59,7 @@ public class PickerImpl implements Picker, Observer, ObjectInWarehouse {
      */
     @Override
     public void shelfArrived(Integer shelfID) {
+        System.out.println("DEBUG: Shelf ID: " + shelfID + " arrived");
         this.shelfID = shelfID;
 
         shelfManager.Item_List(shelfID).stream()

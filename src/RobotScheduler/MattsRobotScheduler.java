@@ -184,6 +184,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
             if (task == "Goto Shelf") {
                 if (!myRobot.isLoaded() && myRobot.getLocation().isEqual(shelfManager.getShelf(myRobot.getShelfID()).getLocation())) {
                     task = "Deliver Shelf";
+                    myRobot.setCurrentTask(task);
                     myRobot.loadShelf(shelfManager.getShelf(myRobot.getShelfID()));
                 } else {
                     if (myRobot.pathEmpty())
@@ -195,6 +196,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
                 if (myRobot.getLocation().isEqual(picker.getPosition())) {
                     picker.shelfArrived(myRobot.getShelfID());
                     task = "Return Shelf";
+                    myRobot.setCurrentTask(task);
                 } else {
                     if (myRobot.pathEmpty())
                         myRobot.setPath(routeFinder.shelfToPicker(myRobot.getLocation()));
@@ -205,6 +207,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
                 if (myRobot.getLocation().isEqual(myRobot.getLoadedShelf().getOriginalLocation())) {
                     myRobot.unloadShelf();
                     task = "Resting Position";
+                    myRobot.setCurrentTask(task);
                 } else {
                     if (myRobot.pathEmpty())
                         myRobot.setPath(routeFinder.returnShelf(myRobot.getLocation(), myRobot.getLoadedShelf().getOriginalLocation()));
@@ -215,6 +218,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
                 if (myRobot.getLocation().isEqual(myRobot.originalLocation)) {
                     myRobot.setIdle(true);
                     task = "No task at present";
+                    myRobot.setCurrentTask(task);
                 } else {
                     if (myRobot.pathEmpty())
                         myRobot.setPath(routeFinder.restingPosition(myRobot.getLocation(), myRobot.originalLocation));

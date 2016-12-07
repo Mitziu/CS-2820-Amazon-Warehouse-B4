@@ -77,7 +77,7 @@ public class RouteFinder {
         lastPoint = goEast(lastPoint, dest.GetX(), route);
         lastPoint = goSouth(lastPoint, dest.GetY(), route);
 
-        return null;
+        return route;
     }
 
     /**

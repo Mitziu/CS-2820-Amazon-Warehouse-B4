@@ -33,7 +33,7 @@ public class Shelf implements ObjectInWarehouse {
 
     public void setPoint(Point newLocation) {
         currentPosition = newLocation;
-    }
+    } // This method overlaps with the method move(x, y) for returning the same variable.
 
     @Override
     public Point getLocation() {

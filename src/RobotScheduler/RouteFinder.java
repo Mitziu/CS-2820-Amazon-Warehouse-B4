@@ -26,8 +26,8 @@ public class RouteFinder {
 
     /**
      * Creates the route from Robot --> Shelf
-     * @param src Point of robot
-     * @param dest Point of shelf
+     * @param src Location of robot
+     * @param dest Location of shelf
      * @return
      */
     public Queue<Point> robotToShelf(Point src, Point dest) {
@@ -43,7 +43,7 @@ public class RouteFinder {
 
     /**
      * Creates the route from Shelf --> Picker
-     * @param src Point of Robot/Shelf
+     * @param src Location of Robot/Shelf
      * @return
      */
     public Queue<Point> shelfToPicker(Point src) {
@@ -62,8 +62,8 @@ public class RouteFinder {
 
     /**
      * Creates the route from Picker --> Original Point of shelf
-     * @param src
-     * @param dest
+     * @param src Location of picker
+     * @param dest Location of shelf
      * @return
      */
     public Queue<Point> returnShelf(Point src, Point dest) {

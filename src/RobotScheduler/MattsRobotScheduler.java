@@ -1,9 +1,11 @@
 package RobotScheduler;
+
 import Belt.Picker;
 import Belt.PickerImpl;
 import Floor.Point;
-import Ordering.*;
-import Inventory.*;
+import Inventory.Shelf_Manager;
+import Ordering.Order;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,6 +61,8 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
      * @param numOfRobots Number of robots to create
      * Creates the number of robots passed as a parameter
      */
+
+    // Currently robots created by this method share the same location at point (0, 0). This may need to be changed later.
     private void createRobots(Integer numOfRobots) {
         for (int i = 0; i < numOfRobots; i++) {
             MattsRobot robot = new MattsRobot(new Point(0,0), i, shelfManager, routeFinder, (PickerImpl) picker);
@@ -123,11 +127,14 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
     /**
      * @author Matt
      * @author Mitziu
-     * @param itemsNeeded
+     * Comments added by Wayne
+     * @param itemsNeeded This is a set of items of various quantities, with a specific ID, and needed for orders.
+     * Add every first container that contains items with the specific ID to tempSet.
+     * Filter out the shelves that has the containers which contain items with the specific ID.
      */
     private void getShelvesNeeded (Set<Integer> itemsNeeded) {
         Set<Integer> tempSet = new HashSet<>();
-        itemsNeeded.forEach(item -> tempSet.add(shelfManager.Contained_In(item).get(0)));
+        itemsNeeded.forEach(itemID -> tempSet.add(shelfManager.Contained_In(itemID).get(0)));
         //shelvesNeeded.addAll(tempSet);
 
         shelvesNeeded.addAll(tempSet.stream()
@@ -138,6 +145,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
     /**
      * @author Mitziu
      * @author Matt
+     * Updated by Wayne Lei on 12/7/2016
      * @param o
      * @param e
      * Moves robots, etc.
@@ -215,13 +223,13 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
             }
 
             if (task == "Resting Position") {
-                if (myRobot.getLocation().isEqual(myRobot.originalLocation)) {
+                if (myRobot.getLocation().isEqual(myRobot.getOriginalLocation())) {
                     myRobot.setIdle(true);
                     task = "No task at present";
                     myRobot.setCurrentTask(task);
                 } else {
                     if (myRobot.pathEmpty())
-                        myRobot.setPath(routeFinder.restingPosition(myRobot.getLocation(), myRobot.originalLocation));
+                        myRobot.setPath(routeFinder.restingPosition(myRobot.getLocation(), myRobot.getOriginalLocation()));
                 }
             }
 

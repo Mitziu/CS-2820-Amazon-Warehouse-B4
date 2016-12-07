@@ -1,7 +1,9 @@
 package Ordering;
 
-//Need import statement for inventory when it is fixed
-import java.util.*;
+// Need import statement for inventory when it is fixed
+// Need to change to type of itemIDMap from Map<Integer, Integer> to Map<Integer, List<Integer>> to fit the description.
+
+import java.util.Map;
 
 //Max Riley Class Ordering.Order
 

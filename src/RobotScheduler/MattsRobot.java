@@ -1,12 +1,13 @@
 package RobotScheduler;
-import java.util.*;
 
-import Belt.Picker;
 import Belt.PickerImpl;
-import Floor.FloorImpl;
-import Inventory.*;
 import Floor.ObjectInWarehouse;
 import Floor.Point;
+import Inventory.Shelf;
+import Inventory.Shelf_Manager;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Matt
@@ -26,10 +27,11 @@ public class MattsRobot implements ObjectInWarehouse {
     private Shelf_Manager shelfManager;
     private RouteFinder routeFinder;
 
-    public Point originalLocation;
+    private Point originalLocation;
 
     /**
      * @author Matt
+     * Updated by Wayne on 12/7/2016
      * constructor
      */
     public MattsRobot (Point location, Integer ID, Shelf_Manager shelfManager, RouteFinder routeFinder, PickerImpl picker) {
@@ -38,6 +40,7 @@ public class MattsRobot implements ObjectInWarehouse {
         this.shelfManager = shelfManager;
         this.routeFinder = routeFinder;
         path = new LinkedList<>();
+        originalLocation = location;
         //path.add(location);
     }
 
@@ -150,6 +153,14 @@ public class MattsRobot implements ObjectInWarehouse {
     }
 
     /**
+     * @return the original location of a robot
+     * @author Wayne Lei aka Virocider
+     */
+    public Point getOriginalLocation() {
+        return originalLocation;
+    }
+
+    /**
      * @author Matt
      * @author Mitziu
      * moves the robot to the next place
@@ -201,6 +212,7 @@ public class MattsRobot implements ObjectInWarehouse {
      * @param y
      * Fulfills interface requirements, probably won't be used.
      */
+    // This method shares the same name with another move method, which has no argument. It may be better to differentiate them with different names.
     public void move(Integer x, Integer y) {
         location = new Point(x, y);
     }

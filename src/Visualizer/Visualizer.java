@@ -30,7 +30,11 @@ public class Visualizer {
     private Integer counter = -1;
     private Runnable r;
 
-
+    /**
+     * @author Matt
+     * @author Mitziu
+     * constructor for visualizer
+     */
     public Visualizer () {
         int largestDim;
         if (WIDTH_OF_GRID > HEIGHT_OF_GRID) largestDim = WIDTH_OF_GRID;
@@ -54,6 +58,10 @@ public class Visualizer {
 
     }
 
+    /**
+     * @author Matt
+     * creates and shows GUI
+     */
     public void createAndShowGUI() {
         JFrame f = new JFrame("Amazon Warehouse Visualizer");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,12 +70,21 @@ public class Visualizer {
         f.setVisible(true);
     }
 
+    /**
+     * @author Matt
+     * @param newList list of Maps of warehouse
+     * Call this to run the simulation
+     */
     public void run(List<Map<String, Point>> newList) {
         warehouseHistory = newList;
         r.run();
         getNextMap();
     }
 
+    /**
+     * @author Matt
+     * gets the next map of floor and calls repaint to show it
+     */
     public void getNextMap () {
         boolean counterAtMax = false;
 
@@ -81,6 +98,10 @@ public class Visualizer {
         p.repaint();
     }
 
+    /**
+     * @author Matt
+     * gets previous map of floor and calls repaint to show it
+     */
     public void getPreviousMap () {
         boolean counterAtMin = false;
 
@@ -93,6 +114,11 @@ public class Visualizer {
         p.repaint();
     }
 
+    /**
+     * @author Matt
+     * Modified from previous project. Draws the squares that make up the visualizer
+     * Could be refactored to remove unneeded methods
+     */
     class Square {
         private int X;
         private int Y;
@@ -152,12 +178,20 @@ public class Visualizer {
 
     }
 
+    /**
+     * @author Matt
+     *  class MyPanel -- what I draw on
+     */
     class MyPanel extends JPanel {
 
         java.util.List<Square> squaresInPanel;
         Square currentSquare = null;
         JButton stepButton = new JButton("Step");
 
+        /**
+         * @author Matt
+         * constructor for MyPanel
+         */
         public MyPanel() {
 
             squaresInPanel = new ArrayList<Square>();
@@ -183,8 +217,10 @@ public class Visualizer {
         }
 
 
-
-
+        /**
+         * @author Matt
+         * Goes forwards or back depending on right or left arrow pressed
+         */
         class ArrowAction extends AbstractAction {
 
             private String cmd;
@@ -206,30 +242,19 @@ public class Visualizer {
 
         }
 
-
-
-        private int inWhichSquare(int x, int y) {
-
-            int indexToReturn = 0;
-
-            for (Square currentSquare: squaresInPanel) {
-
-                if (x >= currentSquare.getX() && x <= currentSquare.getX() + currentSquare.getWidth()
-                        && y >= currentSquare.getY() && y <= currentSquare.getY() + currentSquare.getWidth()) {
-                    return indexToReturn;
-                }
-                indexToReturn++;
-            }
-
-            //Didn't click on a square
-            return -1;
-        }
-
-
+        //TODO: make this a better size once panel is resized
+        //DO NOT let the drawing get bigger than this--may cause problems
         public Dimension getPreferredSize() {
             return new Dimension(4000,4000);
         }
 
+        /**
+         * @author Matt
+         * Draws the squares on the panel
+         * @param g
+         * @param k
+         * @param p
+         */
         public void drawObjects(Graphics g, String k, Point p) {
             int x = p.GetX();
             int y = p.GetY();
@@ -239,6 +264,11 @@ public class Visualizer {
             }
         }
 
+        /**
+         * @author Matt
+         * @param g
+         * draws background of panel
+         */
         public void drawBackground (Graphics g) {
 
             for (int i = 0; i < WIDTH_OF_GRID; i++) {
@@ -252,6 +282,13 @@ public class Visualizer {
             }
         }
 
+        /**
+         * Draws squares on panel--reused from previous swing assignment
+         * @param g
+         * @param x
+         * @param y
+         * @param objectType
+         */
         private void drawSquare(Graphics g, int x, int y, String objectType) {
             Square tempSquare = new Square((x * 15), (y * 15), 15, findColor(objectType));
             g.setColor(tempSquare.getColor());
@@ -260,6 +297,11 @@ public class Visualizer {
             g.drawRect(tempSquare.getX(), tempSquare.getY(), tempSquare.getWidth(), tempSquare.getWidth());
         }
 
+        /**
+         * @author Matt
+         * @param g
+         * Draws/redraws the floor
+         */
         protected void paintComponent(Graphics g) {
             g.drawString("This is our warehouse!",100,950);
             drawBackground(g);
@@ -267,6 +309,11 @@ public class Visualizer {
 
         }
 
+        /**
+         * @author matt
+         * @param objectType
+         * @return Color an object should be painted.
+         */
         public Color findColor (String objectType) {
 
             if (objectType.contains("RobotNotLoaded")) {return Color.BLUE;}

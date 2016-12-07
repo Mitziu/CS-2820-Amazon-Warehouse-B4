@@ -100,6 +100,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
 //                filter(myRobot -> myRobot.getLocation().GetX() == thisRobot.nextLocation().GetX()).
 //                filter(myRobot -> myRobot.getLocation().GetY() == thisRobot.nextLocation().GetY()).
 //                collect(Collectors.toList()).size();
+
         Integer locationUsed = robots.stream()
                 .filter(robot -> robot != thisRobot)
                 .filter(robot -> thisRobot.nextLocation().isEqual(robot.getLocation()))
@@ -180,40 +181,46 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
                 myRobot.setCurrentTask(task);
             }
 
-
             if (task == "Goto Shelf") {
-                if(myRobot.isLoaded() && myRobot.getLocation().isEqual(myRobot.getLoadedShelf().getLocation())) {
+                if (!myRobot.isLoaded() && myRobot.getLocation().isEqual(shelfManager.getShelf(myRobot.getShelfID()).getLocation())) {
                     task = "Deliver Shelf";
-                    myRobot.setCurrentTask(task);
+                    myRobot.loadShelf(shelfManager.getShelf(myRobot.getShelfID()));
+                } else {
+                    if (myRobot.pathEmpty())
+                        myRobot.setPath(routeFinder.robotToShelf(myRobot.getLocation(), shelfManager.getShelf(myRobot.getShelfID()).getLocation()));
                 }
-                else if (myRobot.pathEmpty())  {
-                    myRobot.setPath(routeFinder.robotToShelf(myRobot.getLocation(), shelfManager.getShelf(myRobot.getShelfID()).getLocation()));
-                }
-
             }
 
-            if (task == "Deliver Shelf")  {
-                if (myRobot.getLocation() == picker.getPosition()) {
-                    task = "Return Shelf";
-                    myRobot.setCurrentTask(task);
+            if (task == "Deliver Shelf") {
+                if (myRobot.getLocation().isEqual(picker.getPosition())) {
                     picker.shelfArrived(myRobot.getShelfID());
+                    task = "Return Shelf";
+                } else {
+                    if (myRobot.pathEmpty())
+                        myRobot.setPath(routeFinder.shelfToPicker(myRobot.getLocation()));
                 }
-                else if (myRobot.pathEmpty())  {
-                    myRobot.setPath(routeFinder.shelfToPicker(myRobot.getLocation()));
-                }
-
             }
 
             if (task == "Return Shelf") {
-                if (myRobot.getLocation() == myRobot.getLoadedShelf().getOriginalLocation()) {
-                    myRobot.setIdle(true);
-                    myRobot.setCurrentTask("No task at present");
+                if (myRobot.getLocation().isEqual(myRobot.getLoadedShelf().getOriginalLocation())) {
+                    myRobot.unloadShelf();
+                    task = "Resting Position";
+                } else {
+                    if (myRobot.pathEmpty())
+                        myRobot.setPath(routeFinder.returnShelf(myRobot.getLocation(), myRobot.getLoadedShelf().getOriginalLocation()));
                 }
-                else if (myRobot.pathEmpty()) {
-                    myRobot.setPath(routeFinder.returnShelf(myRobot.getLocation(), myRobot.getLoadedShelf().getOriginalLocation()));
-                }
-
             }
+
+            if (task == "Resting Position") {
+                if (myRobot.getLocation().isEqual(myRobot.originalLocation)) {
+                    myRobot.setIdle(true);
+                    task = "No task at present";
+                } else {
+                    if (myRobot.pathEmpty())
+                        myRobot.setPath(routeFinder.restingPosition(myRobot.getLocation(), myRobot.originalLocation));
+                }
+            }
+
         });
 
         //move robots

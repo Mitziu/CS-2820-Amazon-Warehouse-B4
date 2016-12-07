@@ -26,6 +26,8 @@ public class MattsRobot implements ObjectInWarehouse {
     private Shelf_Manager shelfManager;
     private RouteFinder routeFinder;
 
+    public Point originalLocation;
+
     /**
      * @author Matt
      * constructor
@@ -154,37 +156,38 @@ public class MattsRobot implements ObjectInWarehouse {
      */
     public void move () {
 
-        if (path != null) {
-            if (currentTask == "Goto Shelf") {
-                if (location.isEqual(loadedShelf.getLocation())) {
-                    loadShelf(shelfManager.getShelf(shelfID));
-                    currentTask = "To Picker";
-                }
-            }
+//        if (path != null) {
+//            if (currentTask == "Goto Shelf") {
+//                if (location.isEqual(loadedShelf.getLocation())) {
+//                    loadShelf(shelfManager.getShelf(shelfID));
+//                    currentTask = "To Picker";
+//                }
+//            }
+//
+//            if (currentTask == "To Picker") {
+//
+//            }
+//
+//        }
+//
+//        if (path != null) { //nested if statements are messy, but prevent nullPointerException
+//               if (currentTask == "Goto Shelf") {
+//                   if (shelfManager.getShelf(shelfID).getLocation().isEqual(location)) {
+//                       loadShelf(shelfManager.getShelf(shelfID));
+//                   }
+//               }
+//               else if (currentTask == "Return Shelf") {
+//                   if (location.isEqual(loadedShelf.getOriginalLocation())) {
+//                       unloadShelf();
+//                   }
+//               }
+//        }
 
-            if (currentTask == "To Picker") {
+        if (path == null) return;
 
-            }
 
-        }
-
-        if (path != null) { //nested if statements are messy, but prevent nullPointerException
-               if (currentTask == "Goto Shelf") {
-                   if (shelfManager.getShelf(shelfID).getLocation().isEqual(location)) {
-                       loadShelf(shelfManager.getShelf(shelfID));
-                   }
-               }
-               else if (currentTask == "Return Shelf") {
-                   if (location.isEqual(loadedShelf.getOriginalLocation())) {
-                       unloadShelf();
-                   }
-               }
-        }
-
-        if (path != null) {
-            if (!path.isEmpty()) {
-                location = path.poll();
-            }
+        if (!path.isEmpty()) {
+            location = path.poll();
         }
 
         if (loaded) {

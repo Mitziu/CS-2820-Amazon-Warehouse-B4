@@ -85,12 +85,11 @@ public class RouteFinder {
      * @param src
      * @return
      */
-    public Queue<Point> restingPosition(Point src) {
+    public Queue<Point> restingPosition(Point src, Point originalLocation) {
         Queue<Point> route = new LinkedList<>();
-        Point lastPoint;
 
-        lastPoint = goEast(src, 160, route);
-        lastPoint = goSouth(src, 100, route);
+        route.add(originalLocation);
+
         return route;
     }
 

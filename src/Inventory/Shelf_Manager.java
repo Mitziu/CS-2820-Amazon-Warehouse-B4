@@ -32,7 +32,6 @@ public class Shelf_Manager implements S_Manager{
 	 * @return LinkedList of all the Shelves in Shelf_Manager
 	 * @author William Anderson
 	 * @author Mitziu
-	 * @author Wayne Lei aka Virocider
 	 * Comments added by Wayne on 12/6/2016
 	 */
 	public List<Shelf> listShelves() {

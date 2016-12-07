@@ -133,10 +133,9 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
     /**
      * @author Matt
      * @author Mitziu
-     * Comments added by Wayne
-     * @param itemsNeeded This is a set of items of various quantities, with a specific ID, and needed for orders.
-     * Add every first container that contains items with the specific ID to tempSet.
-     * Filter out the shelves that has the containers which contain items with the specific ID.
+     * Comments added by Wayne <--javadoc should not detail inner workings --Matt
+     * @param itemsNeeded Set of items needed
+     * Finds shelves that contain item and add to list of shelves needed
      */
     private void getShelvesNeeded (Set<Integer> itemsNeeded) {
         Set<Integer> tempSet = new HashSet<>();

@@ -16,7 +16,6 @@ public class VisualizerRecorder implements Observer {
     private Visualizer visualizer;
     private FloorPositions floorPositions;
     private List warehouseHistory;
-    private boolean done = false;
 
     /**
      * @author Matt
@@ -35,9 +34,8 @@ public class VisualizerRecorder implements Observer {
     @Override
     public void update (Observable o, Object arg) {
         //TODO: Get latest map from Floor
-        //Map tempMap = new HashMap<>(floorPositions.getAllPositions());
         Map<String, Point> tempMap = floorPositions.getAllPositions();
-        displayInformation(tempMap);
+        //displayInformation(tempMap);
         storePositions(tempMap);
     }
 
@@ -63,12 +61,12 @@ public class VisualizerRecorder implements Observer {
      * Stores positions in warehouseHistory
      */
     public void storePositions (Map<String, Point> newMap) {
-        if (!done) warehouseHistory.add(newMap);
-        else visualizer.run((LinkedList<HashMap<String, Point>>)warehouseHistory);
+        warehouseHistory.add(newMap);
     }
 
     public void simulationEnded () {
-        done = true;
+        visualizer.run((LinkedList<HashMap<String, Point>>)warehouseHistory);
+        System.out.println("Simulation has ended.");
     }
 
 

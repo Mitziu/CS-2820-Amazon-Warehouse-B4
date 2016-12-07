@@ -5,7 +5,15 @@ import Floor.Point;
 import Inventory.S_Manager;
 import Ordering.Order;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Queue;
+
 import java.util.stream.Collectors;
 
 /**
@@ -15,11 +23,6 @@ import java.util.stream.Collectors;
  * Created by Mitziu on 11/17/16.
  */
 public class PickerImpl implements Picker, Observer, ObjectInWarehouse {
-
-    // TODO: Pass Shelf Manager and deduct items from it
-    // Question: How to get the status of a picker having finished picking items from a shelf?
-    // A boolean value may be needed to represent that status of a picker.
-
 
     private List<OrderToFulfill> ongoingOrders;
     private Belt myBelt;

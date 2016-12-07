@@ -27,7 +27,7 @@ public class MattsRobot implements ObjectInWarehouse {
     private Shelf_Manager shelfManager;
     private RouteFinder routeFinder;
 
-    private Point originalLocation;
+    public Point originalLocation;
 
     /**
      * @author Matt
@@ -40,7 +40,6 @@ public class MattsRobot implements ObjectInWarehouse {
         this.shelfManager = shelfManager;
         this.routeFinder = routeFinder;
         path = new LinkedList<>();
-        originalLocation = location;
         //path.add(location);
     }
 

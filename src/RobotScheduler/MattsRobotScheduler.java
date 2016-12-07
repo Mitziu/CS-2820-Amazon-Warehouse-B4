@@ -6,7 +6,13 @@ import Floor.Point;
 import Inventory.Shelf_Manager;
 import Ordering.Order;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -223,13 +229,13 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
             }
 
             if (task == "Resting Position") {
-                if (myRobot.getLocation().isEqual(myRobot.getOriginalLocation())) {
+                if (myRobot.getLocation().isEqual(myRobot.originalLocation)) {
                     myRobot.setIdle(true);
                     task = "No task at present";
                     myRobot.setCurrentTask(task);
                 } else {
                     if (myRobot.pathEmpty())
-                        myRobot.setPath(routeFinder.restingPosition(myRobot.getLocation(), myRobot.getOriginalLocation()));
+                        myRobot.setPath(routeFinder.restingPosition(myRobot.getLocation(), myRobot.originalLocation));
                 }
             }
 

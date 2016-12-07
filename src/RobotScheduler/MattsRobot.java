@@ -212,6 +212,7 @@ public class MattsRobot implements ObjectInWarehouse {
      */
     public void loadShelf(Shelf shelf) {
         loadedShelf = shelf;
+        loadedShelf.loadedOnRobot = true;
         loaded = true;
     }
 
@@ -235,6 +236,7 @@ public class MattsRobot implements ObjectInWarehouse {
      */
     public void unloadShelf () {
         loaded = false;
+        loadedShelf.loadedOnRobot = false;
         setIdle(true);
     }
 

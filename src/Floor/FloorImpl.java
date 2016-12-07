@@ -110,9 +110,15 @@ public class FloorImpl implements FloorPositions {
                 .forEach(piece -> positionsMap.put("BeltNotEmpty-" + piece.getID(), piece.getLocation()));
 
         robots.stream()
-                .forEach(robot -> positionsMap.put("Robot-"+ robot.getID(), robot.getLocation()));
+                .filter(robot -> robot.isLoaded())
+                .forEach(robot -> positionsMap.put("RobotLoaded-" + robot.getID(), robot.getLocation()));
+
+        robots.stream()
+                .filter(robot -> !robot.isLoaded())
+                .forEach(robot -> positionsMap.put("RobotNotLoaded-" + robot.getID(), robot.getLocation()));
 
         shelves.stream()
+                .filter(shelf -> !shelf.loadedOnRobot)
                 .forEach(shelf -> positionsMap.put("Shelf-" + shelf.getID(), shelf.getLocation()));
 
         positionsMap.put("Picker", picker.getLocation());

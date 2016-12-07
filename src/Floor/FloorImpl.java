@@ -70,7 +70,8 @@ public class FloorImpl implements FloorPositions {
         }
 
         for (int i = 0; i < robots.size(); i++) {
-            robots.get(i).move(160, i * 10);
+            //robots.get(i).move(160, 100 - i);
+            robots.get(i).move(30,30);
         }
     }
 

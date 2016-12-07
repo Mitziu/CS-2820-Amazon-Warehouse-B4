@@ -81,6 +81,20 @@ public class RouteFinder {
     }
 
     /**
+     * Creates the route down
+     * @param src
+     * @return
+     */
+    public Queue<Point> restingPosition(Point src) {
+        Queue<Point> route = new LinkedList<>();
+        Point lastPoint;
+
+        lastPoint = goEast(src, 160, route);
+        lastPoint = goSouth(src, 100, route);
+        return route;
+    }
+
+    /**
      * Adds to a queue points going West (Left)
      * @param currentLocation Starting Point
      * @param limit End Axis

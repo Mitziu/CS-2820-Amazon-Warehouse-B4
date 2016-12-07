@@ -35,8 +35,8 @@ public class RobotTester {
         robotScheduler = new MattsRobotScheduler(picker, shelfManager);
         floor = new FloorImpl(shelfManager, robotScheduler, picker, belt);
         routeFinder = new RouteFinder(picker);
-        robots.add(new MattsRobot(points[1][1], 101, shelfManager, routeFinder));
-        robots.add(new MattsRobot(points[1][2], 102, shelfManager, routeFinder));
+        robots.add(new MattsRobot(points[1][1], 101, shelfManager, routeFinder, picker));
+        robots.add(new MattsRobot(points[1][2], 102, shelfManager, routeFinder, picker));
     }
 
     @Test

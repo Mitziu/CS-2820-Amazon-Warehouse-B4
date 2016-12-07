@@ -30,13 +30,13 @@ public class MattsRobot implements ObjectInWarehouse {
      * @author Matt
      * constructor
      */
-    public MattsRobot (Point location, Integer ID, Shelf_Manager shelfManager, RouteFinder routeFinder) {
+    public MattsRobot (Point location, Integer ID, Shelf_Manager shelfManager, RouteFinder routeFinder, PickerImpl picker) {
         this.location = location;
         this.ID = ID;
         this.shelfManager = shelfManager;
         this.routeFinder = routeFinder;
         path = new LinkedList<>();
-        path.add(location);
+        //path.add(location);
     }
 
     /**
@@ -133,10 +133,10 @@ public class MattsRobot implements ObjectInWarehouse {
      */
     public boolean pathEmpty () {
         if (path != null) {
-            if (path.isEmpty()) return true;
+            if (!path.isEmpty()) return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -153,6 +153,21 @@ public class MattsRobot implements ObjectInWarehouse {
      * moves the robot to the next place
      */
     public void move () {
+
+        if (path != null) {
+            if (currentTask == "Goto Shelf") {
+                if (location.isEqual(loadedShelf.getLocation())) {
+                    loadShelf(shelfManager.getShelf(shelfID));
+                    currentTask = "To Picker";
+                }
+            }
+
+            if (currentTask == "To Picker") {
+
+            }
+
+        }
+
         if (path != null) { //nested if statements are messy, but prevent nullPointerException
                if (currentTask == "Goto Shelf") {
                    if (shelfManager.getShelf(shelfID).getLocation().isEqual(location)) {

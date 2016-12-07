@@ -53,9 +53,15 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         createRobots(5);
     }
 
+    /**
+     * @author Mitziu
+     * @author Matthew
+     * @param numOfRobots Number of robots to create
+     * Creates the number of robots passed as a parameter
+     */
     private void createRobots(Integer numOfRobots) {
         for (int i = 0; i < numOfRobots; i++) {
-            MattsRobot robot = new MattsRobot(new Point(0,0), i, shelfManager, routeFinder);
+            MattsRobot robot = new MattsRobot(new Point(0,0), i, shelfManager, routeFinder, (PickerImpl) picker);
             addRobot(robot);
         }
     }
@@ -94,17 +100,21 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
 //                filter(myRobot -> myRobot.getLocation().GetX() == thisRobot.nextLocation().GetX()).
 //                filter(myRobot -> myRobot.getLocation().GetY() == thisRobot.nextLocation().GetY()).
 //                collect(Collectors.toList()).size();
+        Integer locationUsed = robots.stream()
+                .filter(robot -> robot != thisRobot)
+                .filter(robot -> thisRobot.nextLocation().isEqual(robot.getLocation()))
+                .collect(Collectors.toList()).size();
 
-        Integer locationUsed = 0;
-        for(MattsRobot robot: robots) {
-            if (robot == thisRobot) continue;;
-
-            if (robot.nextLocation() != null) {
-                if (thisRobot.getLocation().GetX() == robot.nextLocation().GetX() &&
-                        thisRobot.getLocation().GetX() == robot.nextLocation().GetY()) locationUsed++;
-            }
-
-        }
+//        Integer locationUsed = 0;
+//        for(MattsRobot robot: robots) {
+//            if (robot == thisRobot) continue;;
+//
+//            if (robot.nextLocation() != null) {
+//                if (thisRobot.getLocation().GetX() == robot.nextLocation().GetX() &&
+//                        thisRobot.getLocation().GetX() == robot.nextLocation().GetY()) locationUsed++;
+//            }
+//
+//        }
 
         if (locationUsed == 0) thisRobot.move();
     }
@@ -117,7 +127,11 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
     private void getShelvesNeeded (Set<Integer> itemsNeeded) {
         Set<Integer> tempSet = new HashSet<>();
         itemsNeeded.forEach(item -> tempSet.add(shelfManager.Contained_In(item).get(0)));
-        shelvesNeeded.addAll(tempSet);
+        //shelvesNeeded.addAll(tempSet);
+
+        shelvesNeeded.addAll(tempSet.stream()
+                .filter(OrderID -> !shelvesNeeded.contains(OrderID))
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -131,8 +145,12 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         Set<Integer> tempItemList = new HashSet<>();
 
         //Make set of items needed
-        if (!pendingOrders.isEmpty()) {
-            pendingOrders.forEach(myOrder -> tempItemList.addAll(myOrder.getItemIDMap().keySet()));
+//        if (!pendingOrders.isEmpty()) {
+//            pendingOrders.forEach(myOrder -> tempItemList.addAll(myOrder.getItemIDMap().keySet()));
+//        }
+
+        while (!pendingOrders.isEmpty()) {
+            tempItemList.addAll(pendingOrders.poll().getItemIDMap().keySet());
         }
 
         //Make a set of shelves based on items needed
@@ -152,10 +170,19 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         //Set task for robot, TODO: Refactor this!! Use an enum.
         robots.forEach(myRobot -> {
             String task = myRobot.getCurrentTask();
-            if (task == null) task = "No task at present"; myRobot.setIdle(true); myRobot.setCurrentTask(task);
+
+            System.out.println("DEBUG: Robot-" + myRobot.getID() + ", Task: " + task);
+            //if (task == null) task = "No task at present"; myRobot.setIdle(true); myRobot.setCurrentTask(task);
+
+            if (task == " ") {
+                task = "No task at present";
+                myRobot.setIdle(true);
+                myRobot.setCurrentTask(task);
+            }
+
 
             if (task == "Goto Shelf") {
-                if(!myRobot.isLoaded()) {
+                if(myRobot.isLoaded() && myRobot.getLocation().isEqual(myRobot.getLoadedShelf().getLocation())) {
                     task = "Deliver Shelf";
                     myRobot.setCurrentTask(task);
                 }
@@ -180,6 +207,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
             if (task == "Return Shelf") {
                 if (myRobot.getLocation() == myRobot.getLoadedShelf().getOriginalLocation()) {
                     myRobot.setIdle(true);
+                    myRobot.setCurrentTask("No task at present");
                 }
                 else if (myRobot.pathEmpty()) {
                     myRobot.setPath(routeFinder.returnShelf(myRobot.getLocation(), myRobot.getLoadedShelf().getOriginalLocation()));

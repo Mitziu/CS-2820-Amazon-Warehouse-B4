@@ -50,7 +50,7 @@ public class VisualizerRecorder implements Observer {
      * @param newMap
      * unused at the moment
      */ /*
-    public void givePositions (Map<String, Point> newMap) {
+    public void run (Map<String, Point> newMap) {
         //Currently uses dummy values
         visualizer.updateFloor(newMap);
     }*/
@@ -65,7 +65,7 @@ public class VisualizerRecorder implements Observer {
     }
 
     public void simulationEnded () {
-        visualizer.run((LinkedList<HashMap<String, Point>>)warehouseHistory);
+        visualizer.run((List<Map<String, Point>>)warehouseHistory);
         System.out.println("Simulation has ended.");
     }
 

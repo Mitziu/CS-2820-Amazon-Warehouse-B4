@@ -4,7 +4,7 @@
  */
 public enum WarehouseDimensionsEnum {
 
-    WIDTH(160), HEIGHT(100);
+    WIDTH(160), HEIGHT(120);
 
     private int value;
 

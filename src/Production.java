@@ -34,7 +34,7 @@ public class Production {
     public static void main(String[] args) {
 
         clock = new Clock();
-        belt = new BeltImpl(10);
+        belt = new BeltImpl(25);
 //
 //        floor = new Setup();
 //        floor.Initialize();
@@ -73,6 +73,13 @@ public class Production {
         while(orderingSystem.finishedOrders != 4) {
             System.out.println("Finished Orders: " + orderingSystem.finishedOrders);
             clock.tick();
+        }
+        //clock.tick();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
         }
 
         visualizer.simulationEnded();

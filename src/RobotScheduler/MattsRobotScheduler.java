@@ -42,7 +42,7 @@ public class MattsRobotScheduler implements Observer, RobotScheduler {
         pendingOrders = new LinkedList<>();
         shelvesNeeded = new LinkedList<>();
         routeFinder = new RouteFinder(picker);
-        createRobots(5);
+        createRobots(4);
     }
 
     /**

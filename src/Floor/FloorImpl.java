@@ -51,27 +51,33 @@ public class FloorImpl implements FloorPositions {
         for (int i = 0; i < belt.getSize(); i++) {
             BeltPiece piece = new BeltPiece(i);
             piece.setEmpty(true);
-            piece.move(0, (100 - (belt.getSize() - 1 - i)));
+            //piece.move(0, (100 - (belt.getSize() - 1 - i)));
+            piece.move(0, i);
             piecesOfBelt.add(i, piece);
         }
 
         //Positions picker next to the belt at the beginning
-        picker.move(1, (100 - (belt.getSize() - 1)));
+        //picker.move(1, (100 - (belt.getSize() - 1)));
+        picker.move(1, belt.getSize() - 1);
 
         Integer shelfCtr = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (shelfCtr == shelves.size())
                     break;
-                shelves.get(shelfCtr).move(20 + (i  * 10), 20 + (j  * 10));
-                shelves.get(shelfCtr).originalLocation = new Point((20 + (i * 10)), (20 + (j * 10)));
+//                shelves.get(shelfCtr).move(20 + (i  * 10), 20 + (j  * 10));
+//                shelves.get(shelfCtr).originalLocation = new Point((20 + (i * 10)), (20 + (j * 10)));
+
+                shelves.get(shelfCtr).move(30 + (j * 5), 2 + (i * 5));
+                shelves.get(shelfCtr).originalLocation = new Point(30 + (j * 5), 2 + (i * 5));
+
                 shelfCtr++;
             }
         }
 
         for (int i = 0; i < robots.size(); i++) {
-            robots.get(i).move(100 - i, 100 - i);
-            robots.get(i).originalLocation = new Point(100 - i, 100 - i);
+            robots.get(i).move(34 - i, 20 - i);
+            robots.get(i).originalLocation = new Point(35 - i, 35 - i);
         }
     }
 
@@ -86,8 +92,12 @@ public class FloorImpl implements FloorPositions {
         }
 
         for (int i = 0; i < piecesOfBelt.size(); i++) {
-            if (belt.getOrdersOnBelt().get(i) != null)
+            if (belt.getOrdersOnBelt().get(piecesOfBelt.size() - 1 - i) != null) {
                 piecesOfBelt.get(i).setEmpty(false);
+            }
+//
+//            if (belt.getOrdersOnBelt().get(i) != null)
+//                piecesOfBelt.get(i).setEmpty(false);
         }
     }
 

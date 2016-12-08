@@ -14,9 +14,10 @@ import java.util.Queue;
 public class RouteFinder {
 
     private final Integer HWYSOUTH = 5;
-    private final Integer HWYNORTH = 10;
-    private final Integer HWYEAST = 5;
-    private final Integer HWYWEST = 95;
+    private final Integer HWYNORTH = 15;
+
+    private final Integer HWYEAST = 30;
+    private final Integer HWYWEST = 0;
 
     private PickerImpl picker;
 
@@ -51,6 +52,7 @@ public class RouteFinder {
         Point lastPoint;
 
         lastPoint = goSouth(src, src.GetY() + 1, route);
+
         lastPoint = goWest(lastPoint, HWYNORTH, route);
         lastPoint = goNorth(lastPoint, HWYWEST, route);
         lastPoint = goWest(lastPoint, HWYSOUTH, route);
@@ -87,8 +89,13 @@ public class RouteFinder {
      */
     public Queue<Point> restingPosition(Point src, Point originalLocation) {
         Queue<Point> route = new LinkedList<>();
+        Point lastpoint;
 
-        route.add(originalLocation);
+        lastpoint = goEast(src, 46, route);
+        lastpoint = goSouth(lastpoint, originalLocation.GetY(), route);
+        lastpoint = goWest(lastpoint, originalLocation.GetX(), route);
+
+        //route.add(originalLocation);
 
         return route;
     }

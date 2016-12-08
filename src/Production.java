@@ -70,11 +70,10 @@ public class Production {
         clock.addObserver(picker);
         clock.addObserver(robotManager);
 
-        while(orderingSystem.finishedOrders != 4) {
+        while(orderingSystem.finishedOrders != 7) {
             System.out.println("Finished Orders: " + orderingSystem.finishedOrders);
             clock.tick();
         }
-        //clock.tick();
 
         try {
             Thread.sleep(3000);

@@ -61,8 +61,8 @@ public class FloorImpl implements FloorPositions {
         picker.move(1, belt.getSize() - 1);
 
         Integer shelfCtr = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 if (shelfCtr == shelves.size())
                     break;
 //                shelves.get(shelfCtr).move(20 + (i  * 10), 20 + (j  * 10));

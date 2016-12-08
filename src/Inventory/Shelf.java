@@ -16,11 +16,13 @@ public class Shelf implements ObjectInWarehouse {
     public Point originalLocation;
 
     public boolean loadedOnRobot;
+    public boolean beingUsed;
 
     public Shelf(Integer ID, Map<Integer, Integer> items) {
         this.items = items;
         this.ID = ID;
         loadedOnRobot = false;
+        beingUsed = false;
     }
 
     public void setOriginalLocation(Point originalLocation) {

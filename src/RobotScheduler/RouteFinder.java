@@ -16,7 +16,7 @@ public class RouteFinder {
     private final Integer HWYSOUTH = 5;
     private final Integer HWYNORTH = 15;
 
-    private final Integer HWYEAST = 30;
+    private final Integer HWYEAST = 24;
     private final Integer HWYWEST = 0;
 
     private PickerImpl picker;

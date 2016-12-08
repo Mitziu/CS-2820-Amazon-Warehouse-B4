@@ -77,7 +77,7 @@ public class FloorImpl implements FloorPositions {
 
         for (int i = 0; i < robots.size(); i++) {
             robots.get(i).move(34 - i, 20 - i);
-            robots.get(i).originalLocation = new Point(35 - i, 35 - i);
+            robots.get(i).originalLocation = new Point(34 - i, 20 - i);
         }
     }
 

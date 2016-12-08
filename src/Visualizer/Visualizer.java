@@ -290,7 +290,7 @@ public class Visualizer {
          * @param objectType
          */
         private void drawSquare(Graphics g, int x, int y, String objectType) {
-            Square tempSquare = new Square((x * 15), (y * 15), 15, findColor(objectType));
+            Square tempSquare = new Square((x * 30), (y * 30), 30, findColor(objectType));
             g.setColor(tempSquare.getColor());
             g.fillRect(tempSquare.getX(), tempSquare.getY(), tempSquare.getWidth(), tempSquare.getWidth());
             g.setColor(Color.BLACK);
@@ -305,7 +305,9 @@ public class Visualizer {
         protected void paintComponent(Graphics g) {
             g.drawString("This is our warehouse!",100,950);
             drawBackground(g);
-            floorMap.forEach((k,v) -> drawObjects(g, (String)k, (Point)v));
+
+            if (floorMap != null)
+                floorMap.forEach((k,v) -> drawObjects(g, (String)k, (Point)v));
 
         }
 
